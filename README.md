@@ -38,7 +38,7 @@
       => AWS Access Key Id: <AWS Access Key Id>
       => AWS Secret Access Key: <AWS Secret Access Key>
       => Default region name: <Default region name>
-      => Default output format: <Default output format>
+      => Default output format: <Default output format(json / yaml / yaml-stream / text / table)>
     ```
     * 환경 변수 등록
     ```bash
