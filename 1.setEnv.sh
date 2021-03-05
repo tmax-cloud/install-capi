@@ -9,7 +9,7 @@ export AWS_SECRET_ACCESS_KEY=uBXQQLC7ugVSzCDaohFzJ7ty8BKwLKlSMXahU5H/
 
 export REGISTRY=172.21.6.2:5000
 
-curl -LO https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/${AWS_VERSION}/clusterawsadm-linux-amd64 -o clusterawsadm
+curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/${AWS_VERSION}/clusterawsadm-linux-amd64 -o clusterawsadm
 chmod +x clusterawsadm
 mv clusterawsadm /usr/local/bin/clusterawsadm
 
