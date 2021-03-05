@@ -1,9 +1,4 @@
 ## install binary about capi
-#### clusterawsadm binary install
-curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/${AWS_VERSION}/clusterawsadm-linux-amd64 -o clusterawsadm
-chmod +x clusterawsadm
-mv clusterawsadm /usr/local/bin/clusterawsadm
-
 #### clusterctl binary install
 curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/${CAPI_VERSION}/clusterctl-linux-amd64 -o clusterctl
 chmod +x clusterctl
