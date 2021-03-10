@@ -1,22 +1,16 @@
-## set 1.1.init.sh & 1.2.setPrivate.sh ENV
 export CAPI_VERSION=v0.3.6
 export AWS_VERSION=v0.5.5-alpha.0
 export KUBE_RBAC_PROXY_VERSION=v0.4.1
 
-export AWS_REGION=eu-west-1
-export AWS_ACCESS_KEY_ID=AKIAQDF4RKX252P2BFGB
-export AWS_SECRET_ACCESS_KEY=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
+## mkdir
+#### make yaml dir
+if [ ! -d yaml ]; then
+    mkdir yaml
+    mkdir yaml/_template
+    mkdir yaml/_install
+fi
 
-export REGISTRY=172.21.6.2:5000
-
-curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/${AWS_VERSION}/clusterawsadm-linux-amd64 -o clusterawsadm
-chmod +x clusterawsadm
-mv clusterawsadm /usr/local/bin/clusterawsadm
-
-clusterawsadm bootstrap iam create-cloudformation-stack
-export AWS_B64ENCODED_CREDENTIALS=$(clusterawsadm bootstrap credentials encode-as-profile)
-
-## set 2.genCluster.sh ENV
-export AWS_SSH_KEY_NAME=default
-export AWS_CONTROL_PLANE_MACHINE_TYPE=t3.large
-export AWS_NODE_MACHINE_TYPE=t3.large
+#### make image dir for download capi, aws images
+if [ ! -d img ]; then
+   mkdir img
+fi

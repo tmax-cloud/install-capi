@@ -14,57 +14,41 @@
 * AWS IAM 정보
 
 ## 폐쇄망 설치 가이드
-"Step 0. Capi/infraProvider -  _폐쇄망 작업_" 추가 실행
-
-## Install Steps
-0. [Capi/infraProvider 설정](https://github.com/tmax-cloud/hypercloud-install-guide/tree/master/Capi#step-0-capiinfraprovider-%EC%84%A4%EC%A0%95)
-1. [Capi/infraProvider 구축](https://github.com/tmax-cloud/hypercloud-install-guide/tree/master/Capi#step-1-capiinfraprovider-%EA%B5%AC%EC%B6%95)
-2. [CapiCluster 생성](https://github.com/tmax-cloud/hypercloud-install-guide/tree/master/Capi#step-1-capiinfraprovider-%EA%B5%AC%EC%B6%95)
-
-## Step 0. Capi/infraProvider 설정
-* 목적 : Capi/infraProvider 구축 전 설정
-* 생성 순서 :
-    * script 실행 권한 부여
+* 외부 네트워크 통신이 가능한 환경에서 0.presetCN.sh를 이용하여 이미지 및 패키지 다운로드 후 2.2.initCN.sh를 이용하여 폐쇄망에 CAPI 환경 구성
+* 최종 실행순서
     ```bash
-    $ chmod +x *.sh
-    ```
-    * AWS IAM 등록
-    ```bash
-    $ ./0.setAWS.sh
-    ~~~~~~~~~~~~~~~~~~~
-    ~~ AWS unzip log ~~
-    ~~~~~~~~~~~~~~~~~~~
-    [insert AWS IAM]
-      => AWS Access Key Id: <AWS Access Key Id>
-      => AWS Secret Access Key: <AWS Secret Access Key>
-      => Default region name: <Default region name>
-      => Default output format: <Default output format(json / yaml / yaml-stream / text / table)>
-    ```
-    * 환경 변수 등록
-    ```bash
-    $ vim 1.setEnv.sh ## 환경 변수를 적절히 수정
+    $ source 0.presetCN.sh
     $ source 1.setEnv.sh
+    $ bash 2.2.initCN.sh
+    $ bash 3.x.set{Provider}.sh
     ```
-    * 환경 구축에 필요한 yaml download
+## Install Steps(Open Network)
+1. [환경변수 및 디렉토리]
+* 목적 : Capi설정을 위한 환경변수 및 디렉토리 설정
     ```bash
-    $ ./2.1.init.sh
+    $ source 1.setEnv.sh
+    $ export REGISTRY={registry IP:PORT}
     ```
-    * _폐쇄망 작업_
+* 주의사항 : 환경변수를 export하기 위해서 꼭 source command를 통하여 실행해주어야 함
+
+
+2. [리소스 다운로드 및 설치]
+* 목적 : Capi 설정에 필요한 리소스(yaml, binary)다운로드 및 설치
     ```bash
-    $ ./2.2.setPrivate.sh
+    $ bash 2.2.initCN.sh
     ```
 
-## Step 1. Capi/infraProvider 구축
-* 목적 : Capi/infraProvider 구축
-* 생성 순서 : 
-    * Capi/infraProvider yaml 적용
-    ```bash
-    $ ./3.provisionCapi
-    ```
-## Step 2. CapiCluster 생성
-* 목적 : CapiCluster 생성
-* 생성 순서 :
-    * CapiCluster 생성
-    ```bash
-    $ ./4.genCluster <cluster-name> <kubernetes-version> <number of master nodes> <number of worker nodes>
-    ```
+3. [외부 프로바이더 설치]
+* 목적 : 해당 Platform에 VM을 구축하기 위해 CAPI Provider api를 설치
+    3.1. [AWS Provider]
+    * AWS config file : UI를 통해 입력된 값을 아래형식으로 ./awsConfig.conf로 저장
+        ```bash
+        export AWS_REGION={aws_region}
+        export AWS_ACCESS_KEY_ID={aws_access_key_id}
+        export AWS_SECRET_ACCESS_KEY={aws_secret_key}
+        '''
+    * 실행 순서
+        ```bash
+        $ source awsConfig.conf
+        $ bash 3.1.setAWS.sh
+        ```
