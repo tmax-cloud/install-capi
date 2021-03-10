@@ -53,3 +53,10 @@
         $ source awsConfig.conf
         $ source 3.1.setAWS.sh
         ```
+
+## Uninstall Steps
+* CAPI와 Provider들의 CRD 제거 및 바이너리, yaml등의 리소스 삭제
+    ```bash
+    $ source version.conf
+    $ bash 4.deleteCapi.sh
+    ```
