@@ -9,3 +9,6 @@ curl -L http://github.com/kubernetes-sigs/cluster-api/releases/download/"$CAPI_V
 
 ## init capi settings
 cp yaml/_template/cluster-api-components-template-${CAPI_VERSION}.yaml yaml/_install/1.cluster-api-components-${CAPI_VERSION}.yaml
+
+## provision capi crd
+kubectl apply -f yaml/_install/1.cluster-api-components-${CAPI_VERSION}.yaml
