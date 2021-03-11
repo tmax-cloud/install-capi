@@ -26,7 +26,9 @@
     $ bash 1.setEnv.sh
     $ export REGISTRY={registryIP:PORT}
     $ bash 2.2.initCN.sh
-    $ bash 3.x.set{Provider}.sh     ## Install Steps(Open Network) 의 Provider 설치에서 해당 Provider 파트 참조
+    $ bash 3.x.set{Provider}.sh
+    ## Line5: Provider에 따른 Script File Name은
+    ## Install Steps(Open Network) > Provider 설치 참조
     ```
 ## Install Steps(Open Network)
 * Capi설정을 위한 환경변수 및 디렉토리 설정
@@ -42,7 +44,7 @@
 
 * Provider 설치
     1. [AWS Provider]
-    * UI를 통해 입력된 AWS Config 값을 아래형식으로 ./awsConfig.conf로 저장
+    * UI를 통해 입력된 AWS Config 값을 아래형식으로 manifest경로 아래 awsConfig.conf로 저장
         ```bash
         export AWS_REGION={aws_region}
         export AWS_ACCESS_KEY_ID={aws_access_key_id}
@@ -57,6 +59,9 @@
 ## Uninstall Steps
 * CAPI와 Provider들의 CRD 제거 및 바이너리, yaml등의 리소스 삭제
     ```bash
-    $ source version.conf
-    $ bash 4.deleteCapi.sh
+    $ for f in *.conf; do source "$f"; done
+    $ bash 4.x.delete{Provider}.sh
+    $ bash 5.deleteCapi.sh
+    ## Line2: Provider에 따른 Script File Name은
+    ## Install Steps(Open Network) > Provider 설치 참조
     ```
