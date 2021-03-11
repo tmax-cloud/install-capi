@@ -39,7 +39,7 @@
 
 * Capi 설정에 필요한 리소스(yaml, binary)다운로드 및 설치
     ```bash
-    $ bash 2.2.initCN.sh
+    $ bash 2.1.initON.sh
     ```
 
 * Provider 설치
