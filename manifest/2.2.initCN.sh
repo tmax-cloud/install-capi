@@ -21,3 +21,7 @@ sed -i 's/gcr.io\/kubebuilder\/kube-rbac-proxy:'${KUBE_RBAC_PROXY_VERSION}'/'${R
 sed -i 's/us.gcr.io\/k8s-artifacts-prod\/cluster-api\/cluster-api-controller:'${CAPI_VERSION}'/'${REGISTRY}'\/k8s-artifacts-prod\/cluster-api\/cluster-api-controller:'${CAPI_VERSION}'/g' yaml/_install/1.cluster-api-components-${CAPI_VERSION}.yaml
 sed -i 's/us.gcr.io\/k8s-artifacts-prod\/cluster-api\/kubeadm-bootstrap-controller:'${CAPI_VERSION}'/'${REGISTRY}'\/k8s-artifacts-prod\/cluster-api\/kubeadm-bootstrap-controller:'${CAPI_VERSION}'/g' yaml/_install/1.cluster-api-components-${CAPI_VERSION}.yaml
 sed -i 's/us.gcr.io\/k8s-artifacts-prod\/cluster-api\/kubeadm-control-plane-controller:'${CAPI_VERSION}'/'${REGISTRY}'\/k8s-artifacts-prod\/cluster-api\/kubeadm-control-plane-controller:'${CAPI_VERSION}'/g' yaml/_install/1.cluster-api-components-${CAPI_VERSION}.yaml
+
+## provision cert-manager, capi ##
+kubectl apply -f yaml/_install/0.cert-manager-${CERT_MANAGER_VERSION}.yaml
+kubectl apply -f yaml/_install/1.cluster-api-components-${CAPI_VERSION}.yaml
