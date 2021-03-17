@@ -17,8 +17,8 @@ docker save us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-control-plane-contr
 docker pull us.gcr.io/k8s-artifacts-prod/cluster-api-aws/cluster-api-aws-controller:$AWS_VERSION
 docker save us.gcr.io/k8s-artifacts-prod/cluster-api-aws/cluster-api-aws-controller:$AWS_VERSION > img/cluster-api-aws_cluster-api-aws-controller_$AWS_VERSION.tar
 
-## packaging binary, yaml
+## download binary files and yaml files ##
 curl -L http://github.com/kubernetes-sigs/cluster-api/releases/download/"$CAPI_VERSION"/cluster-api-components.yaml > yaml/_template/cluster-api-components-template-${CAPI_VERSION}.yaml 
 curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/${CAPI_VERSION}/clusterctl-linux-amd64 -o clusterctl
-chmod +x clusterctl
-mv clusterctl /usr/local/bin/clusterctl
+curl -L https://github.com/jetstack/cert-manager/releases/download/${CERT_MANAGER_VERSION}/cert-manager.yaml -o cert-manager-${CERT_MANAGER_VERSION}.yaml
+curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/${AWS_VERSION}/clusterawsadm-linux-amd64 -o clusterawsadm
