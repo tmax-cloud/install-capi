@@ -31,13 +31,13 @@
     ## Install Steps(Open Network) > Provider 설치 참조
     ```
 ## Install Steps(Open Network)
-* Capi설정을 위한 환경변수 및 디렉토리 설정
+* Capi 설치를 위한 환경변수 및 디렉토리 설정
     ```bash
     $ source version.conf
     $ bash 1.setEnv.sh
     ```
 
-* Capi 설정에 필요한 리소스(yaml, binary)다운로드 및 설치
+* Capi 설치에 필요한 리소스(yaml, binary)다운로드 및 설치
     ```bash
     $ bash 2.1.initON.sh
     ```
