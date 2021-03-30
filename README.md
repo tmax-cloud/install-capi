@@ -44,7 +44,7 @@
 
 * Provider 설치
     1. [AWS Provider]
-    * UI를 통해 입력된 AWS Config 값을 아래형식으로 manifest경로 아래 awsConfig.conf로 저장
+    * UI를 통해 입력된 AWS Config 값을 아래형식으로 manifest경로 아래 aws-credential.conf로 저장
         ```bash
         export AWS_REGION={aws_region}
         export AWS_ACCESS_KEY_ID={aws_access_key_id}
@@ -52,8 +52,20 @@
         ```
     * 실행 순서
         ```bash
-        $ source awsConfig.conf
+        $ source aws-credential.conf
         $ source 3.1.setAWS.sh
+        ```
+
+    2. [vSphere Provider]
+    * UI를 통해 입력된 vSphere Config 값을 아래형식으로 manifest경로 아래 vsphere-credential.conf로 저장
+        ```bash
+        export VSPHERE_USERNAME={vsphere_username}
+        export VSPHERE_PASSWORD={vsphere_password}
+        ```
+    * 실행 순서
+        ```bash
+        $ source vsphere-credential.conf
+        $ source 3.1.setVsphere.sh
         ```
 
 ## Uninstall Steps
@@ -61,7 +73,8 @@
     ```bash
     $ for f in *.conf; do source "$f"; done
     $ bash 4.x.delete{Provider}.sh
-    $ bash 5.deleteCapi.sh
-    ## Line2: Provider에 따른 Script File Name은
-    ## Install Steps(Open Network) > Provider 설치 참조
+    $ bash 5.delete.sh
+    ## Provider에 따른 Script File Name List
+    ## AWS      : 4.1.deleteAWS.sh
+    ## vSphere  : 4.2.deleteVsphere.sh
     ```
