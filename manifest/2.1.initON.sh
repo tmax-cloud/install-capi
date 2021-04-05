@@ -1,7 +1,7 @@
 ## Download clusterctl
 curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/${CAPI_VERSION}/clusterctl-linux-amd64 -o clusterctl
 chmod +x clusterctl
-mv clusterctl /usr/local/bin/clusterctl
+sudo mv clusterctl /usr/local/bin/clusterctl
 
 ## Download and provision cert-manager
 curl -L https://github.com/jetstack/cert-manager/releases/download/"$CERT_MANAGER_VERSION"/cert-manager.yaml > yaml/_template/cert-manager-${CERT_MANAGER_VERSION}.yaml

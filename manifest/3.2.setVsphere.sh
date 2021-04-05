@@ -2,7 +2,7 @@
 curl -LO https://github.com/vmware/govmomi/releases/download/${GOVC_VERSION}/govc_linux_amd64.gz
 gzip -d govc_linux_amd64.gz
 chmod +x govc_linux_amd64
-mv govc_linux_amd64 /usr/local/bin/govc
+sudo mv govc_linux_amd64 /usr/local/bin/govc
 
 ## Download yaml
 curl -L https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/releases/download/${VSPHERE_VERSION}/infrastructure-components.yaml > yaml/_template/infrastructure-components-vsphere-template-${VSPHERE_VERSION}.yaml

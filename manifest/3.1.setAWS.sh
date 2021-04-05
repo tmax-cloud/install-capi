@@ -1,7 +1,7 @@
 ## Download clusterawsadm
 curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/${AWS_VERSION}/clusterawsadm-linux-amd64 -o clusterawsadm
 chmod +x clusterawsadm
-mv clusterawsadm /usr/local/bin/clusterawsadm
+sudo mv clusterawsadm /usr/local/bin/clusterawsadm
 
 ## Initialize aws cloudformationstack and credential
 clusterawsadm bootstrap iam create-cloudformation-stack
