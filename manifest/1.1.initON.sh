@@ -1,3 +1,11 @@
+## make yaml dir
+if [ ! -d yaml ]; then
+    mkdir yaml
+    mkdir yaml/_template
+    mkdir yaml/_install
+    mkdir yaml/_catalog
+fi
+
 ## Download clusterctl
 curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/${CAPI_VERSION}/clusterctl-linux-amd64 -o clusterctl
 chmod +x clusterctl

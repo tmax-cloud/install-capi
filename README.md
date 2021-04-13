@@ -21,25 +21,27 @@
     $ bash 0.presetCN.sh
     ```
 * 폐쇄망 설치 스크립트 실행순서
+    *  $HOME/install-capi 디렉토리 생성 후 스크립트 파일들을 옮겨준다
     ```bash
+    ## path 생성 및 설정
+    $ export $FILE_DIR=${file dir}
+    # ${file dir}은 img, yaml 디렉토리의 부모디렉토리로 입력해준다
+    $ mkdir $HOME/install-capi
+    $ cd $HOME/install-capi
+    ## 이 경로로 스크립트를 옮겨준다
     $ source version.conf
-    $ bash 1.setEnv.sh
     $ export REGISTRY={registryIP:PORT}
-    $ bash 2.2.initCN.sh
-    $ bash 3.x.set{Provider}.sh
-    ## Line5: Provider에 따른 Script File Name은
-    ## Install Steps(Open Network) > Provider 설치 참조
+    $ bash 1.2.initCN.sh
+    $ bash 2.x.set{Provider}.sh -c
+    ## Provider에 따른 Script File Name List
+    ## AWS      : 2.1.setAWS.sh
+    ## vSphere  : 2.2.setVsphere.sh
     ```
 ## Install Steps(Open Network)
-* Capi 설치를 위한 환경변수 및 디렉토리 설정
-    ```bash
-    $ source version.conf
-    $ bash 1.setEnv.sh
-    ```
-
 * Capi 설치에 필요한 리소스(yaml, binary)다운로드 및 설치
     ```bash
-    $ bash 2.1.initON.sh
+    $ source version.conf
+    $ bash 1.1.initON.sh
     ```
 
 * Provider 설치
@@ -53,7 +55,7 @@
     * 실행 순서
         ```bash
         $ source aws-credential.conf
-        $ source 3.1.setAWS.sh
+        $ source 2.1.setAWS.sh -o
         ```
 
     2. [vSphere Provider]
@@ -65,15 +67,15 @@
     * 실행 순서
         ```bash
         $ source vsphere-credential.conf
-        $ source 3.1.setVsphere.sh
+        $ source 2.2.setVsphere.sh -o
         ```
 
 ## Uninstall Steps
 * CAPI와 Provider들의 CRD 제거 및 바이너리, yaml등의 리소스 삭제
     ```bash
     $ for f in *.conf; do source "$f"; done
-    $ bash 4.x.delete{Provider}.sh
-    $ bash 5.delete.sh
+    $ bash 3.x.delete{Provider}.sh
+    $ bash 4.delete.sh
     ## Provider에 따른 Script File Name List
     ## AWS      : 4.1.deleteAWS.sh
     ## vSphere  : 4.2.deleteVsphere.sh
