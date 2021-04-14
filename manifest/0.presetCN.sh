@@ -45,7 +45,9 @@ docker save us.gcr.io/k8s-artifacts-prod/cluster-api-aws/cluster-api-aws-control
 ## Download binary files and yaml files
 curl -L https://github.com/jetstack/cert-manager/releases/download/${CERT_MANAGER_VERSION}/cert-manager.yaml > yaml/_template/cert-manager-${CERT_MANAGER_VERSION}.yaml
 curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/${CAPI_VERSION}/clusterctl-linux-amd64 -o bin/clusterctl
+chmod +x bin/clusterctl
 curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/${CAPI_VERSION}/cluster-api-components.yaml > yaml/_template/cluster-api-components-template-${CAPI_VERSION}.yaml
 curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/${AWS_VERSION}/clusterawsadm-linux-amd64 -o bin/clusterawsadm
+chmod +x bin/clusterawsadm
 curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/${AWS_VERSION}/infrastructure-components.yaml > yaml/_template/infrastructure-components-aws-template-${AWS_VERSION}.yaml
 curl -L https://github.com/tmax/install-capi/releases/download/v0.1.0/service-catalog-template-CAPI-aws.yaml > yaml/_catalog/1.service-catalog-template-CAPI-aws.yaml
