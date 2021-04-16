@@ -18,5 +18,5 @@ sed -i 's/${AWS_B64ENCODED_CREDENTIALS}/'${AWS_B64ENCODED_CREDENTIALS}'/g' yaml/
 kubectl apply -f yaml/_install/2.1.infrastructure-components-aws-${AWS_VERSION}.yaml
 
 ## Download and apply catalog
-curl -L https://github.com/tmax/install-capi/releases/download/v0.1.0/service-catalog-template-CAPI-aws.yaml > yaml/_catalog/1.service-catalog-template-CAPI-aws.yaml
+curl -L https://github.com/tmax-cloud/install-capi/releases/download/v0.1.0/service-catalog-template-CAPI-aws.yaml > yaml/_catalog/1.service-catalog-template-CAPI-aws.yaml
 kubectl apply -f yaml/_catalog/1.service-catalog-template-CAPI-aws.yaml
