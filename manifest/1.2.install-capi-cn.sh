@@ -46,4 +46,6 @@ sed -i 's/us.gcr.io\/k8s-artifacts-prod\/cluster-api\/kubeadm-control-plane-cont
 
 ## Provision cert-manager, CAPI
 kubectl apply -f yaml/_install/0.cert-manager-${CERT_MANAGER_VERSION}.yaml
+echo "waiting cert-manager-webhook for 20s..."
+sleep 20s
 kubectl apply -f yaml/_install/1.cluster-api-components-${CAPI_VERSION}.yaml
