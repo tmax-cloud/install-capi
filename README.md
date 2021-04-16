@@ -47,18 +47,6 @@
             $ source aws-credential.conf
             $ source 2.1.2.install-aws-cn.sh
             ```
-
-        2. [vSphere Provider]
-        * UI를 통해 입력된 vSphere Config 값을 아래형식으로 manifest경로 아래 vsphere-credential.conf로 저장
-            ```bash
-            export VSPHERE_USERNAME={vsphere_username}
-            export VSPHERE_PASSWORD={vsphere_password}
-            ```
-        * 실행 순서
-            ```bash
-            $ source vsphere-credential.conf
-            $ source 2.2.2.install-vsphere-cn.sh
-            ```
 ## Install Steps(Open Network)
 * Capi 설치에 필요한 리소스(yaml, binary)다운로드 및 설치
     ```bash
@@ -81,19 +69,6 @@
         $ source aws-credential.conf
         $ source 2.1.1.install-aws-on.sh
         ```
-
-    2. [vSphere Provider]
-    * UI를 통해 입력된 vSphere Config 값을 아래형식으로 manifest경로 아래 vsphere-credential.conf로 저장
-        ```bash
-        export VSPHERE_USERNAME={vsphere_username}
-        export VSPHERE_PASSWORD={vsphere_password}
-        ```
-    * 실행 순서
-        ```bash
-        $ source vsphere-credential.conf
-        $ source 2.2.1.install-vsphere-on.sh
-        ```
-
 ## Uninstall Steps
 * Provider 삭제
     1. [AWS Provider]
@@ -102,14 +77,6 @@
         $ cd manifest
         $ source version.conf
         $ bash 2.1.3.delete-aws.sh
-        ```
-
-    2. [vSphere Provider]
-    * 실행 순서
-        ```bash
-        $ cd manifest
-        $ source version.conf
-        $ bash 2.2.3.delete-vsphere.sh
         ```
 
 * CAPI와 Provider들의 CRD 제거 및 바이너리, yaml등의 리소스 삭제

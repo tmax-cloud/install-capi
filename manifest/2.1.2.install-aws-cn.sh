@@ -1,5 +1,9 @@
 sudo cp bin/clusterawsadm /usr/local/bin/clusterawsadm
 
+sudo docker load < img/cluster-api-aws_cluster-api-aws-controller_$AWS_VERSION.tar
+sudo docker tag us.gcr.io/k8s-artifacts-prod/cluster-api-aws/cluster-api-aws-controller:$AWS_VERSION $REGISTRY/k8s-artifacts-prod/cluster-api-aws/cluster-api-aws-controller:$AWS_VERSION
+sudo docker push $REGISTRY/k8s-artifacts-prod/cluster-api-aws/cluster-api-aws-controller:$AWS_VERSION
+
 ## Initialize aws cloudformationstack and credential
 clusterawsadm bootstrap iam create-cloudformation-stack
 export AWS_B64ENCODED_CREDENTIALS=$(clusterawsadm bootstrap credentials encode-as-profile)
