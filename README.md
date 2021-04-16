@@ -18,6 +18,7 @@
 * 외부 네트워크 환경 스크립트 실행순서
     ```bash
     $ cd manifest
+    $ chmod +x *.sh
     $ source version.conf
     $ bash 0.preset-cn.sh
     ```
@@ -60,6 +61,7 @@
 * Capi 설치에 필요한 리소스(yaml, binary)다운로드 및 설치
     ```bash
     $ cd manifest
+    $ chmod +x *.sh
     $ source version.conf
     $ bash 1.1.install-capi-on.sh
     ```
