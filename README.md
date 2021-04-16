@@ -12,6 +12,8 @@
 ## Prerequisites
 * kubernetes version >= 1.16
 * AWS IAM 정보
+* TemplateServiceBroker
+* CatalogController
 
 ## 폐쇄망 설치 가이드
 * 외부 네트워크 통신이 가능한 환경에서 0.preset-cn.sh를 이용하여 이미지 및 패키지 다운로드 후 2.2.install-capi-cn.sh를 이용하여 폐쇄망에 CAPI 환경 구성
