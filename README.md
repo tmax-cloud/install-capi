@@ -12,11 +12,15 @@
 ## Prerequisites
 * kubernetes version >= 1.16
 * AWS IAM 정보
-* TemplateServiceBroker
-* CatalogController
+* Cert Manager
+    * [임시 설치 가이드](https://github.com/tmax-cloud/install-cert-manager-temp)
+* Template Service Broker
+    * [설치 가이드](https://github.com/tmax-cloud/template-service-broker)
+* Catalog Controller
+    * [설치 가이드](https://github.com/tmax-cloud/install-catalog)
 
 ## 폐쇄망 설치 가이드
-* 외부 네트워크 통신이 가능한 환경에서 0.preset-cn.sh를 이용하여 이미지 및 패키지 다운로드 후 2.2.install-capi-cn.sh를 이용하여 폐쇄망에 CAPI 환경 구성
+* 외부 네트워크 통신이 가능한 환경에서 0.preset-cn.sh를 이용하여 이미지 및 패키지 다운로드 후 1.2.install-capi-cn.sh를 이용하여 폐쇄망에 CAPI 환경 구성
 * 외부 네트워크 환경 스크립트 실행순서
     ```bash
     $ cd manifest
