@@ -32,6 +32,28 @@ sudo docker save us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-control-plane-
 sudo docker pull us.gcr.io/k8s-artifacts-prod/cluster-api-aws/cluster-api-aws-controller:${AWS_VERSION}
 sudo docker save us.gcr.io/k8s-artifacts-prod/cluster-api-aws/cluster-api-aws-controller:${AWS_VERSION} > img/cluster-api-aws_cluster-api-aws-controller_${AWS_VERSION}.tar
 
+## Pull images: 4.control-plane-componenets-vsphere.yaml
+sudo docker pull plndr/kube-vip:${KUBE_VIP_VERSION}
+sudo docker save plndr/kube-vip:${KUBE_VIP_VERSION} > img/kube-vip_${KUBE_VIP_VERSION}.tar
+
+sudo docker pull quay.io/k8scsi/livenessprobe:${LIVE_PROBE_VERSION}
+sudo docker save quay.io/k8scsi/livenessprobe:${LIVE_PROBE_VERSION} > img/livenessprobe_${LIVE_PROBE_VERSION}.tar
+
+sudo docker pull quay.io/k8scsi/csi-attacher:${CSI_ATTACHER_VERSION}
+sudo docker save quay.io/k8scsi/csi-attacher:${CSI_ATTACHER_VERSION} > img/csi-attacher_${CSI_ATTACHER_VERSION}.tar
+
+sudo docker pull quay.io/k8scsi/csi-provisioner:${CSI_PROVISOINER_VERSION}
+sudo docker save quay.io/k8scsi/csi-provisioner:${CSI_PROVISOINER_VERSION} > img/csi-provisioner_${CSI_PROVISIONER_VERSION}.tar
+
+sudo docker pull quay.io/k8scsi/csi-node-driver-registrar:${CSI_REG_VERSION}
+sudo docker save quay.io/k8scsi/csi-node-driver-registrar:${CSI_REG_VERSION} > img/csi-node-driver-registrar_${CSI_REG_VERSION}.tar
+
+sudo docker pull gcr.io/cloud-provider-vsphere/csi/release/driver:${CSI_DRIVER_VERSION}
+sudo docker save gcr.io/cloud-provider-vsphere/csi/release/driver:${CSI_DRIVER_VERSION} > img/csi-driver_${CSI_DRIVER_VERSION}.tar
+
+sudo docker pull gcr.io/cloud-provider-vsphere/csi/release/syncer:${CSI_SYNCER_VERSION}
+sudo docker save gcr.io/cloud-provider-vsphere/csi/release/syncer:${CSI_SYNCER_VERSION} > img/csi-syncer_${CSI_SYNCER_VERSION}.tar
+
 ## Download binary files and yaml files
 curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/${CAPI_VERSION}/clusterctl-linux-amd64 -o bin/clusterctl
 chmod +x bin/clusterctl
@@ -40,3 +62,7 @@ curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/dow
 chmod +x bin/clusterawsadm
 curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/${AWS_VERSION}/infrastructure-components.yaml > yaml/_template/infrastructure-components-aws-template-${AWS_VERSION}.yaml
 curl -L https://github.com/tmax-cloud/install-capi/releases/download/v0.1.0/service-catalog-template-CAPI-aws.yaml > yaml/_catalog/1.service-catalog-template-CAPI-aws.yaml
+
+
+curl -L https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/releases/download/${VSPHERE_VERSION}/infrastructure-components.yaml > yaml/_template/infrastructure-components-vsphere-template-${VSPHERE_VERSION}.yaml
+curl -L https://github.com/tmax-cloud/install-capi/releases/download/v0.1.0/service-catalog-template-CAPI-vsphere.yaml > yaml/_catalog/2.service-catalog-template-CAPI-vsphere.yaml
