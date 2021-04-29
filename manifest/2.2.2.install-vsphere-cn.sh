@@ -1,6 +1,3 @@
-## Set binary
-sudo cp govc /usr/local/bin/govc
-
 ## Register images to registry
 sudo docker load < img/kube-vip_${KUBE_VIP_VERSION}.tar
 sudo docker tag plndr/kube-vip:${KUBE_VIP_VERSION} ${REGISTRY}/kube-vip:${KUBE_VIP_VERSION}
@@ -30,13 +27,17 @@ sudo docker load < img/csi-syncer_${CSI_SYNCER_VERSION}.tar
 sudo docker tag gcr.io/cloud-provider-vsphere/csi/release/syncer:${CSI_SYNCER_VERSION} ${REGISTRY}/cloud-provider-vsphere/csi/release/syncer:${CSI_SYNCER_VERSION}
 sudo docker push ${REGISTRY}/cloud-provider-vsphere/csi/release/syncer:${CSI_SYNCER_VERSION}
 
-## Initialize capi-provider-vsphere settings
-cp yaml/_template/infrastructure-components-vsphere-template-${VSPHERE_VERSION}.yaml yaml/_install/2.2.infrastructure-components-vsphere-${VSPHERE_VERSION}.yaml
-sed -i 's/${VSPHERE_USERNAME}/'${VSPHERE_USERNAME}'/g' yaml/_install/2.2.infrastructure-components-vsphere-${VSPHERE_VERSION}.yaml
-sed -i 's/${VSPHERE_PASSWORD}/'${VSPHERE_PASSWORD}'/g' yaml/_install/2.2.infrastructure-components-vsphere-${VSPHERE_VERSION}.yaml
-
-## Provision vsphere infrastructure
-kubectl apply -f yaml/_install/2.2.infrastructure-components-vsphere-${VSPHERE_VERSION}.yaml
+## Install CAPV infrastructure comopnents
+sed -i 's/${VSPHERE_USERNAME}/'${VSPHERE_USERNAME}'/g' yaml/infrastructure-components-vsphere-${VSPHERE_VERSION}.yaml
+sed -i 's/${VSPHERE_PASSWORD}/'${VSPHERE_PASSWORD}'/g' yaml/infrastructure-components-vsphere-${VSPHERE_VERSION}.yaml
+kubectl apply -f yaml/infrastructure-components-vsphere-${VSPHERE_VERSION}.yaml
 
 ## Download and apply catalog
-kubectl apply -f yaml/_catalog/2.service-catalog-template-CAPI-vsphere.yaml
+#kubectl apply -f yaml/service-catalog-template-CAPI-vsphere.yaml
+
+echo ""
+echo ""
+echo "########################################################################################"
+echo "COMPLETE INSTALLATION!!!!! USE: kubectl get pods -A | grep capv"
+echo ""
+echo ""

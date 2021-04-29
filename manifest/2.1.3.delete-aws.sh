@@ -1,8 +1,7 @@
 ## Delete CAPI-provider-aws infrastructure
-kubectl delete -f yaml/_catalog/1.service-catalog-template-CAPI-aws.yaml
-kubectl delete -f yaml/_install/2.1.infrastructure-components-aws-${AWS_VERSION}.yaml
-clusterawsadm bootstrap iam delete-cloudformation-stack
+kubectl delete -f yaml/service-catalog-template-CAPI-aws.yaml
+kubectl delete -f yaml/infrastructure-components-aws-${AWS_VERSION}.yaml
+#clusterawsadm bootstrap iam delete-cloudformation-stack
 sudo rm -f /usr/local/bin/clusterawsadm \
-    yaml/_catalog/1.service-catalog-template-CAPI-aws.yaml \
-    yaml/_install/2.1.infrastructure-components-aws-${AWS_VERSION}.yaml \
-    yaml/_template/infrastructure-components-aws-template-${AWS_VERSION}.yaml    
+    yaml/service-catalog-template-CAPI-aws.yaml \
+    yaml/infrastructure-components-aws-${AWS_VERSION}.yaml

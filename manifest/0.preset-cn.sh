@@ -5,9 +5,6 @@ fi
 
 if [ ! -d yaml ]; then
    mkdir yaml
-   mkdir yaml/_template
-   mkdir yaml/_install
-   mkdir yaml/_catalog
 fi
 
 if [ ! -d bin ]; then
@@ -55,14 +52,17 @@ sudo docker pull gcr.io/cloud-provider-vsphere/csi/release/syncer:${CSI_SYNCER_V
 sudo docker save gcr.io/cloud-provider-vsphere/csi/release/syncer:${CSI_SYNCER_VERSION} > img/csi-syncer_${CSI_SYNCER_VERSION}.tar
 
 ## Download binary files and yaml files
-curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/${CAPI_VERSION}/clusterctl-linux-amd64 -o bin/clusterctl
+# CAPI
+curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/${CAPI_VERSION}/clusterctl-linux-amd64 > bin/clusterctl
 chmod +x bin/clusterctl
-curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/${CAPI_VERSION}/cluster-api-components.yaml > yaml/_template/cluster-api-components-template-${CAPI_VERSION}.yaml
-curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/${AWS_VERSION}/clusterawsadm-linux-amd64 -o bin/clusterawsadm
+curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/${CAPI_VERSION}/cluster-api-components.yaml > yaml/cluster-api-components-${CAPI_VERSION}.yaml
+
+# CAPA
+curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/${AWS_VERSION}/clusterawsadm-linux-amd64 > bin/clusterawsadm
 chmod +x bin/clusterawsadm
-curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/${AWS_VERSION}/infrastructure-components.yaml > yaml/_template/infrastructure-components-aws-template-${AWS_VERSION}.yaml
-curl -L https://github.com/tmax-cloud/install-capi/releases/download/v0.1.0/service-catalog-template-CAPI-aws.yaml > yaml/_catalog/1.service-catalog-template-CAPI-aws.yaml
+curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/${AWS_VERSION}/infrastructure-components.yaml > yaml/infrastructure-components-aws-${AWS_VERSION}.yaml
+curl -L https://github.com/tmax-cloud/install-capi/releases/download/v0.1.0/service-catalog-template-CAPI-aws.yaml > yaml/service-catalog-template-CAPI-aws.yaml
 
-
-curl -L https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/releases/download/${VSPHERE_VERSION}/infrastructure-components.yaml > yaml/_template/infrastructure-components-vsphere-template-${VSPHERE_VERSION}.yaml
-curl -L https://github.com/tmax-cloud/install-capi/releases/download/v0.1.0/service-catalog-template-CAPI-vsphere.yaml > yaml/_catalog/2.service-catalog-template-CAPI-vsphere.yaml
+# CAPV
+curl -L https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/releases/download/${VSPHERE_VERSION}/infrastructure-components.yaml > yaml/infrastructure-components-vsphere-${VSPHERE_VERSION}.yaml
+#curl -L https://github.com/tmax-cloud/install-capi/releases/download/v0.1.0/service-catalog-template-CAPI-vsphere.yaml > yaml/service-catalog-template-CAPI-vsphere.yaml

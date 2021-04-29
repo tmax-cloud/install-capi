@@ -20,11 +20,17 @@ sudo docker tag us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-control-plane-c
 sudo docker push ${REGISTRY}/k8s-artifacts-prod/cluster-api/kubeadm-control-plane-controller:${CAPI_VERSION}
 
 ## Change image registry
-cp yaml/_template/cluster-api-components-template-${CAPI_VERSION}.yaml yaml/_install/1.cluster-api-components-${CAPI_VERSION}.yaml
-sed -i 's/gcr.io\/kubebuilder\/kube-rbac-proxy:'"${KUBE_RBAC_PROXY_VERSION}"'/'"${REGISTRY}"'\/kubebuilder\/kube-rbac-proxy:'"${KUBE_RBAC_PROXY_VERSION}"'/g' yaml/_install/1.cluster-api-components-${CAPI_VERSION}.yaml
-sed -i 's/us.gcr.io\/k8s-artifacts-prod\/cluster-api\/cluster-api-controller:'"${CAPI_VERSION}"'/'"${REGISTRY}"'\/k8s-artifacts-prod\/cluster-api\/cluster-api-controller:'"${CAPI_VERSION}"'/g' yaml/_install/1.cluster-api-components-${CAPI_VERSION}.yaml
-sed -i 's/us.gcr.io\/k8s-artifacts-prod\/cluster-api\/kubeadm-bootstrap-controller:'"${CAPI_VERSION}"'/'"${REGISTRY}"'\/k8s-artifacts-prod\/cluster-api\/kubeadm-bootstrap-controller:'"${CAPI_VERSION}"'/g' yaml/_install/1.cluster-api-components-${CAPI_VERSION}.yaml
-sed -i 's/us.gcr.io\/k8s-artifacts-prod\/cluster-api\/kubeadm-control-plane-controller:'"${CAPI_VERSION}"'/'"${REGISTRY}"'\/k8s-artifacts-prod\/cluster-api\/kubeadm-control-plane-controller:'"${CAPI_VERSION}"'/g' yaml/_install/1.cluster-api-components-${CAPI_VERSION}.yaml
+sed -i 's/gcr.io\/kubebuilder\/kube-rbac-proxy:'"${KUBE_RBAC_PROXY_VERSION}"'/'"${REGISTRY}"'\/kubebuilder\/kube-rbac-proxy:'"${KUBE_RBAC_PROXY_VERSION}"'/g' yaml/cluster-api-components-${CAPI_VERSION}.yaml
+sed -i 's/us.gcr.io\/k8s-artifacts-prod\/cluster-api\/cluster-api-controller:'"${CAPI_VERSION}"'/'"${REGISTRY}"'\/k8s-artifacts-prod\/cluster-api\/cluster-api-controller:'"${CAPI_VERSION}"'/g' yaml/cluster-api-components-${CAPI_VERSION}.yaml
+sed -i 's/us.gcr.io\/k8s-artifacts-prod\/cluster-api\/kubeadm-bootstrap-controller:'"${CAPI_VERSION}"'/'"${REGISTRY}"'\/k8s-artifacts-prod\/cluster-api\/kubeadm-bootstrap-controller:'"${CAPI_VERSION}"'/g' yaml/cluster-api-components-${CAPI_VERSION}.yaml
+sed -i 's/us.gcr.io\/k8s-artifacts-prod\/cluster-api\/kubeadm-control-plane-controller:'"${CAPI_VERSION}"'/'"${REGISTRY}"'\/k8s-artifacts-prod\/cluster-api\/kubeadm-control-plane-controller:'"${CAPI_VERSION}"'/g' yaml/cluster-api-components-${CAPI_VERSION}.yaml
 
 ## Provision cert-manager, CAPI
-kubectl apply -f yaml/_install/1.cluster-api-components-${CAPI_VERSION}.yaml
+kubectl apply -f yaml/cluster-api-components-${CAPI_VERSION}.yaml
+
+echo ""
+echo ""
+echo "########################################################################################"
+echo "COMPLETE INSTALLATION!!!!! USE: kubectl get pods -A | grep capi"
+echo ""
+echo ""

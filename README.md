@@ -12,6 +12,7 @@
 ## Prerequisites
 * kubernetes version >= 1.16
 * AWS IAM 정보
+* VCSA 정보
 * Cert Manager
     * [임시 설치 가이드](https://github.com/tmax-cloud/install-cert-manager-temp)
 * Template Service Broker
