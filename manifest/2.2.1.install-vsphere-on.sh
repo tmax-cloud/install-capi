@@ -5,8 +5,8 @@ sed -i 's/${VSPHERE_PASSWORD}/'${VSPHERE_PASSWORD}'/g' yaml/infrastructure-compo
 kubectl apply -f yaml/infrastructure-components-vsphere-${VSPHERE_VERSION}.yaml
 
 ## Install service catalog template
-#curl -L  https://github.com/tmax-cloud/install-capi/releases/download/v0.1.0/service-catalog-template-CAPI-vsphere.yaml > yaml/service-catalog-template-CAPI-vsphere.yaml
-#kubectl apply -f yaml/service-catalog-template-CAPI-vsphere.yaml
+curl -L  https://github.com/tmax-cloud/install-capi/releases/download/v0.1.0/service-catalog-template-CAPI-vsphere.yaml > yaml/service-catalog-template-CAPI-vsphere.yaml
+kubectl apply -f yaml/service-catalog-template-CAPI-vsphere.yaml
 
 echo ""
 echo ""

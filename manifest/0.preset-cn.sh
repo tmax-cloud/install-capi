@@ -13,7 +13,10 @@ fi
 
 ## Pull image: kube-rbac-proxy
 sudo docker pull gcr.io/kubebuilder/kube-rbac-proxy:${KUBE_RBAC_PROXY_VERSION}
-sudo docker save gcr.io/kubebuilder/kube-rbac-proxy:${KUBE_RBAC_PROXY_VERSION} > img/kubebuilder_kube-rbac-proxy_${KUBE_RBAC_PROXY_VERSION}.tar 
+sudo docker save gcr.io/kubebuilder/kube-rbac-proxy:${KUBE_RBAC_PROXY_VERSION} > img/kubebuilder_kube-rbac-proxy_${KUBE_RBAC_PROXY_VERSION}.tar
+
+sudo docker pull gcr.io/kubebuilder/kube-rbac-proxy:${VSPHERE_RBAC_PROXY_VERSION}
+sudo docker save gcr.io/kubebuilder/kube-rbac-proxy:${VSPHERE_RBAC_PROXY_VERSION} > img/kubebuilder_kube-rbac-proxy_${VSPHERE_RBAC_PROXY_VERSION}.tar
 
 ## Pull images: 1.cluster-api-components
 sudo docker pull us.gcr.io/k8s-artifacts-prod/cluster-api/cluster-api-controller:${CAPI_VERSION}
@@ -56,6 +59,10 @@ sudo docker save gcr.io/cloud-provider-vsphere/csi/release/syncer:${CSI_SYNCER_V
 curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/${CAPI_VERSION}/clusterctl-linux-amd64 > bin/clusterctl
 chmod +x bin/clusterctl
 curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/${CAPI_VERSION}/cluster-api-components.yaml > yaml/cluster-api-components-${CAPI_VERSION}.yaml
+sed -i 's/${EXP_MACHINE_POOL:=false}/false/g' yaml/cluster-api-components-${CAPI_VERSION}.yaml
+sed -i 's/${EXP_MACHINE_POOL:=true}/true/g' yaml/cluster-api-components-${CAPI_VERSION}.yaml
+sed -i 's/${EXP_CLUSTER_RESOURCE_SET:=false}/false/g' yaml/cluster-api-components-${CAPI_VERSION}.yaml
+sed -i 's/${EXP_CLUSTER_RESOURCE_SET:=true}/true/g' yaml/cluster-api-components-${CAPI_VERSION}.yaml
 
 # CAPA
 curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/${AWS_VERSION}/clusterawsadm-linux-amd64 > bin/clusterawsadm
