@@ -17,6 +17,10 @@ kubectl apply -f yaml/infrastructure-components-aws-${AWS_VERSION}.yaml
 ## Install service catalog template
 kubectl apply -f yaml/service-catalog-template-CAPI-aws-${AWS_VERSION}.yaml
 
+## Check install status
+echo ""
+clusterawsadm version
+
 echo ""
 echo ""
 echo "########################################################################################"
