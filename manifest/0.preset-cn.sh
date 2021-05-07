@@ -67,9 +67,7 @@ sed -i 's/${EXP_CLUSTER_RESOURCE_SET:=true}/true/g' yaml/cluster-api-components-
 # CAPA
 curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/${AWS_VERSION}/clusterawsadm-linux-amd64 > bin/clusterawsadm
 chmod +x bin/clusterawsadm
-curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/download/${AWS_VERSION}/infrastructure-components.yaml > yaml/infrastructure-components-aws-${AWS_VERSION}.yaml
 curl -L https://github.com/tmax-cloud/install-capi/releases/download/v0.1.0/service-catalog-template-CAPI-aws.yaml > yaml/service-catalog-template-CAPI-aws.yaml
 
 # CAPV
 curl -L https://github.com/kubernetes-sigs/cluster-api-provider-vsphere/releases/download/${VSPHERE_VERSION}/infrastructure-components.yaml > yaml/infrastructure-components-vsphere-${VSPHERE_VERSION}.yaml
-#curl -L https://github.com/tmax-cloud/install-capi/releases/download/v0.1.0/service-catalog-template-CAPI-vsphere.yaml > yaml/service-catalog-template-CAPI-vsphere.yaml

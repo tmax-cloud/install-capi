@@ -13,10 +13,6 @@ curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/dow
 sed -i 's/${AWS_B64ENCODED_CREDENTIALS}/'"${AWS_B64ENCODED_CREDENTIALS}"'/g' yaml/infrastructure-components-aws-${AWS_VERSION}.yaml
 kubectl apply -f yaml/infrastructure-components-aws-${AWS_VERSION}.yaml
 
-## Install service catalog template
-curl -L https://github.com/tmax-cloud/install-capi/releases/download/v0.1.0/service-catalog-template-CAPI-aws.yaml > yaml/service-catalog-template-CAPI-aws.yaml
-kubectl apply -f yaml/service-catalog-template-CAPI-aws.yaml
-
 echo ""
 echo ""
 echo "########################################################################################"

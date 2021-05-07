@@ -1,0 +1,948 @@
+apiVersion: tmax.io/v1
+imageUrl: https://blogs.vmware.com/vsphere/files/2021/02/VMware-vSphere-Blog-Images-vSphere.jpg
+kind: ClusterTemplate
+metadata:
+  name: capi-vsphere-template
+objectKinds:
+- Cluster
+- VSphereCluster
+- VSphereMachineTemplate
+- KubeadmControlPlane
+objects:
+- apiVersion: cluster.x-k8s.io/v1alpha3
+  kind: Cluster
+  metadata:
+    labels:
+      cluster.x-k8s.io/cluster-name: '${ClusterName}'
+    annotations:
+      federation: join
+      owner: ${Owner}
+    name: '${ClusterName}'
+    namespace: '${TargetNamespace}'
+  spec:
+    clusterNetwork:
+      pods:
+        cidrBlocks:
+        - ${CidrBlock}
+    controlPlaneRef:
+      apiVersion: controlplane.cluster.x-k8s.io/v1alpha3
+      kind: KubeadmControlPlane
+      name: '${ClusterName}'
+    infrastructureRef:
+      apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+      kind: VSphereCluster
+      name: '${ClusterName}'
+- apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+  kind: VSphereCluster
+  metadata:
+    name: '${ClusterName}'
+    namespace: '${TargetNamespace}'
+  spec:
+    cloudProviderConfiguration:
+      global:
+        secretName: cloud-provider-vsphere-credentials
+        secretNamespace: kube-system
+        thumbprint: ${VsphereThumbprint}
+      network:
+        name: '${VsphereNetwork}'
+      providerConfig:
+        cloud:
+          controllerImage: gcr.io/cloud-provider-vsphere/cpi/release/manager:v1.18.1
+      virtualCenter:
+        ${VsphereServer}:
+          datacenters: '${VsphereDataCenter}'
+          thumbprint: ${VsphereThumbprint}
+      workspace:
+        datacenter: '${VsphereDataCenter}'
+        datastore: '${VsphereDataStore}'
+        folder: '${VsphereFolder}'
+        resourcePool: '${VsphereResourcePool}'
+        server: '${VsphereServer}'
+    controlPlaneEndpoint:
+      host: ${VsphereControlPlane}
+      port: 6443
+    server: '${VsphereServer}'
+    thumbprint: ${VsphereThumbprint}
+- apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+  kind: VSphereMachineTemplate
+  metadata:
+    name: '${ClusterName}'
+    namespace: '${TargetNamespace}'
+  spec:
+    template:
+      spec:
+        cloneMode: linkedClone
+        datacenter: '${VsphereDataCenter}'
+        datastore: '${VsphereDataStore}'
+        diskGiB: 25
+        folder: '${VsphereFolder}'
+        memoryMiB: 8192
+        network:
+          devices:
+          - dhcp4: true
+            networkName: '${VsphereNetwork}'
+        numCPUs: 2
+        resourcePool: '${VsphereResourcePool}'
+        server: '${VsphereServer}'
+        template: ubuntu-1804-kube-v1.17.3
+        thumbprint: ${VsphereThumbprint}
+- apiVersion: controlplane.cluster.x-k8s.io/v1alpha3
+  kind: KubeadmControlPlane
+  metadata:
+    name: '${ClusterName}'
+    namespace: '${TargetNamespace}'
+  spec:
+    infrastructureTemplate:
+      apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+      kind: VSphereMachineTemplate
+      name: '${ClusterName}'
+    kubeadmConfigSpec:
+      clusterConfiguration:
+        apiServer:
+          extraArgs:
+            audit-webhook-mode: batch
+            cloud-provider: external
+            oidc-ca-file: /etc/kubernetes/pki/Wildcard.tmaxcloud.com.crt
+            oidc-client-id: hypercloud5
+            oidc-groups-claim: group
+            oidc-issuer-url: https://testauth.tmaxcloud.com/auth/realms/tmax
+            oidc-username-claim: preferred_username
+            oidc-username-prefix: '-'
+        controllerManager:
+          extraArgs:
+            cloud-provider: external
+      files:
+      - content: |
+          apiVersion: v1
+          kind: Pod
+          metadata:
+            creationTimestamp: null
+            name: kube-vip
+            namespace: kube-system
+          spec:
+            containers:
+            - args:
+              - start
+              env:
+              - name: vip_arp
+                value: "true"
+              - name: vip_leaderelection
+                value: "true"
+              - name: vip_address
+                value: ${VsphereControlPlane}
+              - name: vip_interface
+                value: eth0
+              - name: vip_leaseduration
+                value: "15"
+              - name: vip_renewdeadline
+                value: "10"
+              - name: vip_retryperiod
+                value: "2"
+              image: plndr/kube-vip:0.3.2
+              imagePullPolicy: IfNotPresent
+              name: kube-vip
+              resources: {}
+              securityContext:
+                capabilities:
+                  add:
+                  - NET_ADMIN
+                  - SYS_TIME
+              volumeMounts:
+              - mountPath: /etc/kubernetes/admin.conf
+                name: kubeconfig
+            hostNetwork: true
+            volumes:
+            - hostPath:
+                path: /etc/kubernetes/admin.conf
+                type: FileOrCreate
+              name: kubeconfig
+          status: {}
+        owner: root:root
+        path: /etc/kubernetes/manifests/kube-vip.yaml
+      - content: |
+          -----BEGIN CERTIFICATE-----
+          MIIGrTCCBZWgAwIBAgIMZcNzJZntN7/urXLQMA0GCSqGSIb3DQEBCwUAMFAxCzAJ
+          BgNVBAYTAkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMSYwJAYDVQQDEx1H
+          bG9iYWxTaWduIFJTQSBPViBTU0wgQ0EgMjAxODAeFw0yMDA0MDcwOTI4NDBaFw0y
+          MjA0MDgwOTI4NDBaMIGAMQswCQYDVQQGEwJLUjEUMBIGA1UECBMLR3llb25nZ2kt
+          ZG8xFDASBgNVBAcTC1Nlb25nbmFtLXNpMREwDwYDVQQLEwhEZXYgVGVhbTEYMBYG
+          A1UECgwPVG1heEEmQyBDby4sTHRkMRgwFgYDVQQDDA8qLnRtYXhjbG91ZC5jb20w
+          ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCaXLC6vbhfFOSHhs7iogek
+          lPu3amqGSvGTIxlfKJLy+2Uivl7sGPeIqaq3Ftv/e1aoPDdah+8ijsGY10raVDeC
+          PjjSTxMkx/pNcHdsSGs6eJXgo9heb3avY7d90thg3avLxnYWCNPa/zHXFBDBd+42
+          FbEsBT7KCoUC9TTnsDuXDPwpok1cBvrGHPYgCZN+9nE0G4qsNoJKWbAcYFUsaaTJ
+          +AL3sb+oinZLfmK5cqoXxQ+UfHY3AR8nCNQfqWE6xKJfRdkxkDH7hvGBAHCF9MrW
+          QE6ql8L3A8liAK68w3qRWNe8I297Z9/gNZ2gqr6KpzRW+l+nTtZHyI3dS75+ILLb
+          AgMBAAGjggNUMIIDUDAOBgNVHQ8BAf8EBAMCBaAwgY4GCCsGAQUFBwEBBIGBMH8w
+          RAYIKwYBBQUHMAKGOGh0dHA6Ly9zZWN1cmUuZ2xvYmFsc2lnbi5jb20vY2FjZXJ0
+          L2dzcnNhb3Zzc2xjYTIwMTguY3J0MDcGCCsGAQUFBzABhitodHRwOi8vb2NzcC5n
+          bG9iYWxzaWduLmNvbS9nc3JzYW92c3NsY2EyMDE4MFYGA1UdIARPME0wQQYJKwYB
+          BAGgMgEUMDQwMgYIKwYBBQUHAgEWJmh0dHBzOi8vd3d3Lmdsb2JhbHNpZ24uY29t
+          L3JlcG9zaXRvcnkvMAgGBmeBDAECAjAJBgNVHRMEAjAAMD8GA1UdHwQ4MDYwNKAy
+          oDCGLmh0dHA6Ly9jcmwuZ2xvYmFsc2lnbi5jb20vZ3Nyc2FvdnNzbGNhMjAxOC5j
+          cmwwKQYDVR0RBCIwIIIPKi50bWF4Y2xvdWQuY29tgg10bWF4Y2xvdWQuY29tMB0G
+          A1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAfBgNVHSMEGDAWgBT473/yzXhn
+          qN5vjySNiPGHAwKz6zAdBgNVHQ4EFgQU0ZIgfOzXTd89rvWOcle7fYtC9N0wggF9
+          BgorBgEEAdZ5AgQCBIIBbQSCAWkBZwB2AKS5CZC0GFgUh7sTosxncAo8NZgE+Rvf
+          uON3zQ7IDdwQAAABcVP4b/EAAAQDAEcwRQIhALLrgdH55Fg0SvN6Pyx0XSq8C4c/
+          +maEfywidHZnrL5TAiBnvwtiIKkdGAn10m2FatfvuSddsj92x0Z8WYFMwHsNPAB1
+          ACJFRQdZVSRWlj+hL/H3bYbgIyZjrcBLf13Gg1xu4g8CAAABcVP4cAIAAAQDAEYw
+          RAIgcU7BF4MZyibvGYXLEL9L4Ln1Hjje8TTdUHVH9+UclI0CID5IowXuaP+FJ1c5
+          DYoOAHOLuJ17lfIbGmjxXteBHtZuAHYAUaOw9f0BeZxWbbg3eI8MpHrMGyfL956I
+          QpoN/tSLBeUAAAFxU/hwHQAABAMARzBFAiEA/cx0/JeWvYvAw/7TT7qdlVD+3JC+
+          vaW4owy/OifxmYcCIF+L31Qe3sabFfuoChFg7qZHaRxJ04neOYM1MbVXfcCAMA0G
+          CSqGSIb3DQEBCwUAA4IBAQADfPt7ztnXnM7TlkzEyjXmaNUhDSdmJ4i5q+bQve90
+          r5zKteyL+P6vxlYSgl2UNmjh7ivhaOak1h223jdEJ0U2C0b/bIUWNGXUP6fMlrql
+          +aCK1VcOmThEht4fyHvfCVvfvIWfvYfkIJAeMN5vZ//zM8zkpYOVXnXdhuUou62h
+          VChqyno5n66Y1xzKSIPhvUApindCYiyi0LPmP0gPoGXbq1E8qotvLypKN4hFlw4O
+          R/mE+0yh2X/G8zkuTtBiNINDJyWrQ5PxpC9gNo09g9lHZIiX81KtZyn7A7Bl5Ffl
+          elrKjiFsoKsL/6obVCSEaKcNL86ickvrhDBN+iUOcSjG
+          -----END CERTIFICATE-----
+          -----BEGIN CERTIFICATE-----
+          MIIDdTCCAl2gAwIBAgILBAAAAAABFUtaw5QwDQYJKoZIhvcNAQEFBQAwVzELMAkG
+          A1UEBhMCQkUxGTAXBgNVBAoTEEdsb2JhbFNpZ24gbnYtc2ExEDAOBgNVBAsTB1Jv
+          b3QgQ0ExGzAZBgNVBAMTEkdsb2JhbFNpZ24gUm9vdCBDQTAeFw05ODA5MDExMjAw
+          MDBaFw0yODAxMjgxMjAwMDBaMFcxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBHbG9i
+          YWxTaWduIG52LXNhMRAwDgYDVQQLEwdSb290IENBMRswGQYDVQQDExJHbG9iYWxT
+          aWduIFJvb3QgQ0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDaDuaZ
+          jc6j40+Kfvvxi4Mla+pIH/EqsLmVEQS98GPR4mdmzxzdzxtIK+6NiY6arymAZavp
+          xy0Sy6scTHAHoT0KMM0VjU/43dSMUBUc71DuxC73/OlS8pF94G3VNTCOXkNz8kHp
+          1Wrjsok6Vjk4bwY8iGlbKk3Fp1S4bInMm/k8yuX9ifUSPJJ4ltbcdG6TRGHRjcdG
+          snUOhugZitVtbNV4FpWi6cgKOOvyJBNPc1STE4U6G7weNLWLBYy5d4ux2x8gkasJ
+          U26Qzns3dLlwR5EiUWMWea6xrkEmCMgZK9FGqkjWZCrXgzT/LCrBbBlDSgeF59N8
+          9iFo7+ryUp9/k5DPAgMBAAGjQjBAMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMBAf8E
+          BTADAQH/MB0GA1UdDgQWBBRge2YaRQ2XyolQL30EzTSo//z9SzANBgkqhkiG9w0B
+          AQUFAAOCAQEA1nPnfE920I2/7LqivjTFKDK1fPxsnCwrvQmeU79rXqoRSLblCKOz
+          yj1hTdNGCbM+w6DjY1Ub8rrvrTnhQ7k4o+YviiY776BQVvnGCv04zcQLcFGUl5gE
+          38NflNUVyRRBnMRddWQVDf9VMOyGj/8N7yy5Y0b2qvzfvGn9LhJIZJrglfCm7ymP
+          AbEVtQwdpf5pLGkkeB6zpxxxYu7KyJesF12KwvhHhm4qxFYxldBniYUr+WymXUad
+          DKqC5JlR3XC321Y9YeRq4VzW9v493kHMB65jUr9TU/Qr6cf9tveCX4XSQRjbgbME
+          HMUfpIBvFSDJ3gyICh3WZlXi/EjJKSZp4A==
+          -----END CERTIFICATE-----
+          -----BEGIN CERTIFICATE-----
+          MIIETjCCAzagAwIBAgINAe5fIh38YjvUMzqFVzANBgkqhkiG9w0BAQsFADBMMSAw
+          HgYDVQQLExdHbG9iYWxTaWduIFJvb3QgQ0EgLSBSMzETMBEGA1UEChMKR2xvYmFs
+          U2lnbjETMBEGA1UEAxMKR2xvYmFsU2lnbjAeFw0xODExMjEwMDAwMDBaFw0yODEx
+          MjEwMDAwMDBaMFAxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52
+          LXNhMSYwJAYDVQQDEx1HbG9iYWxTaWduIFJTQSBPViBTU0wgQ0EgMjAxODCCASIw
+          DQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKdaydUMGCEAI9WXD+uu3Vxoa2uP
+          UGATeoHLl+6OimGUSyZ59gSnKvuk2la77qCk8HuKf1UfR5NhDW5xUTolJAgvjOH3
+          idaSz6+zpz8w7bXfIa7+9UQX/dhj2S/TgVprX9NHsKzyqzskeU8fxy7quRU6fBhM
+          abO1IFkJXinDY+YuRluqlJBJDrnw9UqhCS98NE3QvADFBlV5Bs6i0BDxSEPouVq1
+          lVW9MdIbPYa+oewNEtssmSStR8JvA+Z6cLVwzM0nLKWMjsIYPJLJLnNvBhBWk0Cq
+          o8VS++XFBdZpaFwGue5RieGKDkFNm5KQConpFmvv73W+eka440eKHRwup08CAwEA
+          AaOCASkwggElMA4GA1UdDwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0G
+          A1UdDgQWBBT473/yzXhnqN5vjySNiPGHAwKz6zAfBgNVHSMEGDAWgBSP8Et/qC5F
+          JK5NUPpjmove4t0bvDA+BggrBgEFBQcBAQQyMDAwLgYIKwYBBQUHMAGGImh0dHA6
+          Ly9vY3NwMi5nbG9iYWxzaWduLmNvbS9yb290cjMwNgYDVR0fBC8wLTAroCmgJ4Yl
+          aHR0cDovL2NybC5nbG9iYWxzaWduLmNvbS9yb290LXIzLmNybDBHBgNVHSAEQDA+
+          MDwGBFUdIAAwNDAyBggrBgEFBQcCARYmaHR0cHM6Ly93d3cuZ2xvYmFsc2lnbi5j
+          b20vcmVwb3NpdG9yeS8wDQYJKoZIhvcNAQELBQADggEBAJmQyC1fQorUC2bbmANz
+          EdSIhlIoU4r7rd/9c446ZwTbw1MUcBQJfMPg+NccmBqixD7b6QDjynCy8SIwIVbb
+          0615XoFYC20UgDX1b10d65pHBf9ZjQCxQNqQmJYaumxtf4z1s4DfjGRzNpZ5eWl0
+          6r/4ngGPoJVpjemEuunl1Ig423g7mNA2eymw0lIYkN5SQwCuaifIFJ6GlazhgDEw
+          fpolu4usBCOmmQDo8dIm7A9+O4orkjgTHY+GzYZSR+Y0fFukAj6KYXwidlNalFMz
+          hriSqHKvoflShx8xpfywgVcvzfTO3PYkz6fiNJBonf6q8amaEsybwMbDqKWwIX7e
+          SPY=
+          -----END CERTIFICATE-----
+          -----BEGIN CERTIFICATE-----
+          MIIETjCCAzagAwIBAgINAe5fFp3/lzUrZGXWajANBgkqhkiG9w0BAQsFADBXMQsw
+          CQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEQMA4GA1UECxMH
+          Um9vdCBDQTEbMBkGA1UEAxMSR2xvYmFsU2lnbiBSb290IENBMB4XDTE4MDkxOTAw
+          MDAwMFoXDTI4MDEyODEyMDAwMFowTDEgMB4GA1UECxMXR2xvYmFsU2lnbiBSb290
+          IENBIC0gUjMxEzARBgNVBAoTCkdsb2JhbFNpZ24xEzARBgNVBAMTCkdsb2JhbFNp
+          Z24wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDMJXaQeQZ4Ihb1wIO2
+          hMoonv0FdhHFrYhy/EYCQ8eyip0EXyTLLkvhYIJG4VKrDIFHcGzdZNHr9SyjD4I9
+          DCuul9e2FIYQebs7E4B3jAjhSdJqYi8fXvqWaN+JJ5U4nwbXPsnLJlkNc96wyOkm
+          DoMVxu9bi9IEYMpJpij2aTv2y8gokeWdimFXN6x0FNx04Druci8unPvQu7/1PQDh
+          BjPogiuuU6Y6FnOM3UEOIDrAtKeh6bJPkC4yYOlXy7kEkmho5TgmYHWyn3f/kRTv
+          riBJ/K1AFUjRAjFhGV64l++td7dkmnq/X8ET75ti+w1s4FRpFqkD2m7pg5NxdsZp
+          hYIXAgMBAAGjggEiMIIBHjAOBgNVHQ8BAf8EBAMCAQYwDwYDVR0TAQH/BAUwAwEB
+          /zAdBgNVHQ4EFgQUj/BLf6guRSSuTVD6Y5qL3uLdG7wwHwYDVR0jBBgwFoAUYHtm
+          GkUNl8qJUC99BM00qP/8/UswPQYIKwYBBQUHAQEEMTAvMC0GCCsGAQUFBzABhiFo
+          dHRwOi8vb2NzcC5nbG9iYWxzaWduLmNvbS9yb290cjEwMwYDVR0fBCwwKjAooCag
+          JIYiaHR0cDovL2NybC5nbG9iYWxzaWduLmNvbS9yb290LmNybDBHBgNVHSAEQDA+
+          MDwGBFUdIAAwNDAyBggrBgEFBQcCARYmaHR0cHM6Ly93d3cuZ2xvYmFsc2lnbi5j
+          b20vcmVwb3NpdG9yeS8wDQYJKoZIhvcNAQELBQADggEBACNw6c/ivvVZrpRCb8RD
+          M6rNPzq5ZBfyYgZLSPFAiAYXof6r0V88xjPy847dHx0+zBpgmYILrMf8fpqHKqV9
+          D6ZX7qw7aoXW3r1AY/itpsiIsBL89kHfDwmXHjjqU5++BfQ+6tOfUBJ2vgmLwgtI
+          fR4uUfaNU9OrH0Abio7tfftPeVZwXwzTjhuzp3ANNyuXlava4BJrHEDOxcd+7cJi
+          WOx37XMiwor1hkOIreoTbv3Y/kIvuX1erRjvlJDKPSerJpSZdcfL03v3ykzTr1Eh
+          kluEfSufFT90y1HonoMOFm8b50bOI7355KKL0jlrqnkckSziYSQtjipIcJDEHsXo
+          4HA=
+          -----END CERTIFICATE-----
+        owner: root:root
+        path: /etc/kubernetes/pki/Wildcard.tmaxcloud.com.crt
+        permissions: "0644"
+      initConfiguration:
+        nodeRegistration:
+          criSocket: /var/run/containerd/containerd.sock
+          kubeletExtraArgs:
+            cloud-provider: external
+          name: '{{ ds.meta_data.hostname }}'
+      joinConfiguration:
+        nodeRegistration:
+          criSocket: /var/run/containerd/containerd.sock
+          kubeletExtraArgs:
+            cloud-provider: external
+          name: '{{ ds.meta_data.hostname }}'
+      preKubeadmCommands:
+      - hostname "{{ ds.meta_data.hostname }}"
+      - echo "::1         ipv6-localhost ipv6-loopback" >/etc/hosts
+      - echo "127.0.0.1   localhost" >>/etc/hosts
+      - echo "127.0.0.1   {{ ds.meta_data.hostname }}" >>/etc/hosts
+      - echo "{{ ds.meta_data.hostname }}" >/etc/hostname
+      postKubeadmCommands:
+      - mkdir -p $HOME/.kube
+      - cp /etc/kubernetes/admin.conf $HOME/.kube/config
+      - chown $UESR:$USER $HOME/.kube/config
+      - kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+      - kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.41.0/deploy/static/provider/aws/deploy.yaml
+      useExperimentalRetryJoin: true
+      users:
+      - name: capv
+        sshAuthorizedKeys:
+        - ''
+        sudo: ALL=(ALL) NOPASSWD:ALL
+    replicas: ${MasterNum}
+    version: '${KubernetesVersion}'
+- apiVersion: bootstrap.cluster.x-k8s.io/v1alpha3
+  kind: KubeadmConfigTemplate
+  metadata:
+    name: '${ClusterName}-md-0'
+    namespace: '${TargetNamespace}'
+  spec:
+    template:
+      spec:
+        joinConfiguration:
+          nodeRegistration:
+            criSocket: /var/run/containerd/containerd.sock
+            kubeletExtraArgs:
+              cloud-provider: external
+            name: '{{ ds.meta_data.hostname }}'
+        preKubeadmCommands:
+        - hostname "{{ ds.meta_data.hostname }}"
+        - echo "::1         ipv6-localhost ipv6-loopback" >/etc/hosts
+        - echo "127.0.0.1   localhost" >>/etc/hosts
+        - echo "127.0.0.1   {{ ds.meta_data.hostname }}" >>/etc/hosts
+        - echo "{{ ds.meta_data.hostname }}" >/etc/hostname
+        users:
+        - name: capv
+          sshAuthorizedKeys:
+          - ''
+          sudo: ALL=(ALL) NOPASSWD:ALL
+- apiVersion: cluster.x-k8s.io/v1alpha3
+  kind: MachineDeployment
+  metadata:
+    labels:
+      cluster.x-k8s.io/cluster-name: '${ClusterName}'
+    name: '${ClusterName}-md-0'
+    namespace: '${TargetNamespace}'
+  spec:
+    clusterName: '${ClusterName}'
+    replicas: ${WorkerNum}
+    selector:
+      matchLabels: {}
+    template:
+      metadata:
+        labels:
+          cluster.x-k8s.io/cluster-name: '${ClusterName}'
+      spec:
+        bootstrap:
+          configRef:
+            apiVersion: bootstrap.cluster.x-k8s.io/v1alpha3
+            kind: KubeadmConfigTemplate
+            name: '${ClusterName}-md-0'
+        clusterName: '${ClusterName}'
+        infrastructureRef:
+          apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
+          kind: VSphereMachineTemplate
+          name: '${ClusterName}'
+        version: '${KubernetesVersion}'
+- apiVersion: addons.cluster.x-k8s.io/v1alpha3
+  kind: ClusterResourceSet
+  metadata:
+    labels:
+      cluster.x-k8s.io/cluster-name: '${ClusterName}'
+    name: ${ClusterName}-crs-0
+    namespace: '${TargetNamespace}'
+  spec:
+    clusterSelector:
+      matchLabels:
+        cluster.x-k8s.io/cluster-name: '${ClusterName}'
+    resources:
+    - kind: Secret
+      name: vsphere-csi-controller
+    - kind: ConfigMap
+      name: vsphere-csi-controller-role
+    - kind: ConfigMap
+      name: vsphere-csi-controller-binding
+    - kind: Secret
+      name: csi-vsphere-config
+    - kind: ConfigMap
+      name: csi.vsphere.vmware.com
+    - kind: ConfigMap
+      name: vsphere-csi-node
+    - kind: ConfigMap
+      name: vsphere-csi-controller
+- apiVersion: v1
+  kind: Secret
+  metadata:
+    name: vsphere-csi-controller
+    namespace: '${TargetNamespace}'
+  stringData:
+    data: |
+      apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: vsphere-csi-controller
+        namespace: kube-system
+  type: addons.cluster.x-k8s.io/resource-set
+- apiVersion: v1
+  data:
+    data: |
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRole
+      metadata:
+        name: vsphere-csi-controller-role
+      rules:
+      - apiGroups:
+        - storage.k8s.io
+        resources:
+        - csidrivers
+        verbs:
+        - create
+        - delete
+      - apiGroups:
+        - ""
+        resources:
+        - nodes
+        - pods
+        - secrets
+        - configmaps
+        verbs:
+        - get
+        - list
+        - watch
+      - apiGroups:
+        - ""
+        resources:
+        - persistentvolumes
+        verbs:
+        - get
+        - list
+        - watch
+        - update
+        - create
+        - delete
+        - patch
+      - apiGroups:
+        - storage.k8s.io
+        resources:
+        - volumeattachments
+        verbs:
+        - get
+        - list
+        - watch
+        - update
+        - patch
+      - apiGroups:
+        - storage.k8s.io
+        resources:
+        - volumeattachments/status
+        verbs:
+        - patch
+      - apiGroups:
+        - ""
+        resources:
+        - persistentvolumeclaims
+        verbs:
+        - get
+        - list
+        - watch
+        - update
+      - apiGroups:
+        - storage.k8s.io
+        resources:
+        - storageclasses
+        - csinodes
+        verbs:
+        - get
+        - list
+        - watch
+      - apiGroups:
+        - ""
+        resources:
+        - events
+        verbs:
+        - list
+        - watch
+        - create
+        - update
+        - patch
+      - apiGroups:
+        - coordination.k8s.io
+        resources:
+        - leases
+        verbs:
+        - get
+        - watch
+        - list
+        - delete
+        - update
+        - create
+      - apiGroups:
+        - snapshot.storage.k8s.io
+        resources:
+        - volumesnapshots
+        verbs:
+        - get
+        - list
+      - apiGroups:
+        - snapshot.storage.k8s.io
+        resources:
+        - volumesnapshotcontents
+        verbs:
+        - get
+        - list
+  kind: ConfigMap
+  metadata:
+    name: vsphere-csi-controller-role
+    namespace: '${TargetNamespace}'
+- apiVersion: v1
+  data:
+    data: |
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRoleBinding
+      metadata:
+        name: vsphere-csi-controller-binding
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: vsphere-csi-controller-role
+      subjects:
+      - kind: ServiceAccount
+        name: vsphere-csi-controller
+        namespace: kube-system
+  kind: ConfigMap
+  metadata:
+    name: vsphere-csi-controller-binding
+    namespace: '${TargetNamespace}'
+- apiVersion: v1
+  kind: Secret
+  metadata:
+    name: csi-vsphere-config
+    namespace: '${TargetNamespace}'
+  stringData:
+    data: |
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: csi-vsphere-config
+        namespace: kube-system
+      stringData:
+        csi-vsphere.conf: |+
+          [Global]
+          cluster-id = "${TargetNamespace}/${ClusterName}"
+
+          [VirtualCenter "${VsphereServer}"]
+          insecure-flag = "true"
+          user = "${VsphereUserName}"
+          password = "${VsphereUserPassword}"
+          datacenters = "${VsphereDataCenter}"
+
+          [Network]
+          public-network = "${VsphereNetwork}"
+
+      type: Opaque
+  type: addons.cluster.x-k8s.io/resource-set
+- apiVersion: v1
+  data:
+    data: |
+      apiVersion: storage.k8s.io/v1
+      kind: CSIDriver
+      metadata:
+        name: csi.vsphere.vmware.com
+      spec:
+        attachRequired: true
+  kind: ConfigMap
+  metadata:
+    name: csi.vsphere.vmware.com
+    namespace: '${TargetNamespace}'
+- apiVersion: v1
+  data:
+    data: |
+      apiVersion: apps/v1
+      kind: DaemonSet
+      metadata:
+        name: vsphere-csi-node
+        namespace: kube-system
+      spec:
+        selector:
+          matchLabels:
+            app: vsphere-csi-node
+        template:
+          metadata:
+            labels:
+              app: vsphere-csi-node
+              role: vsphere-csi
+          spec:
+            containers:
+            - args:
+              - --v=5
+              - --csi-address=$(ADDRESS)
+              - --kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)
+              env:
+              - name: ADDRESS
+                value: /csi/csi.sock
+              - name: DRIVER_REG_SOCK_PATH
+                value: /var/lib/kubelet/plugins/csi.vsphere.vmware.com/csi.sock
+              image: quay.io/k8scsi/csi-node-driver-registrar:v2.0.1
+              lifecycle:
+                preStop:
+                  exec:
+                    command:
+                    - /bin/sh
+                    - -c
+                    - rm -rf /registration/csi.vsphere.vmware.com-reg.sock /csi/csi.sock
+              name: node-driver-registrar
+              resources: {}
+              securityContext:
+                privileged: true
+              volumeMounts:
+              - mountPath: /csi
+                name: plugin-dir
+              - mountPath: /registration
+                name: registration-dir
+            - env:
+              - name: CSI_ENDPOINT
+                value: unix:///csi/csi.sock
+              - name: X_CSI_MODE
+                value: node
+              - name: X_CSI_SPEC_REQ_VALIDATION
+                value: "false"
+              - name: VSPHERE_CSI_CONFIG
+                value: /etc/cloud/csi-vsphere.conf
+              - name: LOGGER_LEVEL
+                value: PRODUCTION
+              - name: X_CSI_LOG_LEVEL
+                value: INFO
+              - name: NODE_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: spec.nodeName
+              image: gcr.io/cloud-provider-vsphere/csi/release/driver:v2.1.0
+              livenessProbe:
+                failureThreshold: 3
+                httpGet:
+                  path: /healthz
+                  port: healthz
+                initialDelaySeconds: 10
+                periodSeconds: 5
+                timeoutSeconds: 3
+              name: vsphere-csi-node
+              ports:
+              - containerPort: 9808
+                name: healthz
+                protocol: TCP
+              resources: {}
+              securityContext:
+                allowPrivilegeEscalation: true
+                capabilities:
+                  add:
+                  - SYS_ADMIN
+                privileged: true
+              volumeMounts:
+              - mountPath: /etc/cloud
+                name: vsphere-config-volume
+              - mountPath: /csi
+                name: plugin-dir
+              - mountPath: /var/lib/kubelet
+                mountPropagation: Bidirectional
+                name: pods-mount-dir
+              - mountPath: /dev
+                name: device-dir
+            - args:
+              - --csi-address=/csi/csi.sock
+              image: quay.io/k8scsi/livenessprobe:v2.1.0
+              name: liveness-probe
+              resources: {}
+              volumeMounts:
+              - mountPath: /csi
+                name: plugin-dir
+            dnsPolicy: Default
+            tolerations:
+            - effect: NoSchedule
+              operator: Exists
+            - effect: NoExecute
+              operator: Exists
+            volumes:
+            - name: vsphere-config-volume
+              secret:
+                secretName: csi-vsphere-config
+            - hostPath:
+                path: /var/lib/kubelet/plugins_registry
+                type: Directory
+              name: registration-dir
+            - hostPath:
+                path: /var/lib/kubelet/plugins/csi.vsphere.vmware.com/
+                type: DirectoryOrCreate
+              name: plugin-dir
+            - hostPath:
+                path: /var/lib/kubelet
+                type: Directory
+              name: pods-mount-dir
+            - hostPath:
+                path: /dev
+              name: device-dir
+        updateStrategy:
+          type: RollingUpdate
+  kind: ConfigMap
+  metadata:
+    name: vsphere-csi-node
+    namespace: '${TargetNamespace}'
+- apiVersion: v1
+  data:
+    data: |
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: vsphere-csi-controller
+        namespace: kube-system
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: vsphere-csi-controller
+        template:
+          metadata:
+            labels:
+              app: vsphere-csi-controller
+              role: vsphere-csi
+          spec:
+            containers:
+            - args:
+              - --v=4
+              - --timeout=300s
+              - --csi-address=$(ADDRESS)
+              - --leader-election
+              env:
+              - name: ADDRESS
+                value: /csi/csi.sock
+              image: quay.io/k8scsi/csi-attacher:v3.0.0
+              name: csi-attacher
+              resources: {}
+              volumeMounts:
+              - mountPath: /csi
+                name: socket-dir
+            - env:
+              - name: CSI_ENDPOINT
+                value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
+              - name: X_CSI_MODE
+                value: controller
+              - name: VSPHERE_CSI_CONFIG
+                value: /etc/cloud/csi-vsphere.conf
+              - name: LOGGER_LEVEL
+                value: PRODUCTION
+              - name: X_CSI_LOG_LEVEL
+                value: INFO
+              image: gcr.io/cloud-provider-vsphere/csi/release/driver:v2.1.0
+              livenessProbe:
+                failureThreshold: 3
+                httpGet:
+                  path: /healthz
+                  port: healthz
+                initialDelaySeconds: 10
+                periodSeconds: 5
+                timeoutSeconds: 3
+              name: vsphere-csi-controller
+              ports:
+              - containerPort: 9808
+                name: healthz
+                protocol: TCP
+              resources: {}
+              volumeMounts:
+              - mountPath: /etc/cloud
+                name: vsphere-config-volume
+                readOnly: true
+              - mountPath: /var/lib/csi/sockets/pluginproxy/
+                name: socket-dir
+            - args:
+              - --csi-address=$(ADDRESS)
+              env:
+              - name: ADDRESS
+                value: /var/lib/csi/sockets/pluginproxy/csi.sock
+              image: quay.io/k8scsi/livenessprobe:v2.1.0
+              name: liveness-probe
+              resources: {}
+              volumeMounts:
+              - mountPath: /var/lib/csi/sockets/pluginproxy/
+                name: socket-dir
+            - args:
+              - --leader-election
+              env:
+              - name: X_CSI_FULL_SYNC_INTERVAL_MINUTES
+                value: "30"
+              - name: LOGGER_LEVEL
+                value: PRODUCTION
+              - name: VSPHERE_CSI_CONFIG
+                value: /etc/cloud/csi-vsphere.conf
+              image: gcr.io/cloud-provider-vsphere/csi/release/syncer:v2.1.0
+              name: vsphere-syncer
+              resources: {}
+              volumeMounts:
+              - mountPath: /etc/cloud
+                name: vsphere-config-volume
+                readOnly: true
+            - args:
+              - --v=4
+              - --timeout=300s
+              - --csi-address=$(ADDRESS)
+              - --leader-election
+              - --default-fstype=ext4
+              env:
+              - name: ADDRESS
+                value: /csi/csi.sock
+              image: quay.io/k8scsi/csi-provisioner:v2.0.0
+              name: csi-provisioner
+              resources: {}
+              volumeMounts:
+              - mountPath: /csi
+                name: socket-dir
+            dnsPolicy: Default
+            serviceAccountName: vsphere-csi-controller
+            tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/master
+              operator: Exists
+            volumes:
+            - name: vsphere-config-volume
+              secret:
+                secretName: csi-vsphere-config
+            - emptyDir: {}
+              name: socket-dir
+  kind: ConfigMap
+  metadata:
+    name: vsphere-csi-controller
+    namespace: '${TargetNamespace}'
+- apiVersion: v1
+  data:
+    data: |
+      apiVersion: v1
+      data:
+        csi-migration: "false"
+      kind: ConfigMap
+      metadata:
+        name: internal-feature-states.csi.vsphere.vmware.com
+        namespace: kube-system
+  kind: ConfigMap
+  metadata:
+    name: internal-feature-states.csi.vsphere.vmware.com
+    namespace: '${TargetNamespace}'
+parameters:
+- description: Cluster Owner
+  displayName: Owner
+  name: Owner
+  required: false
+  value: admin
+  valueType: string
+- description: Cluster Name
+  displayName: Cluster Name
+  name: ClusterName
+  required: false
+  value: clustername
+  valueType: string
+- description: Namespace for Cluster and Resource
+  displayName: Namespace
+  name: TargetNamespace
+  required: false
+  value: default
+  valueType: string
+- description: Internal IP Cidr Block for Pods
+  displayName: Cidr Block
+  name: CidrBlock
+  required: true
+  value: 172.16.0.0/16
+  valueType: string
+- description: vCenter Server IP
+  displayName: VCSA IP
+  name: VsphereServer
+  required: true
+  value: 0.0.0.0
+  valueType: string
+- description: vCenter User Name
+  displayName: User Name
+  name: VsphereUserName
+  required: true
+  value: User
+  valueType: string
+- description: vCenter User Password
+  displayName: User Password
+  name: VsphereUserPassword
+  required: true
+  value: Password
+  valueType: string
+- description: vCenter TLS Thumbprint
+  displayName: Thumbprint
+  name: VsphereThumbprint
+  required: true
+  value: 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
+  valueType: string
+- description: vCenter Network Name
+  displayName: Network Name
+  name: VsphereNetwork
+  required: true
+  value: VM Network
+  valueType: string
+- description: vCenter DataCenter Name
+  displayName: DataCenter Name
+  name: VsphereDataCenter
+  required: true
+  value: Datacenter
+  valueType: string
+- description: vCenter DataStore Name
+  displayName: DataStore Name
+  name: VsphereDataStore
+  required: true
+  value: datastore1
+  valueType: string
+- description: vCenter Folder Name
+  displayName: Folder Name
+  name: VsphereFolder
+  required: true
+  value: vm
+  valueType: string
+- description: vCenter Resource Pool Name
+  displayName: Resource Pool Name
+  name: VsphereResourcePool
+  required: true
+  value: VM Resource
+  valueType: string
+- description: Control Plane Endpoint IP
+  displayName: Control Plane Endpoint IP
+  name: VsphereControlPlane
+  required: true
+  value: 0.0.0.0
+  valueType: string
+- description: Kubernetes version
+  displayName: Kubernetes version
+  name: KubernetesVersion
+  required: false
+  value: v1.18.16
+  valueType: string
+- description: Number of Master node
+  displayName: number of master nodes
+  name: MasterNum
+  required: false
+  value: 3
+  valueType: number
+- description: Number of Worker node
+  displayName: number of worker nodes
+  name: WorkerNum
+  required: false
+  value: 3
+  valueType: number
+recommend: true
+tags:
+- CAPI
+urlDescription: ""
