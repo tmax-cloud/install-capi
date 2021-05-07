@@ -1,8 +1,8 @@
 source version.conf
 
 ## Install clusterctl
-chmod +x clusterctl
-sudo cp clusterctl /usr/local/bin/clusterctl
+chmod +x bin/clusterctl
+sudo cp bin/clusterctl /usr/local/bin/clusterctl
 
 ## Download and provision CAPI
 kubectl apply -f yaml/cluster-api-components-${CAPI_VERSION}.yaml

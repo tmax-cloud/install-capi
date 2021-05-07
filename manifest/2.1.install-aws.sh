@@ -2,8 +2,8 @@ source version.conf
 source aws-credential.conf
 
 ## Install clusterawsadm
-chmod +x clusterawsadm
-sudo cp clusterawsadm /usr/local/bin/clusterawsadm
+chmod +x bin/clusterawsadm
+sudo cp bin/clusterawsadm /usr/local/bin/clusterawsadm
 
 ## To Do : Access after install, before cluster provision
 ## Create Cloudformation stack
