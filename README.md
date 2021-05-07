@@ -20,17 +20,17 @@
     * [설치 가이드](https://github.com/tmax-cloud/install-catalog)
 * Provider AWS
     * AWS credential([How to get](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html))
-    ~~* AWS machine spec([Spec list](https://aws.amazon.com/ec2/instance-types/?nc1=h_ls))~~
+    * ~~AWS machine spec([Spec list](https://aws.amazon.com/ec2/instance-types/?nc1=h_ls))~~
     * AWS Cloudformation Stack
 * Provider vSphere
     * vSphere Center Setup
         * vCenter에 OVA 템플릿 등록
-            * [OVA Template Download](https://storage.googleapis.com/capv-images/release/v1.17.3/ubuntu-1804-kube-v1.17.3.ova)
-            * [vCenter에 다운로드 받은 템플릿을 등록](https://docs.vmware.com/kr/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AFEDC48B-C96F-4088-9C1F-4F0A30E965DE.html)
+            * OVA Template Download([Download link](https://storage.googleapis.com/capv-images/release/v1.17.3/ubuntu-1804-kube-v1.17.3.ova))
+            * vCenter에 다운로드 받은 템플릿을 등록([vCenter manual link](https://docs.vmware.com/kr/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AFEDC48B-C96F-4088-9C1F-4F0A30E965DE.html))
     * DHCP Server
     * vSphere credential
-    ~~* vSphere machine spec~~
-        ~~* Resource pool, ...~~
+    * ~~vSphere machine spec~~
+        * ~~Resource pool, ...~~
 
 ## 폐쇄망 설치 가이드
 * 외부 네트워크 통신이 가능한 환경에서 0.preset-cn.sh를 이용하여 이미지 및 패키지 다운로드 하여 옮겨준 뒤, 폐쇄망 환경에서 설치 스크립트 실행
@@ -55,10 +55,11 @@
         * AWS Config 값을 manifest경로 아래 aws-credential.conf에 저장후 스크립트 실행
             ```bash
             $ cat << "EOF" | tee aws-credential.conf
-                > export AWS_REGION=your-region-1
-                > export AWS_ACCESS_KEY=your_access_key
-                > export AWS_SECRET_ACCESS_KEY=your_secret_key
-                > EOF
+            export AWS_REGION=your-region-1
+            export AWS_ACCESS_KEY=your_access_key
+            export AWS_SECRET_ACCESS_KEY=your_secret_key
+            EOF
+            ```    
             $ bash 2.0.set-cn-aws.sh
             $ bash 2.1.install-aws.sh
             ```
@@ -67,9 +68,9 @@
         * vCenter Config 값을 manifest경로 아래 vsphere-credential.conf로 저장후 스크립트 실행
             ```bash
             $ cat << "EOF" | tee vsphere-credential.conf
-                > export VSPHERE_USERNAME=example@domain.local
-                > export VSPHERE_PASSWORD=your_password
-                > EOF
+            export VSPHERE_USERNAME=example@domain.local
+            export VSPHERE_PASSWORD=your_password
+            EOF
             $ bash 3.0.set-cn-vsphere.sh
             $ bash 3.1.install-vsphere.sh
             ```
@@ -86,19 +87,19 @@
     * AWS Config 값을 manifest경로 아래 aws-credential.conf에 저장후 스크립트 실행
         ```bash
         $ cat << "EOF" | tee aws-credential.conf
-            > export AWS_REGION=your-region-1
-            > export AWS_ACCESS_KEY=your_access_key
-            > export AWS_SECRET_ACCESS_KEY=your_secret_key
-            > EOF
+        export AWS_REGION=your-region-1
+        export AWS_ACCESS_KEY=your_access_key
+        export AWS_SECRET_ACCESS_KEY=your_secret_key
+        EOF
         $ bash 2.1.install-aws.sh
 
     2. [vSphere Provider]
     * vCenter Config 값을 manifest경로 아래 vsphere-credential.conf로 저장후 스크립트 실행
         ```bash
         $ cat << "EOF" | tee vsphere-credential.conf
-            > export VSPHERE_USERNAME=example@domain.local
-            > export VSPHERE_PASSWORD=your_password
-            > EOF
+        export VSPHERE_USERNAME=example@domain.local
+        export VSPHERE_PASSWORD=your_password
+        EOF
         $ bash 3.1.install-vsphere.sh
         ```
 ## Uninstall Steps
