@@ -5,10 +5,6 @@ sudo docker load < img/kubebuilder_kube-rbac-proxy_${KUBE_RBAC_PROXY_VERSION}.ta
 sudo docker tag gcr.io/kubebuilder/kube-rbac-proxy:${KUBE_RBAC_PROXY_VERSION} ${REGISTRY}/kubebuilder/kube-rbac-proxy:${KUBE_RBAC_PROXY_VERSION}
 sudo docker push ${REGISTRY}/kubebuilder/kube-rbac-proxy:${KUBE_RBAC_PROXY_VERSION}
 
-sudo docker load < img/kubebuilder_kube-rbac-proxy_${VSPHERE_RBAC_PROXY_VERSION}.tar
-sudo docker tag gcr.io/kubebuilder/kube-rbac-proxy:${VSPHERE_RBAC_PROXY_VERSION} ${REGISTRY}/kubebuilder/kube-rbac-proxy:${VSPHERE_RBAC_PROXY_VERSION}
-sudo docker push ${REGISTRY}/kubebuilder/kube-rbac-proxy:${VSPHERE_RBAC_PROXY_VERSION}
-
 ## Push image to REGISTRY: cluster-api-components.yaml
 sudo docker load < img/cluster-api_cluster-api-controller_${CAPI_VERSION}.tar
 sudo docker tag us.gcr.io/k8s-artifacts-prod/cluster-api/cluster-api-controller:${CAPI_VERSION} ${REGISTRY}/k8s-artifacts-prod/cluster-api/cluster-api-controller:${CAPI_VERSION}

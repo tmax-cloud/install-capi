@@ -27,6 +27,9 @@ sudo docker pull us.gcr.io/k8s-artifacts-prod/cluster-api-aws/cluster-api-aws-co
 sudo docker save us.gcr.io/k8s-artifacts-prod/cluster-api-aws/cluster-api-aws-controller:${AWS_VERSION} > img/cluster-api-aws_cluster-api-aws-controller_${AWS_VERSION}.tar
 
 ## Pull images: control-plane-componenets-vsphere.yaml
+sudo docker pull gcr.io/cluster-api-provider-vsphere/release/manager:${VSPHERE_VERSION}
+sudo docker save gcr.io/cluster-api-provider-vsphere/release/manager:${VSPHERE_VERSION} > img/cluster-api-vsphere_manager_${VSPHERE_VERSION}.tar
+
 sudo docker pull plndr/kube-vip:${KUBE_VIP_VERSION}
 sudo docker save plndr/kube-vip:${KUBE_VIP_VERSION} > img/kube-vip_${KUBE_VIP_VERSION}.tar
 
