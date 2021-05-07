@@ -18,13 +18,26 @@
     * [설치 가이드](https://github.com/tmax-cloud/template-service-broker)
 * Catalog Controller
     * [설치 가이드](https://github.com/tmax-cloud/install-catalog)
+* Provider AWS
+    * AWS credential([How to get](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html))
+    ~~* AWS machine spec([Spec list](https://aws.amazon.com/ec2/instance-types/?nc1=h_ls))~~
+    * AWS Cloudformation Stack
+* Provider vSphere
+    * vSphere Center Setup
+        * vCenter에 OVA 템플릿 등록
+            * [OVA Template Download](https://storage.googleapis.com/capv-images/release/v1.17.3/ubuntu-1804-kube-v1.17.3.ova)
+            * [vCenter에 다운로드 받은 템플릿을 등록](https://docs.vmware.com/kr/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AFEDC48B-C96F-4088-9C1F-4F0A30E965DE.html)
+    * DHCP Server
+    * vSphere credential
+    ~~* vSphere machine spec~~
+        ~~* Resource pool, ...~~
+
 ## 폐쇄망 설치 가이드
-* 외부 네트워크 통신이 가능한 환경에서 0.preset-cn.sh를 이용하여 이미지 및 패키지 다운로드 후 1.2.install-capi-cn.sh를 이용하여 폐쇄망에 CAPI 환경 구성
+* 외부 네트워크 통신이 가능한 환경에서 0.preset-cn.sh를 이용하여 이미지 및 패키지 다운로드 하여 옮겨준 뒤, 폐쇄망 환경에서 설치 스크립트 실행
 * 외부 네트워크 환경 스크립트 실행순서
     ```bash
     $ cd manifest
     $ chmod +x *.sh
-    $ source version.conf
     $ bash 0.preset-cn.sh
     ```
 
@@ -32,97 +45,79 @@
     * Capi 설치
     ```bash
     $ cd manifest
-    $ source version.conf
+    $ chmod +x *.sh
     $ export REGISTRY={registryIP:PORT}
     $ bash 1.2.install-capi-cn.sh
     ```
     
     * Provider 설치
         1. [AWS Provider]
-        * AWS Config 값을 아래형식으로 manifest경로 아래 aws-credential.conf로 저장
+        * AWS Config 값을 manifest경로 아래 aws-credential.conf에 저장후 스크립트 실행
             ```bash
-            export AWS_REGION={aws_region}
-            export AWS_ACCESS_KEY_ID={aws_access_key_id}
-            export AWS_SECRET_ACCESS_KEY={aws_secret_key}
+            $ cat << "EOF" | tee aws-credential.conf
+                > export AWS_REGION=your-region-1
+                > export AWS_ACCESS_KEY=your_access_key
+                > export AWS_SECRET_ACCESS_KEY=your_secret_key
+                > EOF
+            $ bash 2.0.set-cn-aws.sh
+            $ bash 2.1.install-aws.sh
             ```
-        * 실행 순서
-            ```bash
-            $ source aws-credential.conf
-            $ source 2.1.2.install-aws-cn.sh
-            ```
-            * Provider 설치
 
         2. [vSphere Provider]
-        * vCenter에 OVA 템플릿 등록
-            * [OVA Template Download](https://storage.googleapis.com/capv-images/release/v1.17.3/ubuntu-1804-kube-v1.17.3.ova)
-            * [vCenter에 다운로드 받은 템플릿을 등록](https://docs.vmware.com/kr/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AFEDC48B-C96F-4088-9C1F-4F0A30E965DE.html)
-        * vCenter Config 값을 아래형식으로 manifest경로 아래 vsphere-credential.conf로 저장
+        * vCenter Config 값을 manifest경로 아래 vsphere-credential.conf로 저장후 스크립트 실행
             ```bash
-            export VSPHERE_USERNAME={vsphere_username}
-            export VSPHERE_PASSWORD={vsphere_password}
-            ```
-        * 실행 순서
-            ```bash
-            $ source vsphere-credential.conf
-            $ source 2.2.2.install-vsphere-cn.sh
+            $ cat << "EOF" | tee vsphere-credential.conf
+                > export VSPHERE_USERNAME=example@domain.local
+                > export VSPHERE_PASSWORD=your_password
+                > EOF
+            $ bash 3.0.set-cn-vsphere.sh
+            $ bash 3.1.install-vsphere.sh
             ```
 ## Install Steps(Open Network)
 * Capi 설치에 필요한 리소스(yaml, binary)다운로드 및 설치
     ```bash
     $ cd manifest
     $ chmod +x *.sh
-    $ source version.conf
-    $ bash 1.1.install-capi-on.sh
+    $ bash 1.1.install-capi.sh
     ```
 
 * Provider 설치
     1. [AWS Provider]
-    * AWS Config 값을 아래형식으로 manifest경로 아래 aws-credential.conf로 저장
+    * AWS Config 값을 manifest경로 아래 aws-credential.conf에 저장후 스크립트 실행
         ```bash
-        export AWS_REGION={aws_region}
-        export AWS_ACCESS_KEY_ID={aws_access_key_id}
-        export AWS_SECRET_ACCESS_KEY={aws_secret_key}
-        ```
-    * 실행 순서
-        ```bash
-        $ source aws-credential.conf
-        $ source 2.1.1.install-aws-on.sh
-        ```
+        $ cat << "EOF" | tee aws-credential.conf
+            > export AWS_REGION=your-region-1
+            > export AWS_ACCESS_KEY=your_access_key
+            > export AWS_SECRET_ACCESS_KEY=your_secret_key
+            > EOF
+        $ bash 2.1.install-aws.sh
 
     2. [vSphere Provider]
-    * vCenter에 OVA 템플릿 등록
-        * [OVA Template Download](https://storage.googleapis.com/capv-images/release/v1.17.3/ubuntu-1804-kube-v1.17.3.ova)
-        * [vCenter에 다운로드 받은 템플릿을 등록](https://docs.vmware.com/kr/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AFEDC48B-C96F-4088-9C1F-4F0A30E965DE.html)
-    * vCenter Config 값을 아래형식으로 manifest경로 아래 vsphere-credential.conf로 저장
+    * vCenter Config 값을 manifest경로 아래 vsphere-credential.conf로 저장후 스크립트 실행
         ```bash
-        export VSPHERE_USERNAME={vsphere_username}
-        export VSPHERE_PASSWORD={vsphere_password}
+        $ cat << "EOF" | tee vsphere-credential.conf
+            > export VSPHERE_USERNAME=example@domain.local
+            > export VSPHERE_PASSWORD=your_password
+            > EOF
+        $ bash 3.1.install-vsphere.sh
         ```
-    * 실행 순서
-        ```bash
-        $ source vsphere-credential.conf
-        $ source 2.2.1.install-vsphere-on.sh
-            ```
 ## Uninstall Steps
 * Provider 삭제
     1. [AWS Provider]
     * 실행 순서
         ```bash
         $ cd manifest
-        $ source version.conf
-        $ bash 2.1.3.delete-aws.sh
+        $ bash 2.2.delete-aws.sh
         ```
 
     2. [vSphere Provider]
     * 실행 순서
         ```bash
         $ cd manifest
-        $ source version.conf
-        $ bash 2.2.3.delete-vsphere.sh
+        $ bash 3.2.delete-vsphere.sh
         ```
 
 * CAPI와 Provider들의 CRD 제거 및 바이너리, yaml등의 리소스 삭제
     ```bash
-    $ source version.conf
-    $ bash 99.delete.sh
+    $ bash 1.2.delete-capi.sh
     ```

@@ -23,7 +23,7 @@ main branch rebuilding
 CAPV
   - isntaller 초안 추가
 
-************************ 21.05.xx ************************
+************************ 21.05.06 ************************
 CAPV
   - vsphere 추가 1차 완료
   - vsphere 추가로 인한 
@@ -32,3 +32,13 @@ CAPA
   - CAPI version update로 인한 CAPA version update 및 검증
   - Cloudformation stack 생성 및 삭제 과정 제거
     > prerequisites 혹은 다른 단계에서 다룰 예정
+
+************************ 21.05.07 ************************
+bin, yaml file
+  - 필요한 binary, yaml file들을 curl로 다운로드하여
+    수정하던 방식에서 최종수정된 파일을 디렉토리안에
+    직접 보관하는 방식으로 변경
+  
+source $(config file name)
+  - 사용자가 직접 입력하지 않고 모든 스크립트 안에서 필요한
+    config file을 임포트하게 변경
