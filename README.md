@@ -59,7 +59,6 @@
             export AWS_ACCESS_KEY=your_access_key
             export AWS_SECRET_ACCESS_KEY=your_secret_key
             EOF
-            ```    
             $ bash 2.0.set-cn-aws.sh
             $ bash 2.1.install-aws.sh
             ```
