@@ -11,13 +11,8 @@
 
 ## Prerequisites
 * kubernetes version >= 1.16
-* AWS IAM 정보
 * Cert Manager
     * [임시 설치 가이드](https://github.com/tmax-cloud/install-cert-manager-temp)
-* Template Service Broker
-    * [설치 가이드](https://github.com/tmax-cloud/template-service-broker)
-* Catalog Controller
-    * [설치 가이드](https://github.com/tmax-cloud/install-catalog)
 
 ## 폐쇄망 설치 가이드
 * 외부 네트워크 통신이 가능한 환경에서 0.preset-cn.sh를 이용하여 이미지 및 패키지 다운로드 후 1.2.install-capi-cn.sh를 이용하여 폐쇄망에 CAPI 환경 구성
@@ -40,16 +35,27 @@
     
     * Provider 설치
         1. [AWS Provider]
-        * UI를 통해 입력된 AWS Config 값을 아래형식으로 manifest경로 아래 aws-credential.conf로 저장
+            * AWS Config 값을 환경변수로 등록후 스크립트 실행
             ```bash
-            export AWS_REGION={aws_region}
-            export AWS_ACCESS_KEY_ID={aws_access_key_id}
-            export AWS_SECRET_ACCESS_KEY={aws_secret_key}
+            $ export AWS_REGION=your_region
+            $ export AWS_ACCESS_KEY_ID=your_access_key_id
+            $ export AWS_SECRET_ACCESS_KEY=your_secret_access_key_id
+            $ bash 2.1.2.install-aws-cn.sh
             ```
-        * 실행 순서
+
+    * Cluster provisioning
+        1. [AWS Provider]
+            * AWS Config 값을 환경변수로 등록후 스크립트 실행
             ```bash
-            $ source aws-credential.conf
-            $ source 2.1.2.install-aws-cn.sh
+            $ export AWS_REGION=your_region
+            $ export CLUSTER_NAME=your_cluster_name
+            $ export AWS_CONTROL_PLANE_MACHINE_TYPE=t3.large
+            $ export AWS_NODE_MACHINE_TYPE=t3.large
+            $ export AWS_SSH_KEY_NAME=your_aws_ssh_key_name
+            $ export KUBERNETES_VERSION=kubernetes_version
+            $ export CONTROL_PLANE_MACHINE_COUNT=control_plane_machine_count
+            $ export WORKER_MACHINE_COUNT=worker_machine_count
+            $ bash 3.1.2.install-aws-cn.sh
             ```
 ## Install Steps(Open Network)
 * Capi 설치에 필요한 리소스(yaml, binary)다운로드 및 설치
@@ -62,18 +68,44 @@
 
 * Provider 설치
     1. [AWS Provider]
-    * UI를 통해 입력된 AWS Config 값을 아래형식으로 manifest경로 아래 aws-credential.conf로 저장
+        * AWS Config 값을 환경변수로 등록후 스크립트 실행
+            ```bash
+            $ export AWS_REGION=your_region
+            $ export AWS_ACCESS_KEY_ID=your_access_key_id
+            $ export AWS_SECRET_ACCESS_KEY=your_secret_access_key_id
+            $ export CLUSTER_NAME=your_cluster_name
+            $ export AWS_CONTROL_PLANE_MACHINE_TYPE=t3.large
+            $ export AWS_NODE_MACHINE_TYPE=t3.large
+            $ export AWS_SSH_KEY_NAME=your_aws_ssh_key_name
+            $ export KUBERNETES_VERSION=kubernetes_version
+            $ export CONTROL_PLANE_MACHINE_COUNT=control_plane_machine_count
+            $ export WORKER_MACHINE_COUNT=worker_machine_count
+            $ bash 2.1.1.install-aws-on.sh
+            ```
+
+* Cluster provisioning
+    1. [AWS Provider]
+        * AWS Config 값을 환경변수로 등록후 스크립트 실행
         ```bash
-        export AWS_REGION={aws_region}
-        export AWS_ACCESS_KEY_ID={aws_access_key_id}
-        export AWS_SECRET_ACCESS_KEY={aws_secret_key}
-        ```
-    * 실행 순서
-        ```bash
-        $ source aws-credential.conf
-        $ source 2.1.1.install-aws-on.sh
+        $ export AWS_REGION=your_region
+        $ export CLUSTER_NAME=your_cluster_name
+        $ export AWS_CONTROL_PLANE_MACHINE_TYPE=t3.large
+        $ export AWS_NODE_MACHINE_TYPE=t3.large
+        $ export AWS_SSH_KEY_NAME=your_aws_ssh_key_name
+        $ export KUBERNETES_VERSION=kubernetes_version
+        $ export CONTROL_PLANE_MACHINE_COUNT=control_plane_machine_count
+        $ export WORKER_MACHINE_COUNT=worker_machine_count
+        $ bash 3.1.1.install-aws-on.sh
         ```
 ## Uninstall Steps
+* Cluster 삭제
+    1. [AWS Provider]
+    * 실행 순서
+        ```bash
+        $ cd manifest
+        $ source version.conf
+        $ bash 3.1.3.delete-cluster-aws.sh
+
 * Provider 삭제
     1. [AWS Provider]
     * 실행 순서
