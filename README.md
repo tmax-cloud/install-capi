@@ -73,13 +73,6 @@
             $ export AWS_REGION=your_region
             $ export AWS_ACCESS_KEY_ID=your_access_key_id
             $ export AWS_SECRET_ACCESS_KEY=your_secret_access_key_id
-            $ export CLUSTER_NAME=your_cluster_name
-            $ export AWS_CONTROL_PLANE_MACHINE_TYPE=t3.large
-            $ export AWS_NODE_MACHINE_TYPE=t3.large
-            $ export AWS_SSH_KEY_NAME=your_aws_ssh_key_name
-            $ export KUBERNETES_VERSION=kubernetes_version
-            $ export CONTROL_PLANE_MACHINE_COUNT=control_plane_machine_count
-            $ export WORKER_MACHINE_COUNT=worker_machine_count
             $ bash 2.1.1.install-aws-on.sh
             ```
 
