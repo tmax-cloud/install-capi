@@ -57,6 +57,24 @@
             $ export WORKER_MACHINE_COUNT=worker_machine_count
             $ bash 3.1.2.install-aws-cn.sh
             ```
+
+            * Cluster 생성 확인
+            ``` bash
+            $ kubectl get cluster,awscluster,machine,awsmachine
+            ```
+
+            * Cluster kubeconfig 생성 및 calico 설치
+            ``` bash
+            $ export CLUSTER_NAME=your_cluster_name
+            $ bash 4.1.1.set-cluster.sh
+            ```
+
+            * Cluster node 및 pod 확인
+            ``` bash
+            $ export CLUSTER_NAME=your_cluster_name
+            $ kubectl --kubeconfig=${CLUSTER_NAME}.kubeconfig get node -A -o wide
+            $ kubectl --kubeconfig=${CLUSTER_NAME}.kubeconfig get pod -A -o wide
+            ```
 ## Install Steps(Open Network)
 * Capi 설치에 필요한 리소스(yaml, binary)다운로드 및 설치
     ```bash
@@ -90,6 +108,25 @@
         $ export WORKER_MACHINE_COUNT=worker_machine_count
         $ bash 3.1.1.install-aws-on.sh
         ```
+
+        * Cluster 생성 확인
+        ``` bash
+        $ kubectl get cluster,awscluster,machine,awsmachine
+        ```
+
+        * Cluster kubeconfig 생성 및 calico 설치
+        ``` bash
+        $ export CLUSTER_NAME=your_cluster_name
+        $ bash 4.1.1.set-cluster.sh
+        ```
+
+        * Cluster node 및 pod 확인
+        ``` bash
+        $ export CLUSTER_NAME=your_cluster_name
+        $ kubectl --kubeconfig=${CLUSTER_NAME}.kubeconfig get node -A -o wide
+        $ kubectl --kubeconfig=${CLUSTER_NAME}.kubeconfig get pod -A -o wide
+        ```
+
 ## Uninstall Steps
 * Cluster 삭제
     1. [AWS Provider]
