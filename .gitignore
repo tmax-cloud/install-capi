@@ -1,3 +1,4 @@
 aws-credential.conf
 aws-machine.conf
 vsphere-credential.conf
+manifest/*.kubeconfig

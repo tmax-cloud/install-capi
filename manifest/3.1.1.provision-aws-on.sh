@@ -3,6 +3,7 @@ curl -L https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/dow
 
 ## Initialize cluster setting
 cp yaml/_template/cluster-template-aws-${AWS_VERSION}.yaml yaml/_install/2.2.cluster-template-aws-${AWS_VERSION}.yaml
+sed -i 's/${AWS_REGION}/'"${AWS_REGION}"'/g' yaml/_install/2.2.cluster-template-aws-${AWS_VERSION}.yaml
 sed -i 's/${CLUSTER_NAME}/'"${CLUSTER_NAME}"'/g' yaml/_install/2.2.cluster-template-aws-${AWS_VERSION}.yaml
 sed -i 's/${AWS_CONTROL_PLANE_MACHINE_TYPE}/'"${AWS_CONTROL_PLANE_MACHINE_TYPE}"'/g' yaml/_install/2.2.cluster-template-aws-${AWS_VERSION}.yaml
 sed -i 's/${AWS_NODE_MACHINE_TYPE}/'"${AWS_NODE_MACHINE_TYPE}"'/g' yaml/_install/2.2.cluster-template-aws-${AWS_VERSION}.yaml
