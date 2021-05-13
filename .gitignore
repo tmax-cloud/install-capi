@@ -1,5 +1,3 @@
-aws-credential.conf
-aws-machine.conf
-vsphere-credential.conf
+manifest/*.conf
 manifest/*.kubeconfig
 manifest/yaml
