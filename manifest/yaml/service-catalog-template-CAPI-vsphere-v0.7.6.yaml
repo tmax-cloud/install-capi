@@ -861,68 +861,68 @@ parameters:
 - description: Internal IP Cidr Block for Pods
   displayName: Cidr Block
   name: CidrBlock
-  required: true
-  value: 172.16.0.0/16
+  required: false
+  value: 0.0.0.0/0
   valueType: string
 - description: vCenter Server IP
   displayName: VCSA IP
   name: VsphereServer
-  required: true
-  value:
+  required: false
+  value: 0.0.0.0
   valueType: string
 - description: vCenter User Name
   displayName: User Name
   name: VsphereUserName
-  required: true
-  value:
+  required: false
+  value: example@domain.local
   valueType: string
 - description: vCenter User Password
   displayName: User Password
   name: VsphereUserPassword
-  required: true
-  value:
+  required: false
+  value: password
   valueType: string
 - description: vCenter TLS Thumbprint
   displayName: Thumbprint
   name: VsphereThumbprint
-  required: true
-  value:
+  required: false
+  value: 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
   valueType: string
 - description: vCenter Network Name
   displayName: Network Name
   name: VsphereNetwork
-  required: true
+  required: false
   value: VM Network
   valueType: string
 - description: vCenter DataCenter Name
   displayName: DataCenter Name
   name: VsphereDataCenter
-  required: true
+  required: false
   value: Datacenter
   valueType: string
 - description: vCenter DataStore Name
   displayName: DataStore Name
   name: VsphereDataStore
-  required: true
+  required: false
   value: datastore1
   valueType: string
 - description: vCenter Folder Name
   displayName: Folder Name
   name: VsphereFolder
-  required: true
+  required: false
   value: vm
   valueType: string
 - description: vCenter Resource Pool Name
   displayName: Resource Pool Name
   name: VsphereResourcePool
-  required: true
+  required: false
   value: VM Resource
   valueType: string
 - description: Control Plane Endpoint IP
   displayName: Control Plane Endpoint IP
   name: VsphereControlPlane
-  required: true
-  value:
+  required: false
+  value: 0.0.0.0
   valueType: string
 - description: Kubernetes version
   displayName: Kubernetes version
@@ -933,13 +933,13 @@ parameters:
 - description: Number of Master node
   displayName: number of master nodes
   name: MasterNum
-  required: true
+  required: false
   value: 3
   valueType: number
 - description: Number of Worker node
   displayName: number of worker nodes
   name: WorkerNum
-  required: true
+  required: false
   value: 3
   valueType: number
 recommend: true

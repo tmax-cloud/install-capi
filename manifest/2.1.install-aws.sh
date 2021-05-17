@@ -7,7 +7,7 @@ sudo cp bin/clusterawsadm /usr/local/bin/clusterawsadm
 
 ## To Do : Access after install, before cluster provision
 ## Create Cloudformation stack
-#clusterawsadm bootstrap iam create-cloudformation-stack
+clusterawsadm bootstrap iam create-cloudformation-stack
 
 ## Install CAPA infrastructure comopnents
 credential=$(clusterawsadm bootstrap credentials encode-as-profile | sed 's/\//\\\//g')

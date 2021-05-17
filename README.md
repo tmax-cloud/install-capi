@@ -8,7 +8,6 @@
 
  ### **주의**
  _1. Capi는 public cloud와 원활한 통신을 위해 가급적 **최신 버전을 유지**해야 합니다. 최신 버전 확인은 위 링크를 통해 확인 바랍니다_
- <br>_2. 버전 관리 문제로 default yaml을 upload 하지 않았으나, install guide 단계 중 yaml download하는 과정이 있습니다_ 
 
 ## Prerequisites
 * kubernetes version >= 1.16
@@ -47,12 +46,13 @@
     $ cd manifest
     $ chmod +x *.sh
     $ export REGISTRY={registryIP:PORT}
-    $ bash 1.2.install-capi-cn.sh
+    $ bash 1.0.set-cn-capi.sh
+    $ bash 1.1.install-capi.sh
     ```
     
     * Provider 설치
         1. [AWS Provider]
-        * AWS Config 값을 manifest경로 아래 aws-credential.conf에 저장후 스크립트 실행
+        * 아래 명령어를 순서대로 수행
             ```bash
             $ cat << "EOF" | tee aws-credential.conf
             export AWS_REGION=your-region-1
@@ -64,7 +64,7 @@
             ```
 
         2. [vSphere Provider]
-        * vCenter Config 값을 manifest경로 아래 vsphere-credential.conf로 저장후 스크립트 실행
+        * 아래 명령어를 순서대로 수행
             ```bash
             $ cat << "EOF" | tee vsphere-credential.conf
             export VSPHERE_USERNAME=example@domain.local
@@ -83,7 +83,7 @@
 
 * Provider 설치
     1. [AWS Provider]
-    * AWS Config 값을 manifest경로 아래 aws-credential.conf에 저장후 스크립트 실행
+    * 아래 명령어를 순서대로 수행
         ```bash
         $ cat << "EOF" | tee aws-credential.conf
         export AWS_REGION=your-region-1
@@ -93,7 +93,7 @@
         $ bash 2.1.install-aws.sh
 
     2. [vSphere Provider]
-    * vCenter Config 값을 manifest경로 아래 vsphere-credential.conf로 저장후 스크립트 실행
+    * 아래 명령어를 순서대로 수행
         ```bash
         $ cat << "EOF" | tee vsphere-credential.conf
         export VSPHERE_USERNAME=example@domain.local

@@ -4111,8 +4111,6 @@ status:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  annotations:
-    ${AWS_CONTROLLER_IAM_ROLE/#arn/eks.amazonaws.com/role-arn: arn}
   labels:
     cluster.x-k8s.io/provider: infrastructure-aws
     control-plane: controller-manager
@@ -4500,7 +4498,7 @@ spec:
       - args:
         - --metrics-addr=127.0.0.1:8080
         - --enable-leader-election
-        - --feature-gates=EKS=${EXP_EKS:=false},EKSEnableIAM=${EXP_EKS_IAM:=false},MachinePool=${EXP_MACHINE_POOL:=false},EventBridgeInstanceState=${EVENT_BRIDGE_INSTANCE_STATE:=false},AutoControllerIdentityCreator=${AUTO_CONTROLLER_IDENTITY_CREATOR:=true}
+        - --feature-gates=EKS=false,EKSEnableIAM=false,MachinePool=false,EventBridgeInstanceState=false,AutoControllerIdentityCreator=true
         env:
         - name: AWS_SHARED_CREDENTIALS_FILE
           value: /home/.aws/credentials
@@ -4532,9 +4530,6 @@ spec:
         ports:
         - containerPort: 8443
           name: https
-      metadata:
-        annotations:
-          iam.amazonaws.com/role: ${AWS_CONTROLLER_IAM_ROLE:=""}
       securityContext:
         fsGroup: 1000
       serviceAccountName: capa-controller-manager
@@ -4571,7 +4566,7 @@ spec:
       - args:
         - --metrics-addr=127.0.0.1:8080
         - --webhook-port=9443
-        - --feature-gates=EKS=${EXP_EKS:=false},EKSEnableIAM=${EXP_EKS_IAM:=false},MachinePool=${EXP_MACHINE_POOL:=false},EventBridgeInstanceState=${EVENT_BRIDGE_INSTANCE_STATE:=false},AutoControllerIdentityCreator=${AUTO_CONTROLLER_IDENTITY_CREATOR:=true}
+        - --feature-gates=EKS=false,EKSEnableIAM=false,MachinePool=false,EventBridgeInstanceState=false,AutoControllerIdentityCreator=true
         image: gcr.io/k8s-staging-cluster-api-aws/cluster-api-aws-controller:v0.6.5
         imagePullPolicy: IfNotPresent
         livenessProbe:
