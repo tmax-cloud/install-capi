@@ -29,47 +29,50 @@
     * vSphere credential
 
 ## 폐쇄망 설치 가이드
-* 외부 네트워크 통신이 가능한 환경에서 0.preset-cn.sh를 이용하여 이미지 및 패키지 다운로드 하여 옮겨준 뒤, 폐쇄망 환경에서 설치 스크립트 실행
-* 외부 네트워크 환경 스크립트 실행순서
-    ```bash
-    $ cd manifest
-    $ chmod +x *.sh
-    $ bash 0.preset-cn.sh
-    ```
+* 외부 네트워크 통신이 가능한 환경에서 0.preset-cn.sh를 이용하여 이미지 및 패키지를 다운로드하여 폐쇄망 환경으로 옮겨준 뒤, 설치 스크립트를 수행
+    * 외부 네트워크 환경 스크립트 실행순서
+        ```bash
+        $ cd manifest
+        $ chmod +x *.sh
+        $ bash 0.preset-cn.sh
+        ```
 
-* 폐쇄망 설치 스크립트 실행순서
-    * Capi 설치
-    ```bash
-    $ cd manifest
-    $ chmod +x *.sh
-    $ export REGISTRY={registryIP:PORT}
-    $ bash 1.0.set-cn-capi.sh
-    $ bash 1.1.install-capi.sh
-    ```
-    
-    * Provider 설치
-        1. [AWS Provider]
-        * 아래 명령어를 순서대로 수행
-            ```bash
-            $ cat << "EOF" | tee aws-credential.conf
-            export AWS_REGION=your-region-1
-            export AWS_ACCESS_KEY=your_access_key
-            export AWS_SECRET_ACCESS_KEY=your_secret_key
-            EOF
-            $ bash 2.0.set-cn-aws.sh
-            $ bash 2.1.install-aws.sh
-            ```
+    * 폐쇄망 설치 스크립트 실행순서
+        * 외부 네트워크 환경에서 받은 파일들을 manifest경로 아래 위치시켜야 함
+            * img/
 
-        2. [vSphere Provider]
-        * 아래 명령어를 순서대로 수행
-            ```bash
-            $ cat << "EOF" | tee vsphere-credential.conf
-            export VSPHERE_USERNAME=example@domain.local
-            export VSPHERE_PASSWORD=your_password
-            EOF
-            $ bash 3.0.set-cn-vsphere.sh
-            $ bash 3.1.install-vsphere.sh
-            ```
+        * Capi 설치
+        ```bash
+        $ cd manifest
+        $ chmod +x *.sh
+        $ export REGISTRY={registryIP:PORT}
+        $ bash 1.0.set-cn-capi.sh
+        $ bash 1.1.install-capi.sh
+        ```
+        
+        * Provider 설치
+            1. [AWS Provider]
+            * 아래 명령어를 순서대로 수행
+                ```bash
+                $ cat << "EOF" | tee aws-credential.conf
+                export AWS_REGION=your-region-1
+                export AWS_ACCESS_KEY=your_access_key
+                export AWS_SECRET_ACCESS_KEY=your_secret_key
+                EOF
+                $ bash 2.0.set-cn-aws.sh
+                $ bash 2.1.install-aws.sh
+                ```
+
+            2. [vSphere Provider]
+            * 아래 명령어를 순서대로 수행
+                ```bash
+                $ cat << "EOF" | tee vsphere-credential.conf
+                export VSPHERE_USERNAME=example@domain.local
+                export VSPHERE_PASSWORD=your_password
+                EOF
+                $ bash 3.0.set-cn-vsphere.sh
+                $ bash 3.1.install-vsphere.sh
+                ```
 ## Install Steps(Open Network)
 * Capi 설치에 필요한 리소스(yaml, binary)다운로드 및 설치
     ```bash
