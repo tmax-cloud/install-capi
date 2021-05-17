@@ -19,7 +19,6 @@
     * [설치 가이드](https://github.com/tmax-cloud/install-catalog)
 * Provider AWS
     * AWS credential([How to get](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html))
-    * ~~AWS machine spec([Spec list](https://aws.amazon.com/ec2/instance-types/?nc1=h_ls))~~
     * AWS Cloudformation Stack
 * Provider vSphere
     * vSphere Center Setup
@@ -28,8 +27,6 @@
             * vCenter에 다운로드 받은 템플릿을 등록([vCenter manual link](https://docs.vmware.com/kr/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AFEDC48B-C96F-4088-9C1F-4F0A30E965DE.html))
     * DHCP Server
     * vSphere credential
-    * ~~vSphere machine spec~~
-        * ~~Resource pool, ...~~
 
 ## 폐쇄망 설치 가이드
 * 외부 네트워크 통신이 가능한 환경에서 0.preset-cn.sh를 이용하여 이미지 및 패키지 다운로드 하여 옮겨준 뒤, 폐쇄망 환경에서 설치 스크립트 실행
