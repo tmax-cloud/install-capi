@@ -23,8 +23,8 @@ sudo docker pull us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-control-plane-
 sudo docker save us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-control-plane-controller:${CAPI_VERSION} > img/cluster-api_kubeadm-control-plane-controller_${CAPI_VERSION}.tar
 
 ## Pull images: control-plane-components-aws.yaml
-sudo docker pull us.gcr.io/k8s-artifacts-prod/cluster-api-aws/cluster-api-aws-controller:${AWS_VERSION}
-sudo docker save us.gcr.io/k8s-artifacts-prod/cluster-api-aws/cluster-api-aws-controller:${AWS_VERSION} > img/cluster-api-aws_cluster-api-aws-controller_${AWS_VERSION}.tar
+sudo docker pull gcr.io/k8s-staging-cluster-api-aws/cluster-api-aws-controller:${AWS_VERSION}
+sudo docker save gcr.io/k8s-staging-cluster-api-aws/cluster-api-aws-controller:${AWS_VERSION} > img/cluster-api-aws_cluster-api-aws-controller_${AWS_VERSION}.tar
 
 ## Pull images: control-plane-componenets-vsphere.yaml
 sudo docker pull gcr.io/cluster-api-provider-vsphere/release/manager:${VSPHERE_VERSION}
