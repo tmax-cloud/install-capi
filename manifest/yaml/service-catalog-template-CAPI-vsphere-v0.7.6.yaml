@@ -134,7 +134,7 @@ objects:
                 value: "10"
               - name: vip_retryperiod
                 value: "2"
-              image: plndr/kube-vip:${VipVersion}
+              image: plndr/kube-vip:${KUBE_VIP_VERSION}
               imagePullPolicy: IfNotPresent
               name: kube-vip
               resources: {}
@@ -593,7 +593,7 @@ objects:
                 value: /csi/csi.sock
               - name: DRIVER_REG_SOCK_PATH
                 value: /var/lib/kubelet/plugins/csi.vsphere.vmware.com/csi.sock
-              image: quay.io/k8scsi/csi-node-driver-registrar:${RegVersion}
+              image: quay.io/k8scsi/csi-node-driver-registrar:${CSI_REG_VERSION}
               lifecycle:
                 preStop:
                   exec:
@@ -627,7 +627,7 @@ objects:
                 valueFrom:
                   fieldRef:
                     fieldPath: spec.nodeName
-              image: gcr.io/cloud-provider-vsphere/csi/release/driver:${DriverVersion}
+              image: gcr.io/cloud-provider-vsphere/csi/release/driver:${CSI_DRIVER_VERSION}
               livenessProbe:
                 failureThreshold: 3
                 httpGet:
@@ -660,7 +660,7 @@ objects:
                 name: device-dir
             - args:
               - --csi-address=/csi/csi.sock
-              image: quay.io/k8scsi/livenessprobe:${ProbeVersion}
+              image: quay.io/k8scsi/livenessprobe:${LIVE_PROBE_VERSION}
               name: liveness-probe
               resources: {}
               volumeMounts:
@@ -725,7 +725,7 @@ objects:
               env:
               - name: ADDRESS
                 value: /csi/csi.sock
-              image: quay.io/k8scsi/csi-attacher:${AttacherVersion}
+              image: quay.io/k8scsi/csi-attacher:${CSI_ATTACHER_VERSION}
               name: csi-attacher
               resources: {}
               volumeMounts:
@@ -742,7 +742,7 @@ objects:
                 value: PRODUCTION
               - name: X_CSI_LOG_LEVEL
                 value: INFO
-              image: gcr.io/cloud-provider-vsphere/csi/release/driver:${DriverVersion}
+              image: gcr.io/cloud-provider-vsphere/csi/release/driver:${CSI_DRIVER_VERSION}
               livenessProbe:
                 failureThreshold: 3
                 httpGet:
@@ -768,7 +768,7 @@ objects:
               env:
               - name: ADDRESS
                 value: /var/lib/csi/sockets/pluginproxy/csi.sock
-              image: quay.io/k8scsi/livenessprobe:${ProbeVersion}
+              image: quay.io/k8scsi/livenessprobe:${LIVE_PROBE_VERSION}
               name: liveness-probe
               resources: {}
               volumeMounts:
@@ -783,7 +783,7 @@ objects:
                 value: PRODUCTION
               - name: VSPHERE_CSI_CONFIG
                 value: /etc/cloud/csi-vsphere.conf
-              image: gcr.io/cloud-provider-vsphere/csi/release/syncer:${SyncerVersion}
+              image: gcr.io/cloud-provider-vsphere/csi/release/syncer:${CSI_SYNCER_VERSION}
               name: vsphere-syncer
               resources: {}
               volumeMounts:
@@ -799,7 +799,7 @@ objects:
               env:
               - name: ADDRESS
                 value: /csi/csi.sock
-              image: quay.io/k8scsi/csi-provisioner:${ProvisionerVersion}
+              image: quay.io/k8scsi/csi-provisioner:${CSI_PROVISIONER_VERSION}
               name: csi-provisioner
               resources: {}
               volumeMounts:
