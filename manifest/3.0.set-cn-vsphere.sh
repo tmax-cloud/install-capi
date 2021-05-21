@@ -41,12 +41,12 @@ sudo docker push ${REGISTRY}/cloud-provider-vsphere/csi/release/syncer:${CSI_SYN
 sed -i 's/gcr.io\/kubebuilder\/kube-rbac-proxy:'"${VSPHERE_RBAC_PROXY_VERSION}"'/'"${REGISTRY}"'\/kubebuilder\/kube-rbac-proxy:'"${VSPHERE_RBAC_PROXY_VERSION}"'/g' yaml/infrastructure-components-vsphere-${AWS_VERSION}.yaml
 sed -i 's/gcr.io\/cluster-api-provider-vsphere\/release\/manager:'"${VSPHERE_VERSION}"'/'"${REGISTRY}"'\/cluster-api-provider-vsphere\/release\/manager:'"${VSPHERE_VERSION}"'/g' yaml/infrastructure-components-vsphere-${AWS_VERSION}.yaml
 
-sed -i 's/plndr\/kube-vip:'"${KUBE_VIP_VERSION}"'/'"${REGISTRY}"'\/kube-vip:'"${KUBE_VIP_VERSION}"'/g' yaml/service-catalog-template-CAPI-vsphere-${VSPHERE_VERSION}.yaml
-sed -i 's/quay.io\/k8scsi\/livenessprobe:'"${LIVE_PROBE_VERSION}"'/'"${REGISTRY}"'\/k8scsi\/livenessprobe:'"${LIVE_PROBE_VERSION}"'/g' yaml/service-catalog-template-CAPI-vsphere-${VSPHERE_VERSION}.yaml
-sed -i 's/quay.io\/k8scsi\/csi-attacher:'"${CSI_ATTACHER_VERSION}"'/'"${REGISTRY}"'\/k8scsi\/csi-attacher:'"${CSI_ATTACHER_VERSION}"'/g' yaml/service-catalog-template-CAPI-vsphere-${VSPHERE_VERSION}.yaml
-sed -i 's/quay.io\/k8scsi\/csi-provisioner:'"${CSI_PROVISIONER_VERSION}"'/'"${REGISTRY}"'\/k8scsi\/csi-provisioner:'"${CSI_PROVISIONER_VERSION}"'/g' yaml/service-catalog-template-CAPI-vsphere-${VSPHERE_VERSION}.yaml
-sed -i 's/quay.io\/k8scsi\/csi-node-driver-registrar:'"${CSI_REG_VERSION}"'/'"${REGISTRY}"'\/k8scsi\/csi-node-driver-registrar:'"${CSI_REG_VERSION}"'/g' yaml/service-catalog-template-CAPI-vsphere-${VSPHERE_VERSION}.yaml
-sed -i 's/gcr.io\/cloud-provider-vsphere\/csi\/release\/driver:'"${CSI_DRIVER_VERSION}"'/'"${REGISTRY}"'\/cloud-provider-vsphere\/csi\/release\/driver:'"${CSI_DRIVER_VERSION}"'/g' yaml/service-catalog-template-CAPI-vsphere-${VSPHERE_VERSION}.yaml
-sed -i 's/gcr.io\/cloud-provider-vsphere\/csi\/release\/syncer:'"${CSI_SYNCER_VERSION}"'/'"${REGISTRY}"'\/cloud-provider-vsphere\/csi\/release\/syncer:'"${CSI_SYNCER_VERSION}"'/g' yaml/service-catalog-template-CAPI-vsphere-${VSPHERE_VERSION}.yaml
+sed -i 's/plndr\/kube-vip:${KUBE_VIP_VERSION}/'"${REGISTRY}"'\/kube-vip:${KUBE_VIP_VERSION}/g' yaml/service-catalog-template-CAPI-vsphere-${VSPHERE_VERSION}.yaml
+sed -i 's/quay.io\/k8scsi\/livenessprobe:${LIVE_PROBE_VERSION}/'"${REGISTRY}"'\/k8scsi\/livenessprobe:${LIVE_PROBE_VERSION}/g' yaml/service-catalog-template-CAPI-vsphere-${VSPHERE_VERSION}.yaml
+sed -i 's/quay.io\/k8scsi\/csi-attacher:${CSI_ATTACHER_VERSION}/'"${REGISTRY}"'\/k8scsi\/csi-attacher:${CSI_ATTACHER_VERSION}/g' yaml/service-catalog-template-CAPI-vsphere-${VSPHERE_VERSION}.yaml
+sed -i 's/quay.io\/k8scsi\/csi-provisioner:${CSI_PROVISIONER_VERSION}/'"${REGISTRY}"'\/k8scsi\/csi-provisioner:${CSI_PROVISIONER_VERSION}/g' yaml/service-catalog-template-CAPI-vsphere-${VSPHERE_VERSION}.yaml
+sed -i 's/quay.io\/k8scsi\/csi-node-driver-registrar:${CSI_REG_VERSION}/'"${REGISTRY}"'\/k8scsi\/csi-node-driver-registrar:${CSI_REG_VERSION}/g' yaml/service-catalog-template-CAPI-vsphere-${VSPHERE_VERSION}.yaml
+sed -i 's/gcr.io\/cloud-provider-vsphere\/csi\/release\/driver:${CSI_DRIVER_VERSION}/'"${REGISTRY}"'\/cloud-provider-vsphere\/csi\/release\/driver:${CSI_DRIVER_VERSION}/g' yaml/service-catalog-template-CAPI-vsphere-${VSPHERE_VERSION}.yaml
+sed -i 's/gcr.io\/cloud-provider-vsphere\/csi\/release\/syncer:${CSI_SYNCER_VERSION}/'"${REGISTRY}"'\/cloud-provider-vsphere\/csi\/release\/syncer:${CSI_SYNCER_VERSION}/g' yaml/service-catalog-template-CAPI-vsphere-${VSPHERE_VERSION}.yaml
 
 bash message.sh "SUCCESS" "run 'bash 3.1.install-vsphere.sh'"

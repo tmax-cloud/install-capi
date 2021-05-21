@@ -42,7 +42,6 @@ objects:
       global:
         secretName: cloud-provider-vsphere-credentials
         secretNamespace: kube-system
-        thumbprint: ${VsphereThumbprint}
       network:
         name: '${VsphereNetwork}'
       providerConfig:
@@ -51,7 +50,6 @@ objects:
       virtualCenter:
         ${VsphereServer}:
           datacenters: '${VsphereDataCenter}'
-          thumbprint: ${VsphereThumbprint}
       workspace:
         datacenter: '${VsphereDataCenter}'
         datastore: '${VsphereDataStore}'
@@ -62,7 +60,6 @@ objects:
       host: ${VsphereControlPlane}
       port: 6443
     server: '${VsphereServer}'
-    thumbprint: ${VsphereThumbprint}
 - apiVersion: infrastructure.cluster.x-k8s.io/v1alpha3
   kind: VSphereMachineTemplate
   metadata:
@@ -85,7 +82,6 @@ objects:
         resourcePool: '${VsphereResourcePool}'
         server: '${VsphereServer}'
         template: ubuntu-1804-kube-v1.17.3
-        thumbprint: ${VsphereThumbprint}
 - apiVersion: controlplane.cluster.x-k8s.io/v1alpha3
   kind: KubeadmControlPlane
   metadata:
@@ -138,7 +134,7 @@ objects:
                 value: "10"
               - name: vip_retryperiod
                 value: "2"
-              image: plndr/kube-vip:0.3.2
+              image: plndr/kube-vip:${VipVersion}
               imagePullPolicy: IfNotPresent
               name: kube-vip
               resources: {}
@@ -597,7 +593,7 @@ objects:
                 value: /csi/csi.sock
               - name: DRIVER_REG_SOCK_PATH
                 value: /var/lib/kubelet/plugins/csi.vsphere.vmware.com/csi.sock
-              image: quay.io/k8scsi/csi-node-driver-registrar:v2.0.1
+              image: quay.io/k8scsi/csi-node-driver-registrar:${RegVersion}
               lifecycle:
                 preStop:
                   exec:
@@ -631,7 +627,7 @@ objects:
                 valueFrom:
                   fieldRef:
                     fieldPath: spec.nodeName
-              image: gcr.io/cloud-provider-vsphere/csi/release/driver:v2.1.0
+              image: gcr.io/cloud-provider-vsphere/csi/release/driver:${DriverVersion}
               livenessProbe:
                 failureThreshold: 3
                 httpGet:
@@ -664,7 +660,7 @@ objects:
                 name: device-dir
             - args:
               - --csi-address=/csi/csi.sock
-              image: quay.io/k8scsi/livenessprobe:v2.1.0
+              image: quay.io/k8scsi/livenessprobe:${ProbeVersion}
               name: liveness-probe
               resources: {}
               volumeMounts:
@@ -729,7 +725,7 @@ objects:
               env:
               - name: ADDRESS
                 value: /csi/csi.sock
-              image: quay.io/k8scsi/csi-attacher:v3.0.0
+              image: quay.io/k8scsi/csi-attacher:${AttacherVersion}
               name: csi-attacher
               resources: {}
               volumeMounts:
@@ -746,7 +742,7 @@ objects:
                 value: PRODUCTION
               - name: X_CSI_LOG_LEVEL
                 value: INFO
-              image: gcr.io/cloud-provider-vsphere/csi/release/driver:v2.1.0
+              image: gcr.io/cloud-provider-vsphere/csi/release/driver:${DriverVersion}
               livenessProbe:
                 failureThreshold: 3
                 httpGet:
@@ -772,7 +768,7 @@ objects:
               env:
               - name: ADDRESS
                 value: /var/lib/csi/sockets/pluginproxy/csi.sock
-              image: quay.io/k8scsi/livenessprobe:v2.1.0
+              image: quay.io/k8scsi/livenessprobe:${ProbeVersion}
               name: liveness-probe
               resources: {}
               volumeMounts:
@@ -787,7 +783,7 @@ objects:
                 value: PRODUCTION
               - name: VSPHERE_CSI_CONFIG
                 value: /etc/cloud/csi-vsphere.conf
-              image: gcr.io/cloud-provider-vsphere/csi/release/syncer:v2.1.0
+              image: gcr.io/cloud-provider-vsphere/csi/release/syncer:${SyncerVersion}
               name: vsphere-syncer
               resources: {}
               volumeMounts:
@@ -803,7 +799,7 @@ objects:
               env:
               - name: ADDRESS
                 value: /csi/csi.sock
-              image: quay.io/k8scsi/csi-provisioner:v2.0.0
+              image: quay.io/k8scsi/csi-provisioner:${ProvisionerVersion}
               name: csi-provisioner
               resources: {}
               volumeMounts:
@@ -881,12 +877,6 @@ parameters:
   name: VsphereUserPassword
   required: false
   value: password
-  valueType: string
-- description: vCenter TLS Thumbprint
-  displayName: Thumbprint
-  name: VsphereThumbprint
-  required: false
-  value: 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
   valueType: string
 - description: vCenter Network Name
   displayName: Network Name
