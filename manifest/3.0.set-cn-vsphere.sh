@@ -49,9 +49,4 @@ sed -i 's/quay.io\/k8scsi\/csi-node-driver-registrar:'"${CSI_REG_VERSION}"'/'"${
 sed -i 's/gcr.io\/cloud-provider-vsphere\/csi\/release\/driver:'"${CSI_DRIVER_VERSION}"'/'"${REGISTRY}"'\/cloud-provider-vsphere\/csi\/release\/driver:'"${CSI_DRIVER_VERSION}"'/g' yaml/service-catalog-template-CAPI-vsphere-${VSPHERE_VERSION}.yaml
 sed -i 's/gcr.io\/cloud-provider-vsphere\/csi\/release\/syncer:'"${CSI_SYNCER_VERSION}"'/'"${REGISTRY}"'\/cloud-provider-vsphere\/csi\/release\/syncer:'"${CSI_SYNCER_VERSION}"'/g' yaml/service-catalog-template-CAPI-vsphere-${VSPHERE_VERSION}.yaml
 
-echo ""
-echo ""
-echo "########################################################################################"
-echo "COMPLETE PRESET!!!!! GO TO NEXT STEP"
-echo ""
-echo ""
+bash message.sh "SUCCESS" "run 'bash 3.1.install-vsphere.sh'"

@@ -6,9 +6,4 @@ kubectl delete -f yaml/infrastructure-components-aws-${AWS_VERSION}.yaml
 #clusterawsadm bootstrap iam delete-cloudformation-stack
 sudo rm -f /usr/local/bin/clusterawsadm
 
-echo ""
-echo ""
-echo "########################################################################################"
-echo "COMPLETE UNINSTALLATION!!!!!"
-echo ""
-echo ""
+bash message.sh "SUCCESS" "CAPI-provider-aws is deleted"

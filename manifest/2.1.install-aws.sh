@@ -1,3 +1,8 @@
+if [ ! -f "aws-credential.conf" ]; then
+    bash message.sh "ERROR" "'aws-credential.conf' is NOT EXIST!"
+    exit 0
+fi
+
 source version.conf
 source aws-credential.conf
 
@@ -21,9 +26,4 @@ kubectl apply -f yaml/service-catalog-template-CAPI-aws-${AWS_VERSION}.yaml
 echo ""
 clusterawsadm version
 
-echo ""
-echo ""
-echo "########################################################################################"
-echo "COMPLETE INSTALLATION!!!!! USE: kubectl get pods -A | grep capa"
-echo ""
-echo ""
+bash message.sh "SUCCESS" "see 'kubectl get pods -A | grep capa'"

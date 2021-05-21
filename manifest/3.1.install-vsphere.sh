@@ -1,3 +1,8 @@
+if [ ! -f "vsphere-credential.conf" ]; then
+    bash message.sh "ERROR" "'vsphere-credential.conf' is NOT EXIST!"
+	exit 0
+fi
+
 source version.conf
 source vsphere-credential.conf
 
@@ -9,9 +14,4 @@ kubectl apply -f yaml/infrastructure-components-vsphere-${VSPHERE_VERSION}.yaml
 ## Install service catalog template
 kubectl apply -f yaml/service-catalog-template-CAPI-vsphere-${VSPHERE_VERSION}.yaml
 
-echo ""
-echo ""
-echo "########################################################################################"
-echo "COMPLETE INSTALLATION!!!!! USE: kubectl get pods -A | grep capv"
-echo ""
-echo ""
+bash message.sh "SUCCESS" "run 'kubectl get pods -A | grep capv'"

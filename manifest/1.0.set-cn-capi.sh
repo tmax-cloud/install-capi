@@ -24,9 +24,4 @@ sed -i 's/us.gcr.io\/k8s-artifacts-prod\/cluster-api\/cluster-api-controller:'"$
 sed -i 's/us.gcr.io\/k8s-artifacts-prod\/cluster-api\/kubeadm-bootstrap-controller:'"${CAPI_VERSION}"'/'"${REGISTRY}"'\/k8s-artifacts-prod\/cluster-api\/kubeadm-bootstrap-controller:'"${CAPI_VERSION}"'/g' yaml/cluster-api-components-${CAPI_VERSION}.yaml
 sed -i 's/us.gcr.io\/k8s-artifacts-prod\/cluster-api\/kubeadm-control-plane-controller:'"${CAPI_VERSION}"'/'"${REGISTRY}"'\/k8s-artifacts-prod\/cluster-api\/kubeadm-control-plane-controller:'"${CAPI_VERSION}"'/g' yaml/cluster-api-components-${CAPI_VERSION}.yaml
 
-echo ""
-echo ""
-echo "########################################################################################"
-echo "COMPLETE PRESET!!!!! GO TO NEXT STEP"
-echo ""
-echo ""
+bash message.sh "SUCCESS" "run 'bash 1.1.install-capi.sh'"
