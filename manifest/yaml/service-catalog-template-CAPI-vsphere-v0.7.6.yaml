@@ -74,17 +74,17 @@ objects:
         cloneMode: linkedClone
         datacenter: '${VsphereDataCenter}'
         datastore: '${VsphereDataStore}'
-        diskGiB: 25
+        diskGiB: ${DiskSize}
         folder: '${VsphereFolder}'
-        memoryMiB: 8192
+        memoryMiB: ${MemSize}
         network:
           devices:
           - dhcp4: true
             networkName: '${VsphereNetwork}'
-        numCPUs: 2
+        numCPUs: ${CpuNum}
         resourcePool: '${VsphereResourcePool}'
         server: '${VsphereServer}'
-        template: ubuntu-1804-kube-v1.17.3
+        template: '${TemplateName}'
         thumbprint: ${VsphereThumbprint}
 - apiVersion: controlplane.cluster.x-k8s.io/v1alpha3
   kind: KubeadmControlPlane
@@ -299,7 +299,7 @@ objects:
       - kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
       useExperimentalRetryJoin: true
       users:
-      - name: capv
+      - name: root
         sshAuthorizedKeys:
         - ''
         sudo: ALL=(ALL) NOPASSWD:ALL
@@ -326,7 +326,7 @@ objects:
         - echo "127.0.0.1   {{ ds.meta_data.hostname }}" >>/etc/hosts
         - echo "{{ ds.meta_data.hostname }}" >/etc/hostname
         users:
-        - name: capv
+        - name: root
           sshAuthorizedKeys:
           - ''
           sudo: ALL=(ALL) NOPASSWD:ALL
@@ -916,6 +916,30 @@ parameters:
   name: VsphereResourcePool
   required: false
   value: VM Resource
+  valueType: string
+- description: VM Disk Size
+  displayName: Disk Size
+  name: DiskSize
+  required: false
+  value: 25
+  valueType: number
+- description: VM Memory Size
+  displayName: Memory Size
+  name: MemSize
+  required: false
+  value: 8192
+  valueType: number
+- description: Number of CPUs
+  displayName: Number of CPUs
+  name: CpuNum
+  required: false
+  value: 2
+  valueType: number
+- description: Target Template Name
+  displayName: Template Name
+  name: TemplateName
+  required: false
+  value: ubuntu-1804-kube-v1.17.3
   valueType: string
 - description: Control Plane Endpoint IP
   displayName: Control Plane Endpoint IP
