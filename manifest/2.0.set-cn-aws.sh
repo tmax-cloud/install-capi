@@ -1,3 +1,9 @@
+if [ ! -f "registry.conf" ]; then
+    bash message.sh "ERROR" "'registry.conf' is NOT EXIST!"
+    exit 0
+fi
+
+source registry.conf
 source version.conf
 
 ## Register images to registry

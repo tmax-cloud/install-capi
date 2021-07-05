@@ -102,12 +102,12 @@ objects:
           extraArgs:
             audit-webhook-mode: batch
             cloud-provider: external
-            oidc-ca-file: /etc/kubernetes/pki/Wildcard.tmaxcloud.com.crt
-            oidc-client-id: hypercloud5
-            oidc-groups-claim: group
-            oidc-issuer-url: https://testauth.tmaxcloud.com/auth/realms/tmax
-            oidc-username-claim: preferred_username
-            oidc-username-prefix: '-'
+            oidc-issuer-url: ${OIDC_ISSUER_URL}
+            oidc-client-id: ${OIDC_CLIENT_ID}
+            oidc-username-claim: ${OIDC_USERNAME_CLAIM}
+            oidc-username-prefix: ${OIDC_USERNAME_PREFIX}
+            oidc-groups-claim: ${OIDC_GROUPS_CLAIM}
+            oidc-ca-file: ${OIDC_CA_FILE}
         controllerManager:
           extraArgs:
             cloud-provider: external
@@ -272,7 +272,7 @@ objects:
           4HA=
           -----END CERTIFICATE-----
         owner: root:root
-        path: /etc/kubernetes/pki/Wildcard.tmaxcloud.com.crt
+        path: ${OIDC_CA_FILE}
         permissions: "0644"
       initConfiguration:
         nodeRegistration:

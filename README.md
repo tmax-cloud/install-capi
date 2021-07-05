@@ -17,6 +17,8 @@
     * [설치 가이드](https://github.com/tmax-cloud/template-service-broker)
 * Catalog Controller
     * [설치 가이드](https://github.com/tmax-cloud/install-catalog)
+* HyperCloud OIDC Information
+    * [참고](https:/https://github.com/tmax-cloud/install-hyperauth/tree/5.0#step-5-kubernetes-oidc-%EC%97%B0%EB%8F%99)
 * Provider AWS
     * AWS credential([How to get](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html))
     * AWS Cloudformation Stack
@@ -45,7 +47,18 @@
         ```bash
         $ cd manifest
         $ chmod +x *.sh
-        $ export REGISTRY={registryIP:PORT}
+        $ cat << "EOF" | tee registry.conf
+        export REGISTRY={registryIP:PORT}
+        EOF
+        $ cat << "EOF" | tee oidc.conf
+        export OIDC_ISSUER_URL=https://{HYPERAUTH_SERVICE_IP}/auth/realms/tmax
+        export OIDC_CLIENT_ID=hypercloud5
+        export OIDC_USERNAME_CLAIM=preferred_username
+        export OIDC_USERNAME_PREFIX=\'-\'
+        export OIDC_GROUPS_CLAIM=claim=group
+        export OIDC_CA_FILE=/etc/kubernetes/pki/hyperauth.crt
+        export HYPERAUTH_CERT=$(sudo cat /etc/kubernetes/pki/hyperauth.crt | sed ':a;N;$!ba;s/\n/\\\\n/g' | sed 's/\//\\\//g')
+        EOF
         $ bash 1.0.set-cn-capi.sh
         $ bash 1.1.install-capi.sh
         ```
@@ -67,7 +80,7 @@
             * 아래 명령어를 순서대로 수행
                 ```bash
                 $ cat << "EOF" | tee vsphere-credential.conf
-                export VSPHERE_USERNAME=example@domain.local
+                export VSPHERE_USERNAME=your_username
                 export VSPHERE_PASSWORD=your_password
                 EOF
                 $ bash 3.0.set-cn-vsphere.sh
@@ -78,6 +91,15 @@
     ```bash
     $ cd manifest
     $ chmod +x *.sh
+    $ cat << "EOF" | tee oidc.conf
+    export OIDC_ISSUER_URL=https://{HYPERAUTH_SERVICE_IP}/auth/realms/tmax
+    export OIDC_CLIENT_ID=hypercloud5
+    export OIDC_USERNAME_CLAIM=preferred_username
+    export OIDC_USERNAME_PREFIX=\'-\'
+    export OIDC_GROUPS_CLAIM=claim=group
+    export OIDC_CA_FILE=/etc/kubernetes/pki/hyperauth.crt
+    export HYPERAUTH_CERT=$(sudo cat /etc/kubernetes/pki/hyperauth.crt | sed ':a;N;$!ba;s/\n/\\\\n/g' | sed 's/\//\\\//g')
+    EOF
     $ bash 1.1.install-capi.sh
     ```
 
