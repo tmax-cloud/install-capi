@@ -3,8 +3,10 @@ if [ ! -f "oidc.conf" ]; then
     exit 0
 fi
 
+cp oidc.conf oidc-for-sed.conf
+sed 's/\//\\\//g' oidc-for-sed.conf
 source version.conf
-source oidc.conf
+source oidc-for-sed.conf
 
 ## Set oidc configuration to templates
 sed -i 's/${OIDC_ISSUER_URL}/'"${OIDC_ISSUER_URL}"'/g' yaml/service-catalog-template-CAPI-*.yaml
@@ -20,4 +22,5 @@ sed -i -e '/${HYPERAUTH_CERT}/r '"${OIDC_CA_FILE}" -e '/${HYPERAUTH_CERT}/d' yam
 ## Download and provision CAPI
 kubectl apply -f yaml/cluster-api-components-${CAPI_VERSION}.yaml
 
+rm -f oidc-for-sed.conf
 bash ./message.sh "SUCCESS" "see 'kubectl get pods -A | grep capi'"
