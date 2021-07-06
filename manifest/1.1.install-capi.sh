@@ -13,8 +13,9 @@ sed -i 's/${OIDC_USERNAME_CLAIM}/'"${OIDC_USERNAME_CLAIM}"'/g' yaml/service-cata
 sed -i 's/${OIDC_USERNAME_PREFIX}/'"${OIDC_USERNAME_PREFIX}"'/g' yaml/service-catalog-template-CAPI-*.yaml
 sed -i 's/${OIDC_GROUPS_CLAIM}/'"${OIDC_GROUPS_CLAIM}"'/g' yaml/service-catalog-template-CAPI-*.yaml
 sed -i 's/${OIDC_CA_FILE}/'"${OIDC_CA_FILE}"'/g' yaml/service-catalog-template-CAPI-*.yaml
-sed -i ${HYPERAUTH_CERT} yaml/service-catalog-template-CAPI-*.yaml
-sed -i 's/\\n/\'$'\n''/g' yaml/service-catalog-template-CAPI-*.yaml
+sed -i -e '/${HYPERAUTH_CERT}/r '"${OIDC_CA_FILE}" -e '/${HYPERAUTH_CERT}/d' yaml/service-catalog-template-CAPI-*.yaml
+#sed -i ${HYPERAUTH_CERT} yaml/service-catalog-template-CAPI-*.yaml
+#sed -i 's/\\n/\'$'\n''/g' yaml/service-catalog-template-CAPI-*.yaml
 
 ## Download and provision CAPI
 kubectl apply -f yaml/cluster-api-components-${CAPI_VERSION}.yaml

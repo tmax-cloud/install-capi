@@ -57,7 +57,6 @@
         export OIDC_USERNAME_PREFIX=\'-\'
         export OIDC_GROUPS_CLAIM=claim=group
         export OIDC_CA_FILE=/etc/kubernetes/pki/hyperauth.crt
-        export HYPERAUTH_CERT=$(sudo cat /etc/kubernetes/pki/hyperauth.crt | sed ':a;N;$!ba;s/\n/\\\\n/g' | sed 's/\//\\\//g')
         EOF
         $ bash 1.0.set-cn-capi.sh
         $ bash 1.1.install-capi.sh
@@ -98,7 +97,6 @@
     export OIDC_USERNAME_PREFIX=\'-\'
     export OIDC_GROUPS_CLAIM=claim=group
     export OIDC_CA_FILE=/etc/kubernetes/pki/hyperauth.crt
-    export HYPERAUTH_CERT=$(sudo cat /etc/kubernetes/pki/hyperauth.crt | sed ':a;N;$!ba;s/\n/\\\\n/g' | sed 's/\//\\\//g')
     EOF
     $ bash 1.1.install-capi.sh
     ```
