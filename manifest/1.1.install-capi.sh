@@ -7,8 +7,8 @@ source version.conf
 source oidc.conf
 
 ## Exception case handling for oidc configuration
-sudo cp ${OIDC_CA_FILE} ./target.crt
-sed -i 's/^/          /' ./target.crt
+sudo cp ${OIDC_CA_FILE} target.crt
+sed -i 's/^/          /' target.crt
 url_for_sed=$(echo ${OIDC_ISSUER_URL} | sed 's/\//\\\//g')
 file_for_sed=$(echo ${OIDC_CA_FILE} | sed 's/\//\\\//g')
 
@@ -26,6 +26,6 @@ sudo sed -i -e '/${HYPERAUTH_CERT}/r target.crt' -e '/${HYPERAUTH_CERT}/d' yaml/
 ## Download and provision CAPI
 kubectl apply -f yaml/cluster-api-components-${CAPI_VERSION}.yaml
 
-rm -f ./target.crt
+rm -f target.crt
 
-bash ./message.sh "SUCCESS" "see 'kubectl get pods -A | grep capi'"
+bash message.sh "SUCCESS" "see 'kubectl get pods -A | grep capi'"
