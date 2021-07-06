@@ -4,7 +4,7 @@ if [ ! -f "oidc.conf" ]; then
 fi
 
 cp oidc.conf oidc-for-sed.conf
-sed 's/\//\\\//g' oidc-for-sed.conf
+sed -i 's/\//\\\//g' oidc-for-sed.conf
 source version.conf
 source oidc-for-sed.conf
 
