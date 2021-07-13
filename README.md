@@ -55,7 +55,7 @@
         export OIDC_CLIENT_ID=hypercloud5
         export OIDC_USERNAME_CLAIM=preferred_username
         export OIDC_USERNAME_PREFIX=\'-\'
-        export OIDC_GROUPS_CLAIM=claim=group
+        export OIDC_GROUPS_CLAIM=group
         export OIDC_CA_FILE=/etc/kubernetes/pki/hyperauth.crt
         EOF
         $ bash 1.0.set-cn-capi.sh
@@ -95,7 +95,7 @@
     export OIDC_CLIENT_ID=hypercloud5
     export OIDC_USERNAME_CLAIM=preferred_username
     export OIDC_USERNAME_PREFIX=\'-\'
-    export OIDC_GROUPS_CLAIM=claim=group
+    export OIDC_GROUPS_CLAIM=group
     export OIDC_CA_FILE=/etc/kubernetes/pki/hyperauth.crt
     EOF
     $ bash 1.1.install-capi.sh
