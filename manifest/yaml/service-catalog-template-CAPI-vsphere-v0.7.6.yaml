@@ -164,6 +164,73 @@ objects:
         owner: root:root
         path: ${OIDC_CA_FILE}
         permissions: "0644"
+      - content: |
+          apiVersion: v1
+          kind: Config
+          clusters:
+          - cluster:
+              certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUZ0VENDQTUyZ0F3SUJBZ0lVQVVhL3VZNFZOdTZXTEU0dGFqVFZBblRZV0M4d0RRWUpLb1pJaHZjTkFRRUwKQlFBd1V6RUxNQWtHQTFVRUJoTUNTMUl4Q3pBSkJnTlZCQWdNQWtOQk1SWXdGQVlEVlFRSERBMVRZVzRnUm5KaApibU5wYzJOdk1RMHdDd1lEVlFRS0RBUlViV0Y0TVJBd0RnWURWUVFEREFkVWJXRjRJRU5CTUI0WERUSXhNRFV4Ck1EQTJOVFV6TlZvWERUSXpNRFV6TURBMk5UVXpOVm93VlRFTE1Ba0dBMVVFQmhNQ1MxSXhDekFKQmdOVkJBZ00KQWtOQk1SWXdGQVlEVlFRSERBMVRZVzRnUm5KaGJtTnBjMk52TVEwd0N3WURWUVFLREFSVWJXRjRNUkl3RUFZRApWUVFEREFsb2VYQmxjbUYxZEdnd2dnSWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUNEd0F3Z2dJS0FvSUNBUUM3Ckh4MXlEUCtXMTR2S0xpL1JnYi9TRFQwT0NoT3lrNy9hdGFpS3d6Z3ZtT1VBa2xZdFpWZ1FVdlhkM2EyQlFtRnYKNFpzMEJNWXU3dGZCWWZOSlpISXZlTTlLc1hpdEprNXZhM21Sa3h6WEw3SmRCK1haSkJCR3hqdnJhN2x6ZXNUVQpob3BHaS83RTJqdFQvT1lNQ2JHRXp5aThOd3lsT2R1enIrSWJlMVhva3Q1czJ2VlkzVUNIZW9pTng3em50WCtDCkU4VFl6cDByZzFsRXhhTkFlbmV2cmFmcXNyYTZHL0VuT1J0WStXTHhmVzhyRDhUMEErSFFwK0xxY08ybW9tY0gKWlFiQTJNanljRUR5Q0dEVmk1eHBnaGxSWmZhcUJlNEx2MGVSeVhwM3J4WHNpQnRGL2Zzd3E5VlREMXV2TDdnbgpwZ0xSbTFyS25UelRvMlJkdXk0K2M5ZysvZ3p0dVJJcTlwUm5CcXNua3hXaGFSWGZIcGZMMHBYMVRHbVhSdklBCmZPeEJzSk1OK2hyUjNTMlJKY015NkNnSk1hUDluUkFPVERvd3kwZm5GNUNsZmlXT29IdFhwQ3BDS2F3bW5mL3YKQ0c4L1dzM2RtamtzVEpodEQyeXhDUTlMazhxaDBWM3VrWUM1Z1NXaVIzUnltd0NJZjk0R2hWSjIxblREZnZZWApkY3FhSFRmS3BqZlEra3cxNUN6TmZjc3Jsa3lnaHFWK0hNalRvUWFnc3g5dVZ5UTZvTUhtOVVKdER2SjZKWlI1CkVVUFRCNFlERnhkVktyd0xnbFlNNHdwR3NwdjUyalRPNXFTT0lwUUhuZGlKd2d6dTdsZ1o5RXZsRmtHRS9yaEEKdG1Eem1IZWNmUjNYVUgwUGpsTHIzUk5JOXJQYmhFNlVYRmtJS2VmYXJRSURBUUFCbzM4d2ZUQWZCZ05WSFNNRQpHREFXZ0JTVXVsdit5Q1YwRm1xRnhxS1hKWkhKeVlnS3pUQU1CZ05WSFJNQkFmOEVBakFBTUIwR0ExVWRKUVFXCk1CUUdDQ3NHQVFVRkJ3TUJCZ2dyQmdFRkJRY0RBakFPQmdOVkhROEJBZjhFQkFNQ0JhQXdIUVlEVlIwT0JCWUUKRk1uQXdMbUxmMkJtRTFnSk5Ia2Npb3NHRjREdE1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQ0FRQ1hpR0NIL2xZVQpiLzhieWpRNE5zTUZ2UXNGY3I0djhXR1I3dVlnVm8yUFV3SUVESnY4SlJPcDNrV2xNRUUySkFIWmI3OHNGVXozCjV0UW1uc3Z4SUpmVVBsaGdabnhwVC9KR2JOTGpUVVprREx5VW1IRlBEL294Q1VoYmZ0WlJzeHRuL1dYcFFNazYKYUxjZVVMUVdHWVIwN0ErVFZRQkFONzlvVG0xa3MwSFpjQmQ4ZEowR0poSUx3cC9hRlFvMFBrUG5qeStqUTFwOAp0ZnJVOE9RU2l0aDNCejlKbWMyWWVTNU92Q3A3aTZFZGc1dkdia2M1d09Db3UzOXhRQUgwNVdWVUpnYkRnMWRzCk51WElYVFhUbUh0c0x3Zkh2ZzArOFpUUVN4OFRFM2EyVzhMeE15bWoyYmtYRGhDdUxnLytlSXZZRXZzZ25NYlcKOStZUXkzdHhSL2d1K3JhNFF1RnJRZXlLYTAxRmNvaTZ4K21rNCtnOFdpTHU1bXE1aTJjTGQ4VFdZNkhzTE83WQpuRzcyTGwyaFh0OWk0RG5WNzZtZE1MbFQzNG9yczRPK2d6OC94TlUxMnVBdFRYNXJ2WGRBaVFRTnZTK3ZGa3RyCmE1WmVSNkh3ZmhYVzRXRUZieFFkMFl2clRzL25kRlFxKzFEZ0tMQ0QxUFVKL0lxY2o4bUJqZ282Y0IwRDJ6T3kKbGlQSCtscE15NDU4ak51RFpPbmI1cXR1VFpIRUlwVUJmeSsyQUxyVS9hZnJMaVlLdUVHRmFlMkowRXljYSs5bQovZUhRZGNHY0RwYXp2Tnc2Z000V2daWVpJYUpFV05QNVl0eHpHYzgrZnNja3VsSVpCeTRXdTU5MHlwaW1tdWFOCnc4RGZQNlUrWTY4SzM3M25tazZEclZEQUR4STQyZkx3QUE9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+              server: https://hypercloud5-api-server-service.${INGRESS_IP}.svc/audit/?namespace=${Namespace}&clusterName=${ClusterName}
+            name: audit-webhook-service
+          contexts:
+          - context:
+              cluster: audit-webhook-service
+            name: audit-webhook-context
+          current-context: audit-webhook-context
+        owner: root:root
+        path: /etc/kubernetes/pki/audit-webhook-config
+        permissions: "0644"
+      - content: |
+          apiVersion: audit.k8s.io/v1 # This is required.
+          kind: Policy
+          omitStages:
+            - "ResponseStarted"
+            - "RequestReceived"
+          rules:
+            # Don't log system requests.
+            - level: None
+              userGroups: ["system:serviceaccounts:hypercloud4-system", "system:nodes", "system:serviceaccounts", "system:masters"]
+            # Don't log requests by hypercloud4-admin and kube-system user.
+            - level: None
+              users: ["system:serviceaccount:hypercloud4-system:hypercloud4-admin", "system:kube-controller-manager", "system:kube-scheduler", "system:apiserver"]
+            # Don't log watch and get request
+            - level: None
+              verbs: ["watch", "get", "list"]
+            # Log the request body of configmap changes in kube-system.
+            - level: Metadata
+              resources:
+              - group: ""
+              - group: "admissionregistration.k8s.io"
+              - group: "apiextensions.k8s.io"
+              - group: "apiregistration.k8s.io"
+              - group: "apps"
+              - group: "authentication.istio.io"
+              - group: "autoscaling"
+              - group: "batch"
+              - group: "cdi.kubevirt.io"
+              - group: "ceph.rook.io"
+              - group: "cluster.x-k8s.io"
+              - group: "config.istio.io"
+              - group: "core.kubefed.io"
+              - group: "extensions"
+              - group: "kubevirt.io"
+              - group: "networking.istio.io"
+              - group: "policy"
+              - group: "rbac.authorization.k8s.io"
+              - group: "rbac.istio.io"
+              - group: "security.istio.io"
+              - group: "servicecatalog.k8s.io"
+              - group: "storage.k8s.io"
+              - group: "tekton.dev"
+              - group: "tmax.io"
+              - group: "claim.tmax.io"
+              - group: "cluster.tmax.io"
+              - group: "types.kubefed.io"
+            # Don't log others.
+            - level: None
+        owner: root:root
+        path: /etc/kubernetes/pki/audit-policy.yaml
+        permissions: "0644"
       initConfiguration:
         nodeRegistration:
           criSocket: /var/run/containerd/containerd.sock
@@ -730,6 +797,12 @@ objects:
     name: internal-feature-states.csi.vsphere.vmware.com
     namespace: '${TargetNamespace}'
 parameters:
+- description: namespace
+  displayName: Namespace
+  name: Namespace
+  required: false
+  value: default
+  valyeType: string
 - description: Cluster Owner
   displayName: Owner
   name: Owner
