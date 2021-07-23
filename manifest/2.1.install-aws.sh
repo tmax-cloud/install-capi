@@ -19,9 +19,6 @@ credential=$(clusterawsadm bootstrap credentials encode-as-profile | sed 's/\//\
 sed -i 's/${AWS_B64ENCODED_CREDENTIALS}/'"$credential"'/g' yaml/infrastructure-components-aws-${AWS_VERSION}.yaml
 kubectl apply -f yaml/infrastructure-components-aws-${AWS_VERSION}.yaml
 
-## Install service catalog template
-kubectl apply -f yaml/service-catalog-template-CAPI-aws-${AWS_VERSION}.yaml
-
 ## Check install status
 echo ""
 clusterawsadm version
