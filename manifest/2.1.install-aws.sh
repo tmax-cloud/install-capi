@@ -15,8 +15,8 @@ sudo cp bin/clusterawsadm /usr/local/bin/clusterawsadm
 clusterawsadm bootstrap iam create-cloudformation-stack
 
 ## Install CAPA infrastructure comopnents
-credential=$(clusterawsadm bootstrap credentials encode-as-profile | sed 's/\//\\\//g')
-sed -i 's/${AWS_B64ENCODED_CREDENTIALS}/'"$credential"'/g' yaml/infrastructure-components-aws-${AWS_VERSION}.yaml
+credential=$(clusterawsadm bootstrap credentials encode-as-profile)
+sed -i 's#${AWS_B64ENCODED_CREDENTIALS}#'"$credential"'#g' yaml/infrastructure-components-aws-${AWS_VERSION}.yaml
 kubectl apply -f yaml/infrastructure-components-aws-${AWS_VERSION}.yaml
 
 ## Check install status
