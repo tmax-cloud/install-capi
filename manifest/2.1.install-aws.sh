@@ -6,7 +6,7 @@ fi
 source version.conf
 source aws-credential.conf
 
-sed -i 's#${AWS_ACCESS_KEY_ID}#'${AWS_ACCESS_KEY_ID}'#g' ./aws-credential.form
+sed -i 's#${AWS_ACCESS_KEY}#'${AWS_ACCESS_KEY}'#g' ./aws-credential.form
 sed -i 's#${AWS_SECRET_ACCESS_KEY}#'${AWS_SECRET_ACCESS_KEY}'#g' ./aws-credential.form
 sed -i 's#${AWS_REGION}#'${AWS_REGION}'#g' ./aws-credential.form
 credential=$(cat ./aws-credential.form | base64 | tr -d '\n')
