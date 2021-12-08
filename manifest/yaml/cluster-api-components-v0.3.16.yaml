@@ -4455,6 +4455,42 @@ webhooks:
     - clusterresourcesets
   sideEffects: None
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: capi-controller-manager
+  namespace: capi-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: capi-controller-manager
+  namespace: capi-webhook-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: capi-kubeadm-bootstrap-controller-manager
+  namespace: capi-kubeadm-bootstrap-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: capi-kubeadm-bootstrap-controller-manager
+  namespace: capi-webhook-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: capi-kubeadm-control-plane-controller-manager
+  namespace: capi-kubeadm-control-plane-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: capi-kubeadm-control-plane-controller-manager
+  namespace: capi-webhook-system
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -4743,7 +4779,7 @@ roleRef:
   name: capi-leader-election-role
 subjects:
 - kind: ServiceAccount
-  name: default
+  name: capi-controller-manager
   namespace: capi-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -4759,7 +4795,7 @@ roleRef:
   name: capi-aggregated-manager-role
 subjects:
 - kind: ServiceAccount
-  name: default
+  name: capi-controller-manager
   namespace: capi-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -4774,7 +4810,7 @@ roleRef:
   name: capi-proxy-role
 subjects:
 - kind: ServiceAccount
-  name: default
+  name: capi-controller-manager
   namespace: capi-system
 ---
 apiVersion: v1
@@ -4860,6 +4896,7 @@ spec:
           httpGet:
             path: /readyz
             port: healthz
+      serviceAccountName: capi-controller-manager
       terminationGracePeriodSeconds: 10
       tolerations:
       - effect: NoSchedule
@@ -4924,6 +4961,7 @@ spec:
         - mountPath: /tmp/k8s-webhook-server/serving-certs
           name: cert
           readOnly: true
+      serviceAccountName: capi-controller-manager
       terminationGracePeriodSeconds: 10
       tolerations:
       - effect: NoSchedule
@@ -4934,7 +4972,7 @@ spec:
           defaultMode: 420
           secretName: capi-webhook-service-cert
 ---
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   labels:
@@ -4945,20 +4983,17 @@ spec:
   dnsNames:
   - capi-webhook-service.capi-webhook-system.svc
   - capi-webhook-service.capi-webhook-system.svc.cluster.local
+  isCA: false
   issuerRef:
-    kind: Issuer
-    name: capi-selfsigned-issuer
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: tmaxcloud-issuer
   secretName: capi-webhook-service-cert
----
-apiVersion: cert-manager.io/v1alpha2
-kind: Issuer
-metadata:
-  labels:
-    cluster.x-k8s.io/provider: cluster-api
-  name: capi-selfsigned-issuer
-  namespace: capi-webhook-system
-spec:
-  selfSigned: {}
+  usage:
+  - digital signature
+  - key encipherment
+  - server auth
+  - client auth
 ---
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: ValidatingWebhookConfiguration
@@ -8947,7 +8982,7 @@ roleRef:
   name: capi-kubeadm-bootstrap-leader-election-role
 subjects:
 - kind: ServiceAccount
-  name: default
+  name: capi-kubeadm-bootstrap-controller-manager
   namespace: capi-kubeadm-bootstrap-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -8962,7 +8997,7 @@ roleRef:
   name: capi-kubeadm-bootstrap-manager-role
 subjects:
 - kind: ServiceAccount
-  name: default
+  name: capi-kubeadm-bootstrap-controller-manager
   namespace: capi-kubeadm-bootstrap-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -8977,7 +9012,7 @@ roleRef:
   name: capi-kubeadm-bootstrap-proxy-role
 subjects:
 - kind: ServiceAccount
-  name: default
+  name: capi-kubeadm-bootstrap-controller-manager
   namespace: capi-kubeadm-bootstrap-system
 ---
 apiVersion: v1
@@ -9051,6 +9086,7 @@ spec:
         image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-bootstrap-controller:v0.3.16
         imagePullPolicy: IfNotPresent
         name: manager
+      serviceAccountName: capi-kubeadm-bootstrap-controller-manager
       terminationGracePeriodSeconds: 10
       tolerations:
       - effect: NoSchedule
@@ -9104,6 +9140,7 @@ spec:
         - mountPath: /tmp/k8s-webhook-server/serving-certs
           name: cert
           readOnly: true
+      serviceAccountName: capi-kubeadm-bootstrap-controller-manager
       terminationGracePeriodSeconds: 10
       tolerations:
       - effect: NoSchedule
@@ -9114,7 +9151,7 @@ spec:
           defaultMode: 420
           secretName: capi-kubeadm-bootstrap-webhook-service-cert
 ---
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   labels:
@@ -9125,20 +9162,17 @@ spec:
   dnsNames:
   - capi-kubeadm-bootstrap-webhook-service.capi-webhook-system.svc
   - capi-kubeadm-bootstrap-webhook-service.capi-webhook-system.svc.cluster.local
+  isCA: false
   issuerRef:
-    kind: Issuer
-    name: capi-kubeadm-bootstrap-selfsigned-issuer
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: tmaxcloud-issuer
   secretName: capi-kubeadm-bootstrap-webhook-service-cert
----
-apiVersion: cert-manager.io/v1alpha2
-kind: Issuer
-metadata:
-  labels:
-    cluster.x-k8s.io/provider: bootstrap-kubeadm
-  name: capi-kubeadm-bootstrap-selfsigned-issuer
-  namespace: capi-webhook-system
-spec:
-  selfSigned: {}
+  usage:
+  - digital signature
+  - key encipherment
+  - server auth
+  - client auth
 ---
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: ValidatingWebhookConfiguration
@@ -10572,7 +10606,7 @@ roleRef:
   name: capi-kubeadm-control-plane-leader-election-role
 subjects:
 - kind: ServiceAccount
-  name: default
+  name: capi-kubeadm-control-plane-controller-manager
   namespace: capi-kubeadm-control-plane-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -10587,7 +10621,7 @@ roleRef:
   name: capi-kubeadm-control-plane-aggregated-manager-role
 subjects:
 - kind: ServiceAccount
-  name: default
+  name: capi-kubeadm-control-plane-controller-manager
   namespace: capi-kubeadm-control-plane-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -10602,7 +10636,7 @@ roleRef:
   name: capi-kubeadm-control-plane-proxy-role
 subjects:
 - kind: ServiceAccount
-  name: default
+  name: capi-kubeadm-control-plane-controller-manager
   namespace: capi-kubeadm-control-plane-system
 ---
 apiVersion: v1
@@ -10675,6 +10709,7 @@ spec:
         image: us.gcr.io/k8s-artifacts-prod/cluster-api/kubeadm-control-plane-controller:v0.3.16
         imagePullPolicy: IfNotPresent
         name: manager
+      serviceAccountName: capi-kubeadm-control-plane-controller-manager
       terminationGracePeriodSeconds: 10
       tolerations:
       - effect: NoSchedule
@@ -10727,6 +10762,7 @@ spec:
         - mountPath: /tmp/k8s-webhook-server/serving-certs
           name: cert
           readOnly: true
+      serviceAccountName: capi-kubeadm-control-plane-controller-manager
       terminationGracePeriodSeconds: 10
       tolerations:
       - effect: NoSchedule
@@ -10737,7 +10773,7 @@ spec:
           defaultMode: 420
           secretName: capi-kubeadm-control-plane-webhook-service-cert
 ---
-apiVersion: cert-manager.io/v1alpha2
+apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   labels:
@@ -10748,20 +10784,17 @@ spec:
   dnsNames:
   - capi-kubeadm-control-plane-webhook-service.capi-webhook-system.svc
   - capi-kubeadm-control-plane-webhook-service.capi-webhook-system.svc.cluster.local
+  isCA: false
   issuerRef:
-    kind: Issuer
-    name: capi-kubeadm-control-plane-selfsigned-issuer
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: tmaxcloud-issuer
   secretName: capi-kubeadm-control-plane-webhook-service-cert
----
-apiVersion: cert-manager.io/v1alpha2
-kind: Issuer
-metadata:
-  labels:
-    cluster.x-k8s.io/provider: control-plane-kubeadm
-  name: capi-kubeadm-control-plane-selfsigned-issuer
-  namespace: capi-webhook-system
-spec:
-  selfSigned: {}
+  usage:
+  - digital signature
+  - key encipherment
+  - server auth
+  - client auth
 ---
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: ValidatingWebhookConfiguration
