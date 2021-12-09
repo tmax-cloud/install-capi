@@ -5005,7 +5005,7 @@ spec:
     kind: ClusterIssuer
     name: tmaxcloud-issuer
   secretName: capi-webhook-service-cert
-  usage:
+  usages:
   - digital signature
   - key encipherment
   - server auth
@@ -9176,7 +9176,7 @@ spec:
     kind: ClusterIssuer
     name: tmaxcloud-issuer
   secretName: capi-kubeadm-bootstrap-webhook-service-cert
-  usage:
+  usages:
   - digital signature
   - key encipherment
   - server auth
@@ -10790,7 +10790,7 @@ spec:
     kind: ClusterIssuer
     name: tmaxcloud-issuer
   secretName: capi-kubeadm-control-plane-webhook-service-cert
-  usage:
+  usages:
   - digital signature
   - key encipherment
   - server auth

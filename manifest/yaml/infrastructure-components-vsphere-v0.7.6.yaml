@@ -3124,7 +3124,7 @@ spec:
     kind: ClusterIssuer
     name: tmaxcloud-issuer
   secretName: capv-webhook-service-cert
-  usage:
+  usages:
   - digital signature
   - key encipherment
   - server auth

@@ -4633,7 +4633,7 @@ spec:
     kind: ClusterIssuer
     name: tmaxcloud-issuer
   secretName: capa-webhook-service-cert
-  usage:
+  usages:
   - digital signature
   - key encipherment
   - server auth
