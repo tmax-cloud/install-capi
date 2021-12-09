@@ -4974,7 +4974,7 @@ spec:
         - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
           name: capi-controller-manager-token
           readOnly: true
-      service AccountName: capi-controller-manager
+      serviceAccountName: capi-controller-manager
       terminationGracePeriodSeconds: 10
       tolerations:
       - effect: NoSchedule
