@@ -12,7 +12,7 @@
 ## Prerequisites
 - kubernetes version >= 1.16
 - Cert Manager
-    - [임시 설치 가이드](https://github.com/tmax-cloud/install-cert-manager-temp)
+    - [설치 가이드](https://github.com/tmax-cloud/install-cert-manager)
 - Provider AWS
     - AWS credential([How to get](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html))
     - AWS Cloudformation Stack([How to create](https://github.com/tmax-cloud/install-capi/tree/5.0#AWS-Cloudformation-Stack-추가-방법))
