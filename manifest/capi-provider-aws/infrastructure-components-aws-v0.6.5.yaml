@@ -4454,7 +4454,7 @@ subjects:
 ---
 apiVersion: v1
 data:
-  credentials: ${AWS_B64ENCODED_CREDENTIALS}
+  credentials: {{ .Values.credentials }}
 kind: Secret
 metadata:
   labels:
