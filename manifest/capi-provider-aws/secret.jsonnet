@@ -2,6 +2,7 @@ function (
     credentials="aws",
 )
     [
+        {
         "apiVersion": "v1",
         "data": {
             "credentials": credentials,
@@ -17,4 +18,5 @@ function (
             "namespace" : "capa-system",
         },
         "type": "Opaque",
+        }
     ]
