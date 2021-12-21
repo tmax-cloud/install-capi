@@ -4454,7 +4454,7 @@ subjects:
 ---
 apiVersion: v1
 data:
-  credentials: {{ .Values.credentials }}
+  credentials: params.credentials
 kind: Secret
 metadata:
   labels:
