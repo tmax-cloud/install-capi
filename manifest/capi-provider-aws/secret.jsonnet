@@ -4,9 +4,11 @@ function (
     [
         {
         "apiVersion": "v1",
-        "data": {
-            "credentials": credentials,
-        }
+        "data": [
+            {
+                "credentials": credentials,
+            }
+        ],
         "kind": "Secret",
         "metadata": {
             "labels": [
