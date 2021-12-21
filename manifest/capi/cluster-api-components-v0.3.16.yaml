@@ -5066,6 +5066,16 @@ spec:
           defaultMode: 420
           secretName: capi-controller-manager-token
 ---
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  labels:
+    cluster.x-k8s.io/provider: cluster-api
+  name: capi-selfsigned-issuer
+  namespace: capi-webhook-system
+spec:
+  selfSigned: {}
+---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -5077,17 +5087,19 @@ spec:
   dnsNames:
   - capi-webhook-service.capi-webhook-system.svc
   - capi-webhook-service.capi-webhook-system.svc.cluster.local
-  isCA: false
+  # isCA: false
   issuerRef:
-    group: cert-manager.io
-    kind: ClusterIssuer
-    name: tmaxcloud-issuer
+    kind: Issuer
+    name: capi-selfsigned-issuer
+    # group: cert-manager.io
+    # kind: ClusterIssuer
+    # name: tmaxcloud-issuer
   secretName: capi-webhook-service-cert
-  usages:
-  - digital signature
-  - key encipherment
-  - server auth
-  - client auth
+  # usages:
+  # - digital signature
+  # - key encipherment
+  # - server auth
+  # - client auth
 ---
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: ValidatingWebhookConfiguration
@@ -9261,6 +9273,16 @@ spec:
           defaultMode: 420
           secretName: capi-kubeadm-bootstrap-controller-manager-token
 ---
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  labels:
+    cluster.x-k8s.io/provider: bootstrap-kubeadm
+  name: capi-kubeadm-bootstrap-selfsigned-issuer
+  namespace: capi-webhook-system
+spec:
+  selfSigned: {}
+---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -9272,17 +9294,19 @@ spec:
   dnsNames:
   - capi-kubeadm-bootstrap-webhook-service.capi-webhook-system.svc
   - capi-kubeadm-bootstrap-webhook-service.capi-webhook-system.svc.cluster.local
-  isCA: false
+  # isCA: false
   issuerRef:
-    group: cert-manager.io
-    kind: ClusterIssuer
-    name: tmaxcloud-issuer
+    kind: Issuer
+    name: capi-kubeadm-bootstrap-selfsigned-issuer
+    # group: cert-manager.io
+    # kind: ClusterIssuer
+    # name: tmaxcloud-issuer
   secretName: capi-kubeadm-bootstrap-webhook-service-cert
-  usages:
-  - digital signature
-  - key encipherment
-  - server auth
-  - client auth
+  # usages:
+  # - digital signature
+  # - key encipherment
+  # - server auth
+  # - client auth
 ---
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: ValidatingWebhookConfiguration
@@ -10899,6 +10923,16 @@ spec:
           defaultMode: 420
           secretName: capi-kubeadm-control-plane-controller-manager-token
 ---
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  labels:
+    cluster.x-k8s.io/provider: cluster-api
+  name: capi-kubeadm-control-plane-selfsigned-issuer
+  namespace: capi-webhook-system
+spec:
+  selfSigned: {}
+---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -10910,17 +10944,19 @@ spec:
   dnsNames:
   - capi-kubeadm-control-plane-webhook-service.capi-webhook-system.svc
   - capi-kubeadm-control-plane-webhook-service.capi-webhook-system.svc.cluster.local
-  isCA: false
+  # isCA: false
   issuerRef:
-    group: cert-manager.io
-    kind: ClusterIssuer
-    name: tmaxcloud-issuer
+    kind: Issuer
+    name: capi-kubeadm-control-plane-selfsigned-issuer
+    # group: cert-manager.io
+    # kind: ClusterIssuer
+    # name: tmaxcloud-issuer
   secretName: capi-kubeadm-control-plane-webhook-service-cert
-  usages:
-  - digital signature
-  - key encipherment
-  - server auth
-  - client auth
+  # usages:
+  # - digital signature
+  # - key encipherment
+  # - server auth
+  # - client auth
 ---
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: ValidatingWebhookConfiguration
