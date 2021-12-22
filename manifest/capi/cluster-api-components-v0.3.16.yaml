@@ -339,7 +339,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capi-webhook-service
           namespace: capi-webhook-system
@@ -779,7 +779,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capi-webhook-service
           namespace: capi-webhook-system
@@ -1821,7 +1821,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capi-webhook-service
           namespace: capi-webhook-system
@@ -2654,7 +2654,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capi-webhook-service
           namespace: capi-webhook-system
@@ -3386,7 +3386,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capi-webhook-service
           namespace: capi-webhook-system
@@ -4331,7 +4331,6 @@ metadata:
   name: capi-mutating-webhook-configuration
 webhooks:
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capi-webhook-service
       namespace: capi-webhook-system
@@ -4351,7 +4350,6 @@ webhooks:
     - clusters
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capi-webhook-service
       namespace: capi-webhook-system
@@ -4371,7 +4369,6 @@ webhooks:
     - machines
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capi-webhook-service
       namespace: capi-webhook-system
@@ -4391,7 +4388,6 @@ webhooks:
     - machinedeployments
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capi-webhook-service
       namespace: capi-webhook-system
@@ -4411,7 +4407,6 @@ webhooks:
     - machinehealthchecks
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capi-webhook-service
       namespace: capi-webhook-system
@@ -4431,7 +4426,6 @@ webhooks:
     - machinesets
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capi-webhook-service
       namespace: capi-webhook-system
@@ -4451,7 +4445,6 @@ webhooks:
     - machinepools
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capi-webhook-service
       namespace: capi-webhook-system
@@ -5112,7 +5105,6 @@ metadata:
   name: capi-validating-webhook-configuration
 webhooks:
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capi-webhook-service
       namespace: capi-webhook-system
@@ -5132,7 +5124,6 @@ webhooks:
     - clusters
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capi-webhook-service
       namespace: capi-webhook-system
@@ -5152,7 +5143,6 @@ webhooks:
     - machines
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capi-webhook-service
       namespace: capi-webhook-system
@@ -5172,7 +5162,6 @@ webhooks:
     - machinedeployments
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capi-webhook-service
       namespace: capi-webhook-system
@@ -5192,7 +5181,6 @@ webhooks:
     - machinehealthchecks
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capi-webhook-service
       namespace: capi-webhook-system
@@ -5212,7 +5200,6 @@ webhooks:
     - machinesets
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capi-webhook-service
       namespace: capi-webhook-system
@@ -5232,7 +5219,6 @@ webhooks:
     - machinepools
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capi-webhook-service
       namespace: capi-webhook-system
@@ -5269,7 +5255,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capi-kubeadm-bootstrap-webhook-service
           namespace: capi-webhook-system
@@ -7110,7 +7096,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capi-kubeadm-bootstrap-webhook-service
           namespace: capi-webhook-system
@@ -9319,7 +9305,6 @@ metadata:
   name: capi-kubeadm-bootstrap-validating-webhook-configuration
 webhooks:
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capi-kubeadm-bootstrap-webhook-service
       namespace: capi-webhook-system
@@ -9355,7 +9340,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capi-kubeadm-control-plane-webhook-service
           namespace: capi-webhook-system
@@ -10565,7 +10550,6 @@ metadata:
   name: capi-kubeadm-control-plane-mutating-webhook-configuration
 webhooks:
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capi-kubeadm-control-plane-webhook-service
       namespace: capi-webhook-system
@@ -10969,7 +10953,6 @@ metadata:
   name: capi-kubeadm-control-plane-validating-webhook-configuration
 webhooks:
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capi-kubeadm-control-plane-webhook-service
       namespace: capi-webhook-system
