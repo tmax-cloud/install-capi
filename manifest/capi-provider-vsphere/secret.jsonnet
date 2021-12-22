@@ -1,7 +1,4 @@
-function (
-    username="id",
-    password="pw",
-)
+local params = import 'params.libsonnet'
     [
         {
             "apiVersion": "v1",
@@ -16,7 +13,7 @@ function (
                 "namespace": "capv-system",
             },
             "stringData": {
-                "credentials.yaml": std.join("", ["username: ", username, "\npassword: ", password]),
+                "credentials.yaml": std.join("", ["username: ", params.username, "\npassword: ", params.password]),
             },
             "type": "Opaque",
         },
