@@ -1,6 +1,6 @@
 function (
-    username="id"
-    password="pw"
+    username="id",
+    password="pw",
 )
     [
         {
