@@ -16,7 +16,7 @@ function (
                 "namespace": "capv-system",
             },
             "stringData": {
-                "credentials.yaml": "username: \"username\"\npassword: \"password\"",
+                "credentials.yaml": "username: std.extVar("username")\npassword: std.extVar("password")",
             },
             "type": "Opaque",
         },
