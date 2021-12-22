@@ -21,7 +21,6 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-  
         service:
           name: capv-webhook-service
           namespace: capi-webhook-system
@@ -338,7 +337,6 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-  
         service:
           name: capv-webhook-service
           namespace: capi-webhook-system
@@ -950,7 +948,6 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-  
         service:
           name: capv-webhook-service
           namespace: capi-webhook-system
@@ -1638,7 +1635,6 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-  
         service:
           name: capv-webhook-service
           namespace: capi-webhook-system
@@ -2264,7 +2260,6 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-  
         service:
           name: capv-webhook-service
           namespace: capi-webhook-system
