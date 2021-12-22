@@ -16,7 +16,7 @@ function (
                 "namespace": "capv-system",
             },
             "stringData": {
-                "credentials.yaml": "username: "username"\npassword: "password"",
+                "credentials.yaml": "username: username\npassword: password",
             },
             "type": "Opaque",
         },
