@@ -20,7 +20,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capa-webhook-service
           namespace: capi-webhook-system
@@ -154,7 +154,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capa-webhook-service
           namespace: system
@@ -346,7 +346,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capa-webhook-service
           namespace: capi-webhook-system
@@ -2375,7 +2375,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capa-webhook-service
           namespace: capi-webhook-system
@@ -3134,7 +3134,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capa-webhook-service
           namespace: capi-webhook-system
@@ -4690,7 +4690,6 @@ metadata:
   name: capa-mutating-webhook-configuration
 webhooks:
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capa-webhook-service
       namespace: capi-webhook-system
@@ -4710,7 +4709,6 @@ webhooks:
     - awsclusters
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capa-webhook-service
       namespace: capi-webhook-system
@@ -4730,7 +4728,6 @@ webhooks:
     - awsclustercontrolleridentities
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capa-webhook-service
       namespace: capi-webhook-system
@@ -4750,7 +4747,6 @@ webhooks:
     - awsclusterroleidentities
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capa-webhook-service
       namespace: capi-webhook-system
@@ -4769,7 +4765,6 @@ webhooks:
     - awsmachines
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capa-webhook-service
       namespace: capi-webhook-system
@@ -4789,7 +4784,6 @@ webhooks:
     - awsfargateprofiles
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capa-webhook-service
       namespace: capi-webhook-system
@@ -4809,7 +4803,6 @@ webhooks:
     - awsmachinepools
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capa-webhook-service
       namespace: capi-webhook-system
@@ -4839,7 +4832,6 @@ metadata:
   name: capa-validating-webhook-configuration
 webhooks:
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capa-webhook-service
       namespace: capi-webhook-system
@@ -4859,7 +4851,6 @@ webhooks:
     - awsclusters
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capa-webhook-service
       namespace: capi-webhook-system
@@ -4879,7 +4870,6 @@ webhooks:
     - awsclustercontrolleridentities
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capa-webhook-service
       namespace: capi-webhook-system
@@ -4899,7 +4889,6 @@ webhooks:
     - awsclusterroleidentities
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capa-webhook-service
       namespace: capi-webhook-system
@@ -4919,7 +4908,6 @@ webhooks:
     - awsmachines
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capa-webhook-service
       namespace: capi-webhook-system
@@ -4939,7 +4927,6 @@ webhooks:
     - awsmachinetemplates
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capa-webhook-service
       namespace: capi-webhook-system
@@ -4959,7 +4946,6 @@ webhooks:
     - fargateprofiles
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capa-webhook-service
       namespace: capi-webhook-system
@@ -4979,7 +4965,6 @@ webhooks:
     - awsmachinepools
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capa-webhook-service
       namespace: capi-webhook-system
