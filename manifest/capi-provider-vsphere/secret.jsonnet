@@ -4,7 +4,7 @@ function (
 )
     [
         {
-            "apiVersion": "1",
+            "apiVersion": "v1",
             "kind": "Secret",
             "metadata": {
                 "labels": [
