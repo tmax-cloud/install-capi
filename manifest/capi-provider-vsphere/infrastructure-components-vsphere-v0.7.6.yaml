@@ -21,7 +21,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capv-webhook-service
           namespace: capi-webhook-system
@@ -338,7 +338,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capv-webhook-service
           namespace: capi-webhook-system
@@ -950,7 +950,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capv-webhook-service
           namespace: capi-webhook-system
@@ -1638,7 +1638,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capv-webhook-service
           namespace: capi-webhook-system
@@ -2264,7 +2264,7 @@ spec:
     strategy: Webhook
     webhook:
       clientConfig:
-        caBundle: Cg==
+  
         service:
           name: capv-webhook-service
           namespace: capi-webhook-system
@@ -3180,7 +3180,6 @@ metadata:
   name: capv-validating-webhook-configuration
 webhooks:
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capv-webhook-service
       namespace: capi-webhook-system
@@ -3200,7 +3199,6 @@ webhooks:
     - vsphereclusters
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capv-webhook-service
       namespace: capi-webhook-system
@@ -3220,7 +3218,6 @@ webhooks:
     - vspheremachines
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capv-webhook-service
       namespace: capi-webhook-system
@@ -3240,7 +3237,6 @@ webhooks:
     - vspheremachinetemplates
   sideEffects: None
 - clientConfig:
-    caBundle: Cg==
     service:
       name: capv-webhook-service
       namespace: capi-webhook-system
