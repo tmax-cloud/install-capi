@@ -16,7 +16,7 @@ function (
                 "namespace": "capv-system",
             },
             "stringData": {
-                "credentials.yaml": std.join("username: ", username),
+                "credentials.yaml": std.join(" ", ["username: ", username]),
             },
             "type": "Opaque",
         },
