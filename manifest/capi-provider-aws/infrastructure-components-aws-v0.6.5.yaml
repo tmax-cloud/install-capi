@@ -4685,6 +4685,7 @@ metadata:
   name: capa-mutating-webhook-configuration
 webhooks:
 - clientConfig:
+    caBuldle: cg==
     service:
       name: capa-webhook-service
       namespace: capi-webhook-system
