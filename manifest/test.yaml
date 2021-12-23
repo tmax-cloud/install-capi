@@ -1,0 +1,623 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"argoproj.io/v1alpha1","kind":"Application","metadata":{"annotations":{},"name":"cluster-api-provider-aws","namespace":"argocd"},"spec":{"destination":{"namespace":"default","server":"https://kubernetes.default.svc"},"project":"default","source":{"directory":{"jsonnet":{"tlas":[{"name":"credentials","value":""}]}},"path":"manifest/capi-provider-aws","repoURL":"https://github.com/tmax-cloud/install-capi","targetRevision":"argo"}}}
+  creationTimestamp: "2021-12-23T03:47:27Z"
+  generation: 56
+  name: cluster-api-provider-aws
+  namespace: argocd
+  resourceVersion: "1130704"
+  selfLink: /apis/argoproj.io/v1alpha1/namespaces/argocd/applications/cluster-api-provider-aws
+  uid: 59a634a0-099c-4bf8-8d8b-d0769039cfda
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    directory:
+      jsonnet:
+        tlas:
+        - name: credentials
+          value: W2RlZmF1bHRdCmF3c19hY2Nlc3Nfa2V5X2lkID0gQUtJQVFERjRSS1gyNTJQMkJGR0IKYXdzX3NlY3JldF9hY2Nlc3Nfa2V5ID0gdUJYUVFMQzd1Z1ZTekNEYW9oRnpKN3R5OEJLd0xLbFNNWGFoVTVILwpyZWdpb24gPSBldS1jZW50cmFsLTEKCg==
+    path: manifest/capi-provider-aws
+    repoURL: https://github.com/tmax-cloud/install-capi
+    targetRevision: argo
+status:
+  health:
+    status: Healthy
+  history:
+  - deployStartedAt: "2021-12-23T03:48:38Z"
+    deployedAt: "2021-12-23T03:48:46Z"
+    id: 0
+    revision: 048c112fe9337337d0dc71ea4f701af02810b303
+    source:
+      directory:
+        jsonnet:
+          tlas:
+          - name: credentials
+            value: ""
+      path: manifest/capi-provider-aws
+      repoURL: https://github.com/tmax-cloud/install-capi
+      targetRevision: argo
+  operationState:
+    finishedAt: "2021-12-23T03:48:46Z"
+    message: successfully synced (all tasks run)
+    operation:
+      initiatedBy:
+        username: admin
+      retry: {}
+      sync:
+        revision: 048c112fe9337337d0dc71ea4f701af02810b303
+        syncStrategy:
+          hook: {}
+    phase: Succeeded
+    startedAt: "2021-12-23T03:48:38Z"
+    syncResult:
+      resources:
+      - group: ""
+        hookPhase: Running
+        kind: Namespace
+        message: namespace/capa-system created
+        name: capa-system
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: ""
+        hookPhase: Running
+        kind: ServiceAccount
+        message: serviceaccount/capa-controller-manager created
+        name: capa-controller-manager
+        namespace: capi-webhook-system
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: ""
+        hookPhase: Running
+        kind: ServiceAccount
+        message: serviceaccount/capa-controller-manager created
+        name: capa-controller-manager
+        namespace: capa-system
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: ""
+        hookPhase: Running
+        kind: Secret
+        message: secret/capa-controller-manager-token created
+        name: capa-controller-manager-token
+        namespace: capa-system
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: ""
+        hookPhase: Running
+        kind: Secret
+        message: secret/capa-manager-bootstrap-credentials created
+        name: capa-manager-bootstrap-credentials
+        namespace: capa-system
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: ""
+        hookPhase: Running
+        kind: Secret
+        message: secret/capa-controller-manager-token created
+        name: capa-controller-manager-token
+        namespace: capi-webhook-system
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: apiextensions.k8s.io
+        hookPhase: Running
+        kind: CustomResourceDefinition
+        message: customresourcedefinition.apiextensions.k8s.io/awsmachinepools.infrastructure.cluster.x-k8s.io
+          configured
+        name: awsmachinepools.infrastructure.cluster.x-k8s.io
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: apiextensions.k8s.io
+        hookPhase: Running
+        kind: CustomResourceDefinition
+        message: customresourcedefinition.apiextensions.k8s.io/awsmachinetemplates.infrastructure.cluster.x-k8s.io
+          configured
+        name: awsmachinetemplates.infrastructure.cluster.x-k8s.io
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: apiextensions.k8s.io
+        hookPhase: Running
+        kind: CustomResourceDefinition
+        message: customresourcedefinition.apiextensions.k8s.io/awsmanagedmachinepools.infrastructure.cluster.x-k8s.io
+          configured
+        name: awsmanagedmachinepools.infrastructure.cluster.x-k8s.io
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: apiextensions.k8s.io
+        hookPhase: Running
+        kind: CustomResourceDefinition
+        message: customresourcedefinition.apiextensions.k8s.io/awsfargateprofiles.infrastructure.cluster.x-k8s.io
+          configured
+        name: awsfargateprofiles.infrastructure.cluster.x-k8s.io
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: apiextensions.k8s.io
+        hookPhase: Running
+        kind: CustomResourceDefinition
+        message: customresourcedefinition.apiextensions.k8s.io/awsclustercontrolleridentities.infrastructure.cluster.x-k8s.io
+          configured
+        name: awsclustercontrolleridentities.infrastructure.cluster.x-k8s.io
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: apiextensions.k8s.io
+        hookPhase: Running
+        kind: CustomResourceDefinition
+        message: customresourcedefinition.apiextensions.k8s.io/awsmachines.infrastructure.cluster.x-k8s.io
+          configured
+        name: awsmachines.infrastructure.cluster.x-k8s.io
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: apiextensions.k8s.io
+        hookPhase: Running
+        kind: CustomResourceDefinition
+        message: customresourcedefinition.apiextensions.k8s.io/awsclusterroleidentities.infrastructure.cluster.x-k8s.io
+          configured
+        name: awsclusterroleidentities.infrastructure.cluster.x-k8s.io
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: apiextensions.k8s.io
+        hookPhase: Running
+        kind: CustomResourceDefinition
+        message: customresourcedefinition.apiextensions.k8s.io/awsmanagedclusters.infrastructure.cluster.x-k8s.io
+          configured
+        name: awsmanagedclusters.infrastructure.cluster.x-k8s.io
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: apiextensions.k8s.io
+        hookPhase: Running
+        kind: CustomResourceDefinition
+        message: customresourcedefinition.apiextensions.k8s.io/awsclusters.infrastructure.cluster.x-k8s.io
+          configured
+        name: awsclusters.infrastructure.cluster.x-k8s.io
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: apiextensions.k8s.io
+        hookPhase: Running
+        kind: CustomResourceDefinition
+        message: customresourcedefinition.apiextensions.k8s.io/awsclusterstaticidentities.infrastructure.cluster.x-k8s.io
+          configured
+        name: awsclusterstaticidentities.infrastructure.cluster.x-k8s.io
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: rbac.authorization.k8s.io
+        hookPhase: Running
+        kind: ClusterRole
+        message: "clusterrole.rbac.authorization.k8s.io/capa-manager-role reconciled.
+          reconciliation required create\n\tmissing rules added:\n\t\t{Verbs:[create
+          get list patch update watch] APIGroups:[] Resources:[events] ResourceNames:[]
+          NonResourceURLs:[]}\n\t\t{Verbs:[create delete get list patch update watch]
+          APIGroups:[] Resources:[secrets] ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[get
+          list watch] APIGroups:[cluster.x-k8s.io] Resources:[clusters clusters/status]
+          ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[get list watch] APIGroups:[cluster.x-k8s.io]
+          Resources:[machines machines/status] ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[get
+          list watch] APIGroups:[controlplane.cluster.x-k8s.io] Resources:[awsmanagedcontrolplanes
+          awsmanagedcontrolplanes/status] ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[create
+          get list patch watch] APIGroups:[] Resources:[events] ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[get
+          list watch] APIGroups:[exp.cluster.x-k8s.io] Resources:[machinepools machinepools/status]
+          ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[create get list watch]
+          APIGroups:[infrastructure.cluster.x-k8s.io] Resources:[awsclustercontrolleridentities]
+          ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[get list watch] APIGroups:[infrastructure.cluster.x-k8s.io]
+          Resources:[awsclusterroleidentities awsclusterstaticidentities] ResourceNames:[]
+          NonResourceURLs:[]}\n\t\t{Verbs:[create delete get list patch update watch]
+          APIGroups:[infrastructure.cluster.x-k8s.io] Resources:[awsclusters] ResourceNames:[]
+          NonResourceURLs:[]}\n\t\t{Verbs:[get patch update] APIGroups:[infrastructure.cluster.x-k8s.io]
+          Resources:[awsclusters/status] ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[create
+          delete get list patch update watch] APIGroups:[infrastructure.cluster.x-k8s.io]
+          Resources:[awsfargateprofiles] ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[get
+          patch update] APIGroups:[infrastructure.cluster.x-k8s.io] Resources:[awsfargateprofiles/status]
+          ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[create delete get list
+          patch update watch] APIGroups:[infrastructure.cluster.x-k8s.io] Resources:[awsmachinepools]
+          ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[get patch update] APIGroups:[infrastructure.cluster.x-k8s.io]
+          Resources:[awsmachinepools/status] ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[create
+          delete get list patch update watch] APIGroups:[infrastructure.cluster.x-k8s.io]
+          Resources:[awsmachines] ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[get
+          patch update] APIGroups:[infrastructure.cluster.x-k8s.io] Resources:[awsmachines/status]
+          ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[create delete get list
+          patch update watch] APIGroups:[infrastructure.cluster.x-k8s.io] Resources:[awsmanagedclusters]
+          ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[get patch update] APIGroups:[infrastructure.cluster.x-k8s.io]
+          Resources:[awsmanagedclusters/status] ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[create
+          delete get list patch update watch] APIGroups:[infrastructure.cluster.x-k8s.io]
+          Resources:[awsmanagedmachinepools] ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[get
+          patch update] APIGroups:[infrastructure.cluster.x-k8s.io] Resources:[awsmanagedmachinepools/status]
+          ResourceNames:[] NonResourceURLs:[]}. clusterrole.rbac.authorization.k8s.io/capa-manager-role
+          configured. Warning: resource clusterroles/capa-manager-role is missing
+          the kubectl.kubernetes.io/last-applied-configuration annotation which is
+          required by  apply.  apply should only be used on resources created declaratively
+          by either  create --save-config or  apply. The missing annotation will be
+          patched automatically."
+        name: capa-manager-role
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: rbac.authorization.k8s.io
+        hookPhase: Running
+        kind: ClusterRole
+        message: "clusterrole.rbac.authorization.k8s.io/capa-proxy-role reconciled.
+          reconciliation required create\n\tmissing rules added:\n\t\t{Verbs:[create]
+          APIGroups:[authentication.k8s.io] Resources:[tokenreviews] ResourceNames:[]
+          NonResourceURLs:[]}\n\t\t{Verbs:[create] APIGroups:[authorization.k8s.io]
+          Resources:[subjectaccessreviews] ResourceNames:[] NonResourceURLs:[]}. clusterrole.rbac.authorization.k8s.io/capa-proxy-role
+          configured. Warning: resource clusterroles/capa-proxy-role is missing the
+          kubectl.kubernetes.io/last-applied-configuration annotation which is required
+          by  apply.  apply should only be used on resources created declaratively
+          by either  create --save-config or  apply. The missing annotation will be
+          patched automatically."
+        name: capa-proxy-role
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: rbac.authorization.k8s.io
+        hookPhase: Running
+        kind: ClusterRoleBinding
+        message: "clusterrolebinding.rbac.authorization.k8s.io/capa-proxy-rolebinding
+          reconciled. reconciliation required create\n\tmissing subjects added:\n\t\t{Kind:ServiceAccount
+          APIGroup: Name:capa-controller-manager Namespace:capa-system}. clusterrolebinding.rbac.authorization.k8s.io/capa-proxy-rolebinding
+          configured. Warning: resource clusterrolebindings/capa-proxy-rolebinding
+          is missing the kubectl.kubernetes.io/last-applied-configuration annotation
+          which is required by  apply.  apply should only be used on resources created
+          declaratively by either  create --save-config or  apply. The missing annotation
+          will be patched automatically."
+        name: capa-proxy-rolebinding
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: rbac.authorization.k8s.io
+        hookPhase: Running
+        kind: ClusterRoleBinding
+        message: "clusterrolebinding.rbac.authorization.k8s.io/capa-manager-rolebinding
+          reconciled. reconciliation required create\n\tmissing subjects added:\n\t\t{Kind:ServiceAccount
+          APIGroup: Name:capa-controller-manager Namespace:capa-system}. clusterrolebinding.rbac.authorization.k8s.io/capa-manager-rolebinding
+          configured. Warning: resource clusterrolebindings/capa-manager-rolebinding
+          is missing the kubectl.kubernetes.io/last-applied-configuration annotation
+          which is required by  apply.  apply should only be used on resources created
+          declaratively by either  create --save-config or  apply. The missing annotation
+          will be patched automatically."
+        name: capa-manager-rolebinding
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: rbac.authorization.k8s.io
+        hookPhase: Running
+        kind: Role
+        message: "role.rbac.authorization.k8s.io/capa-leader-election-role reconciled.
+          reconciliation required create\n\tmissing rules added:\n\t\t{Verbs:[get
+          list watch create update patch delete] APIGroups:[] Resources:[configmaps]
+          ResourceNames:[] NonResourceURLs:[]}\n\t\t{Verbs:[get update patch] APIGroups:[]
+          Resources:[configmaps/status] ResourceNames:[] NonResourceURLs:[]}. role.rbac.authorization.k8s.io/capa-leader-election-role
+          configured. Warning: resource roles/capa-leader-election-role is missing
+          the kubectl.kubernetes.io/last-applied-configuration annotation which is
+          required by  apply.  apply should only be used on resources created declaratively
+          by either  create --save-config or  apply. The missing annotation will be
+          patched automatically."
+        name: capa-leader-election-role
+        namespace: capa-system
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: rbac.authorization.k8s.io
+        hookPhase: Running
+        kind: RoleBinding
+        message: "rolebinding.rbac.authorization.k8s.io/capa-leader-election-rolebinding
+          reconciled. reconciliation required create\n\tmissing subjects added:\n\t\t{Kind:ServiceAccount
+          APIGroup: Name:capa-controller-manager Namespace:capa-system}. rolebinding.rbac.authorization.k8s.io/capa-leader-election-rolebinding
+          configured. Warning: resource rolebindings/capa-leader-election-rolebinding
+          is missing the kubectl.kubernetes.io/last-applied-configuration annotation
+          which is required by  apply.  apply should only be used on resources created
+          declaratively by either  create --save-config or  apply. The missing annotation
+          will be patched automatically."
+        name: capa-leader-election-rolebinding
+        namespace: capa-system
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: ""
+        hookPhase: Running
+        kind: Service
+        message: service/capa-controller-manager-metrics-service created
+        name: capa-controller-manager-metrics-service
+        namespace: capa-system
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: ""
+        hookPhase: Running
+        kind: Service
+        message: service/capa-webhook-service created
+        name: capa-webhook-service
+        namespace: capi-webhook-system
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: apps
+        hookPhase: Running
+        kind: Deployment
+        message: deployment.apps/capa-controller-manager created
+        name: capa-controller-manager
+        namespace: capi-webhook-system
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: apps
+        hookPhase: Running
+        kind: Deployment
+        message: deployment.apps/capa-controller-manager created
+        name: capa-controller-manager
+        namespace: capa-system
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: admissionregistration.k8s.io
+        hookPhase: Running
+        kind: MutatingWebhookConfiguration
+        message: mutatingwebhookconfiguration.admissionregistration.k8s.io/capa-mutating-webhook-configuration
+          created
+        name: capa-mutating-webhook-configuration
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1beta1
+      - group: cert-manager.io
+        hookPhase: Running
+        kind: Issuer
+        message: issuer.cert-manager.io/capa-selfsigned-issuer created
+        name: capa-selfsigned-issuer
+        namespace: capi-webhook-system
+        status: Synced
+        syncPhase: Sync
+        version: v1alpha2
+      - group: cert-manager.io
+        hookPhase: Running
+        kind: Certificate
+        message: certificate.cert-manager.io/capa-serving-cert created
+        name: capa-serving-cert
+        namespace: capi-webhook-system
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: admissionregistration.k8s.io
+        hookPhase: Running
+        kind: ValidatingWebhookConfiguration
+        message: validatingwebhookconfiguration.admissionregistration.k8s.io/capa-validating-webhook-configuration
+          created
+        name: capa-validating-webhook-configuration
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1beta1
+      revision: 048c112fe9337337d0dc71ea4f701af02810b303
+      source:
+        directory:
+          jsonnet:
+            tlas:
+            - name: credentials
+              value: ""
+        path: manifest/capi-provider-aws
+        repoURL: https://github.com/tmax-cloud/install-capi
+        targetRevision: argo
+  reconciledAt: "2021-12-23T05:58:35Z"
+  resources:
+  - kind: Namespace
+    name: capa-system
+    status: Synced
+    version: v1
+  - kind: Secret
+    name: capa-controller-manager-token
+    namespace: capa-system
+    status: Synced
+    version: v1
+  - kind: Secret
+    name: capa-manager-bootstrap-credentials
+    namespace: capa-system
+    status: OutOfSync
+    version: v1
+  - kind: Secret
+    name: capa-controller-manager-token
+    namespace: capi-webhook-system
+    status: Synced
+    version: v1
+  - health:
+      status: Healthy
+    kind: Service
+    name: capa-controller-manager-metrics-service
+    namespace: capa-system
+    status: Synced
+    version: v1
+  - health:
+      status: Healthy
+    kind: Service
+    name: capa-webhook-service
+    namespace: capi-webhook-system
+    status: Synced
+    version: v1
+  - kind: ServiceAccount
+    name: capa-controller-manager
+    namespace: capa-system
+    status: Synced
+    version: v1
+  - kind: ServiceAccount
+    name: capa-controller-manager
+    namespace: capi-webhook-system
+    status: Synced
+    version: v1
+  - group: admissionregistration.k8s.io
+    kind: MutatingWebhookConfiguration
+    name: capa-mutating-webhook-configuration
+    status: OutOfSync
+    version: v1beta1
+  - group: admissionregistration.k8s.io
+    kind: ValidatingWebhookConfiguration
+    name: capa-validating-webhook-configuration
+    status: Synced
+    version: v1beta1
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
+    name: awsclustercontrolleridentities.infrastructure.cluster.x-k8s.io
+    status: Synced
+    version: v1
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
+    name: awsclusterroleidentities.infrastructure.cluster.x-k8s.io
+    status: Synced
+    version: v1
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
+    name: awsclusters.infrastructure.cluster.x-k8s.io
+    status: Synced
+    version: v1
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
+    name: awsclusterstaticidentities.infrastructure.cluster.x-k8s.io
+    status: Synced
+    version: v1
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
+    name: awsfargateprofiles.infrastructure.cluster.x-k8s.io
+    status: Synced
+    version: v1
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
+    name: awsmachinepools.infrastructure.cluster.x-k8s.io
+    status: Synced
+    version: v1
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
+    name: awsmachines.infrastructure.cluster.x-k8s.io
+    status: Synced
+    version: v1
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
+    name: awsmachinetemplates.infrastructure.cluster.x-k8s.io
+    status: Synced
+    version: v1
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
+    name: awsmanagedclusters.infrastructure.cluster.x-k8s.io
+    status: Synced
+    version: v1
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
+    name: awsmanagedmachinepools.infrastructure.cluster.x-k8s.io
+    status: Synced
+    version: v1
+  - group: apps
+    health:
+      status: Healthy
+    kind: Deployment
+    name: capa-controller-manager
+    namespace: capa-system
+    status: Synced
+    version: v1
+  - group: apps
+    health:
+      status: Healthy
+    kind: Deployment
+    name: capa-controller-manager
+    namespace: capi-webhook-system
+    status: Synced
+    version: v1
+  - group: cert-manager.io
+    health:
+      message: Certificate is up to date and has not expired
+      status: Healthy
+    kind: Certificate
+    name: capa-serving-cert
+    namespace: capi-webhook-system
+    status: Synced
+    version: v1
+  - group: cert-manager.io
+    health:
+      status: Healthy
+    kind: Issuer
+    name: capa-selfsigned-issuer
+    namespace: capi-webhook-system
+    status: Synced
+    version: v1alpha2
+  - group: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: capa-manager-role
+    status: Synced
+    version: v1
+  - group: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: capa-proxy-role
+    status: Synced
+    version: v1
+  - group: rbac.authorization.k8s.io
+    kind: ClusterRoleBinding
+    name: capa-manager-rolebinding
+    status: Synced
+    version: v1
+  - group: rbac.authorization.k8s.io
+    kind: ClusterRoleBinding
+    name: capa-proxy-rolebinding
+    status: Synced
+    version: v1
+  - group: rbac.authorization.k8s.io
+    kind: Role
+    name: capa-leader-election-role
+    namespace: capa-system
+    status: Synced
+    version: v1
+  - group: rbac.authorization.k8s.io
+    kind: RoleBinding
+    name: capa-leader-election-rolebinding
+    namespace: capa-system
+    status: Synced
+    version: v1
+  sourceType: Directory
+  summary:
+    images:
+    - gcr.io/k8s-staging-cluster-api-aws/cluster-api-aws-controller:v0.6.5
+    - gcr.io/kubebuilder/kube-rbac-proxy:v0.4.1
+  sync:
+    comparedTo:
+      destination:
+        namespace: default
+        server: https://kubernetes.default.svc
+      source:
+        directory:
+          jsonnet:
+            tlas:
+            - name: credentials
+              value: W2RlZmF1bHRdCmF3c19hY2Nlc3Nfa2V5X2lkID0gQUtJQVFERjRSS1gyNTJQMkJGR0IKYXdzX3NlY3JldF9hY2Nlc3Nfa2V5ID0gdUJYUVFMQzd1Z1ZTekNEYW9oRnpKN3R5OEJLd0xLbFNNWGFoVTVILwpyZWdpb24gPSBldS1jZW50cmFsLTEKCg==
+        path: manifest/capi-provider-aws
+        repoURL: https://github.com/tmax-cloud/install-capi
+        targetRevision: argo
+    revision: 048c112fe9337337d0dc71ea4f701af02810b303
+    status: OutOfSync
