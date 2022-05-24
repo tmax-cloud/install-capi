@@ -1,6 +1,13 @@
 
 # Capi 설치 가이드
 
+## 개요
+- Cluster Api
+    - Cluster API is a Kubernetes sub-project focused on providing declarative APIs and tooling to simplify provisioning, upgrading, and operating multiple Kubernetes clusters.
+- Cluster Api Provider AWS
+    - The Cluster API brings declarative, Kubernetes-style APIs to cluster creation, configuration and management.
+    The API itself is shared across multiple cloud providers allowing for true AWS hybrid deployments of Kubernetes. It is built atop the lessons learned from previous cluster managers such as kops and kubicorn.
+
 ## 구성 요소 및 버전
 - [Cluster Api](https://github.com/kubernetes-sigs/cluster-api/releases/latest)
 - [InfrastructureProvider-AWS](https://github.com/kubernetes-sigs/cluster-api-provider-aws/releases/latest)
