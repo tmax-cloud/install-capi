@@ -5,3 +5,12 @@ vsphere-credential.conf
 vsphere-machine.conf
 
 manifest/*.kubeconfig
+
+img/
+
+tmp.txt
+
+registry.conf
+
+offline-cluster-api-componenets.yaml
+offline-infrastructure-componenets.yaml
