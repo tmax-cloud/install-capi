@@ -127,6 +127,29 @@ Resources:
       - Ref: AWSIAMRoleControlPlane
       - Ref: AWSIAMRoleNodes
     Type: AWS::IAM::ManagedPolicy
+  AWSIAMManagedPolicyEFS:
+    Properties:
+      Description: For the Kubernetes Cluster to use EFS filesystem
+      ManagedPolicyName: efs.cluster-api-provider-aws.sigs.k8s.io
+      PolicyDocument:
+        Statement:
+        - Action:
+          - elasticfilesystem:DescribeAccessPoints
+          - elasticfilesystem:DescribeFileSystems
+          - elasticfilesystem:CreateAccessPoint
+          - elasticfilesystem:DeleteAccessPoint
+          - elasticfilesystem:CreateMountTarget
+          - elasticfilesystem:ClientWrite
+          - elasticfilesystem:ClientRootAccess
+          - elasticfilesystem:ClientMount
+          Effect: Allow
+          Resource:
+          - '*'
+        Version: 2012-10-17
+      Roles:
+      - Ref: AWSIAMRoleControlPlane
+      - Ref: AWSIAMRoleNodes
+    Type: AWS::IAM::ManagedPolicy
   AWSIAMManagedPolicyControllers:
     Properties:
       Description: For the Kubernetes Cluster API Provider AWS Controllers
@@ -200,6 +223,7 @@ Resources:
           - ec2:DescribeLaunchTemplateVersions
           - ec2:DeleteLaunchTemplate
           - ec2:DeleteLaunchTemplateVersions
+          - ec2:DescribeKeyPairs
           Effect: Allow
           Resource:
           - '*'
@@ -293,3 +317,4 @@ Resources:
         Version: 2012-10-17
       RoleName: nodes.cluster-api-provider-aws.sigs.k8s.io
     Type: AWS::IAM::Role
+
