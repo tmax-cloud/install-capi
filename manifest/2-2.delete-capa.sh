@@ -1,0 +1,1 @@
+envsubst < capa/infrastructure-components.yaml | kubectl delete -f -

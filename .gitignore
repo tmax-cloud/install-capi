@@ -5,3 +5,7 @@ vsphere-credential.conf
 vsphere-machine.conf
 
 manifest/*.kubeconfig
+
+img/
+
+tmp.txt

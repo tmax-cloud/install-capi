@@ -1,0 +1,1 @@
+kubectl delete -f capi/cluster-api-components.yaml
