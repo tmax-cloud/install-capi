@@ -1,6 +1,6 @@
 if [ ! -f "aws-credential.conf" ]; then
     bash message.sh "ERROR" "'aws-credential.conf' is NOT EXIST!"
-    exit 0
+    exit 1
 fi
 
 
@@ -16,4 +16,3 @@ EOF
 export AWS_B64ENCODED_CREDENTIALS=$(cat tmp.txt)
 
 envsubst < capa/infrastructure-components.yaml | kubectl apply -f -
-kubectl apply -f capa/certificate.yaml

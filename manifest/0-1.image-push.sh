@@ -1,11 +1,11 @@
 ## Make image dir for download capi, aws images
 if [ ! -d img ]; then
    bash message.sh "ERROR" "'manifest/img/' is NOT EXIST!"
-   exit 0
+    exit 1
 fi
 if [ ! -f "registry.conf" ]; then
     bash message.sh "ERROR" "'registry.conf' is NOT EXIST!"
-    exit 0
+    exit 1
 fi
 
 source registry.conf

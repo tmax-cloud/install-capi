@@ -29,6 +29,7 @@
 ## Prerequisites
 - K8S version >= v1.18
 - [Cert Manager 설치 가이드](https://github.com/tmax-cloud/install-cert-manager)
+  - "tmaxcloud-issuer" clusterissuer 설치 확인 필요
 - Provider AWS
     - AWS credential([How to get](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html))
     - AWS Cloudformation Stack([How to create](https://github.com/tmax-cloud/install-capi/tree/5.0#AWS-Cloudformation-Stack-추가-방법))

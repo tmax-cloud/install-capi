@@ -1,6 +1,6 @@
 if [ ! -f "registry.conf" ]; then
     bash message.sh "ERROR" "'registry.conf' is NOT EXIST!"
-    exit 0
+    exit 1
 fi
 
 source registry.conf
