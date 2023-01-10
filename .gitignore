@@ -10,7 +10,5 @@ img/
 
 tmp.txt
 
-registry.conf
-
 offline-cluster-api-componenets.yaml
 offline-infrastructure-componenets.yaml

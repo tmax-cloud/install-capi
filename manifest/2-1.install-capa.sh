@@ -1,3 +1,9 @@
+if [ ! -f "aws-credential.conf" ]; then
+    bash message.sh "ERROR" "'aws-credential.conf' is NOT EXIST!"
+    exit 0
+fi
+
+
 source aws-credential.conf
 
 cat << EOF | base64 | tr '\n' ' ' | sed 's/ //g' > tmp.txt
