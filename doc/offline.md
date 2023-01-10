@@ -8,28 +8,30 @@
 
 <hr/>
 
-## Image 다운로드 
-- 외부 네트워크 통신이 가능한 환경에서 이미지를 다운로드한다.
+## Image 다운로드 및 업로드
+- 외부 네트워크 통신이 가능한 환경에서 이미지를 다운로드
     ```bash
     $ cd manifest
     $ chmod +x *.sh
     $ bash 0.image-pull.sh
     ```
 
-- 다운받은 이미지는 `manifest/img` 경로에서 확인할 수 있다. 
+- 다운받은 이미지는 `manifest/img` 경로에서 확인할 수 있음 
 
 - 다운 받은 이미지를 폐쇄망 환경으로 가져와 `manifest/img` 경로에 위치시킨다.
-- `registry.conf` 파일에 `REGISTRY 정보`를 기입한다.    
+- `registry.conf` 파일에 `REGISTRY 정보`를 기입   
     ```bash
     $ cd manifest
     $ cat registry.conf
       export REGISTRY=172.21.5.30:5000
     ```
-- registry에 다운 받은 이미지를 업로드 한다. 
+- registry에 다운 받은 이미지를 업로드
     ```bash
     $ bash 0-1.image-push.sh 
     ```
 
+    
+<br/>
 
 <hr/>
 
@@ -41,21 +43,19 @@ $ chmod +x *.sh
 $ bash 1-0.setting-offline-capi.sh
 $ bash 1-1.install-capi.sh
 ```
-    
-
+        
 <br/>
-
 
 <hr/>
 
 
 ## CAPI-AWS 설치
-### 1. AWS Cloudformation Stack 추가 방법은 [여기](./AWS_CONSOLE.md#aws-cloudformation-stack-추가-방법)를 참고한다. 
-### 2. AWS Key pair 생성 방법은 [여기](./AWS_CONSOLE.md#aws-key-pair-생성-방법)를 참고한다. 
+### 1. AWS Cloudformation Stack 추가 방법은 [여기](./AWS_CONSOLE.md#aws-cloudformation-stack-추가-방법)를 참고
+### 2. AWS Key pair 생성 방법은 [여기](./AWS_CONSOLE.md#aws-key-pair-생성-방법)를 참고
 
 ### 3. Install Steps
 
-- `manifest/aws-credential.conf` 생성 후, `AWS_ACCESS_KEY`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`에 값을 기입한다. 
+- `manifest/aws-credential.conf` 생성 후, `AWS_ACCESS_KEY`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`에 값을 기입
     ```bash
     $ cd manifest
     $ cp aws-credential.conf.example aws-credential.conf
@@ -66,13 +66,14 @@ $ bash 1-1.install-capi.sh
     ```
 
 
-- CAPI-AWS를 설치한다. 
+- CAPI-AWS를 설치
     ```bash
     $ bash 2-0.setting-offline-capa.sh
     $ bash 2-1.install-capa.sh
     ```
 
-
+    
+<br/>
 
 <hr/>
 
@@ -89,14 +90,13 @@ $ bash 1-1.install-capi.sh
     ```
 
 
-- CAPI-vShere 설치하기 
+- CAPI-vShere를 설치 
     ```bash
     $ bash 3-0.setting-offline-capv.sh
     $ bash 3-1.install-capv.sh
     ``` 
-
+    
 <br/>
-
 
 <hr/>
 

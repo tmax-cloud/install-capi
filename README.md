@@ -1,7 +1,5 @@
 # CAPI 설치 가이드
 
-### 폐쇄망 가이드는 [여기](doc/offline.md)을 참고
-
 ## 개요
 - Cluster API
   
@@ -47,8 +45,10 @@
 
 
 <hr/>
-<br/>
 
+### 폐쇄망 설치 가이드는 [여기](doc/offline.md)을 참고
+
+<hr/>
 
 ## Cluster-API 설치
    
@@ -58,12 +58,9 @@ $ chmod +x *.sh
 $ bash 1-1.install-capi.sh
 ```
     
-
 <br/>
 
-
 <hr/>
-
 
 ## CAPI-AWS 설치
 ### 1. AWS Cloudformation Stack 추가 방법은 [여기](doc/AWS_CONSOLE.md#aws-cloudformation-stack-추가-방법)를 참고
@@ -82,12 +79,13 @@ $ bash 1-1.install-capi.sh
     ```
 
 
-- CAPI-AWS 설치하기
+- CAPI-AWS 설치
     ```bash
     $ bash 2-1.install-capa.sh
     ```
 
-
+    
+<br/>
 
 <hr/>
 
@@ -104,13 +102,12 @@ $ bash 1-1.install-capi.sh
     ```
 
 
-- CAPI-vShere 설치하기 
+- CAPI-vShere 설치
     ```bash
     $ bash 3-1.install-capv.sh
     ``` 
-
+    
 <br/>
-
 
 <hr/>
 
