@@ -6,7 +6,7 @@
 
 <br/>
 
-2. 템플릿 파일 업로드를 선택하고 `manifest/capa/aws-cloud-formation.yaml`을 업로드후 "다음" 버튼 클릭
+2. 템플릿 파일 업로드를 선택하고 [manifest/capa/aws-cloud-formation.yaml](../manifest/capa/aws-cloud-formation.yaml)을 업로드후 "다음" 버튼 클릭
 ![image](../figure/step2.png)
 
 <br/>

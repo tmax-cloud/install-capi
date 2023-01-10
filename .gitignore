@@ -9,6 +9,3 @@ manifest/*.kubeconfig
 img/
 
 tmp.txt
-
-offline-cluster-api-componenets.yaml
-offline-infrastructure-componenets.yaml
