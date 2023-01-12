@@ -27,7 +27,7 @@
 <br/>
 
 ## Prerequisites
-- K8S version >= v1.18
+- K8S version >= v1.20
 - [Cert Manager 설치 가이드](https://github.com/tmax-cloud/install-cert-manager)
   - "tmaxcloud-issuer" clusterissuer 설치 확인 필요
 - Provider AWS
